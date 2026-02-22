@@ -12,10 +12,10 @@ interface WorkSliderBtnsProps {
   btnStyles: string
 }
 
-const WorkSliderBtns = ({
+export default function WorkSliderBtns({
   containerStyles,
   btnStyles,
-}: WorkSliderBtnsProps) => {
+}: WorkSliderBtnsProps) {
   const swiper = useSwiper()
   return (
     <div className={containerStyles}>
@@ -36,5 +36,3 @@ const WorkSliderBtns = ({
     </div>
   )
 }
-
-export default WorkSliderBtns
