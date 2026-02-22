@@ -1,7 +1,11 @@
-import ServicePages from '@/components/PagesService'
+import dynamic from 'next/dynamic'
 import { services } from '@/constants/services'
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+
+const ServicePages = dynamic(
+  () => import('@/components/PagesService'),
+)
 
 export async function generateStaticParams() {
   return services.map(({ href }) => ({

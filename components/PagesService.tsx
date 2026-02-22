@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import {
   Card,
   CardContent,
@@ -10,35 +9,13 @@ import {
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import Link from 'next/link'
+import type { Service } from '@/constants/services'
 
-interface ServicePackage {
-  name: string
-  price: string
-  features: readonly string[]
-}
-
-interface Testimonial {
-  name: string
-  comment: string
-}
-
-interface Service {
-  num: string
-  title: string
-  description: string
-  href: string
-  packages?: readonly ServicePackage[]
-  steps?: readonly string[]
-  testimonials?: readonly Testimonial[]
-}
-
-interface ServicePagesProps {
-  service: Service
-}
-
-const ServicePages: React.FC<ServicePagesProps> = ({
+export default function ServicePages({
   service,
-}) => {
+}: {
+  service: Service
+}) {
   return (
     <section className='container mx-auto py-16 px-4 sm:px-6 lg:px-8'>
       <header className='mb-12 text-center max-w-4xl mx-auto'>
@@ -89,7 +66,7 @@ const ServicePages: React.FC<ServicePagesProps> = ({
                   key={idx}
                   className='flex items-start gap-4'
                 >
-                  <span className='flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white font-semibold'>
+                  <span className='shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white font-semibold'>
                     {idx + 1}
                   </span>
                   <p className='text-base leading-7'>
@@ -116,11 +93,11 @@ const ServicePages: React.FC<ServicePagesProps> = ({
                       {pkg.name}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className='flex flex-col flex-grow'>
+                  <CardContent className='flex flex-col grow'>
                     <p className='text-2xl font-bold text-primary mb-8 text-center '>
                       {pkg.price}
                     </p>
-                    <ul className='list-disc pl-10 space-y-2 text-sm flex-grow'>
+                    <ul className='list-disc pl-10 space-y-2 text-sm grow'>
                       {pkg.features.map((f) => (
                         <li key={f}>{f}</li>
                       ))}
@@ -165,5 +142,3 @@ const ServicePages: React.FC<ServicePagesProps> = ({
     </section>
   )
 }
-
-export default ServicePages

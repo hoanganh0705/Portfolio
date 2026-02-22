@@ -1,5 +1,9 @@
+import dynamic from 'next/dynamic'
 import { createMetadata } from '@/lib/metadata'
-import ServicesClient from '@/components/ServicesClient'
+
+const ServicesClient = dynamic(
+  () => import('@/components/ServicesClient'),
+)
 
 export const metadata = createMetadata({
   title: 'Services',
@@ -22,8 +26,6 @@ export const metadata = createMetadata({
     'https://gitlab.com/nguyennanhcd1/image-container/-/raw/main/portfolio-image/Screenshot%202025-06-21%20073227.png?ref_type=heads',
 })
 
-const Services = () => {
+export default function Services() {
   return <ServicesClient />
 }
-
-export default Services
