@@ -51,7 +51,6 @@ export const about = {
 }
 
 export const experience = {
-  icon: 'assets/resume/badge.svg',
   title: 'My experience',
   description: 'lorem ipsum',
   items: [
@@ -89,7 +88,6 @@ export const experience = {
 }
 
 export const education = {
-  icon: 'assets/resume/cap.svg',
   title: 'My education',
   description: 'lorem ipsum',
   items: [

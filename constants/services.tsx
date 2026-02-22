@@ -247,5 +247,3 @@ export const services = [
     ],
   },
 ]
-
-export type ServiceSlug = (typeof services)[number]['href']

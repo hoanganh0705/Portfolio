@@ -1,19 +1,24 @@
+import { Suspense } from 'react'
 import { Button } from '@/components/ui/button'
 import { FiDownload } from 'react-icons/fi'
+import dynamic from 'next/dynamic'
 
 // Components
 import Social from '@/components/Social'
-import Stats from '@/components/Stats'
 import TypeWriter from '@/components/TypeWriter'
+
+// bundle-dynamic-imports: lazy-load heavy below-fold client components
+const Stats = dynamic(() => import('@/components/Stats'))
+const BriefInfo = dynamic(
+  () => import('@/components/BriefInfo'),
+)
+const WhyMe = dynamic(() => import('@/components/WhyMe'))
 
 // Constants
 import { mySelf } from '@/constants/mySelf'
-import { stats } from '@/constants/stats'
 
 // Utils
 import { createMetadata } from '@/lib/metadata'
-import BriefInfo from '@/components/BriefInfo'
-import WhyMe from '@/components/WhyMe'
 
 // Export revalidate to enable ISR for 10 days
 export const revalidate = 864000 // 10*24*60*60
@@ -37,9 +42,32 @@ export const metadata = createMetadata({
     'https://gitlab.com/nguyennanhcd1/image-container/-/raw/main/portfolio-image/Screenshot%202025-06-21%20072326.png?ref_type=heads',
 })
 
-export default async function Home() {
-  const statsData = stats
+// rendering-hoist-jsx: static fallback extracted outside component
+const StatsFallback = (
+  <section className='pt-4 pb-12 xl:pt-0 xl:pb-0'>
+    <div className='container mx-auto relative top-3'>
+      <div className='flex flex-wrap items-center justify-center gap-6 max-w-[80vw] mx-auto xl:max-w-none animate-pulse'>
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div
+            key={i}
+            className='flex-1 flex gap-4 items-center justify-center xl:justify-start'
+          >
+            <div className='h-12 w-20 bg-white/10 rounded' />
+            <div className='h-6 w-24 bg-white/10 rounded' />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)
 
+// server-parallel-fetching: async server component fetches data independently
+async function StatsSection() {
+  const { stats } = await import('@/constants/stats')
+  return <Stats statsData={stats} />
+}
+
+export default function Home() {
   return (
     <section className='h-full xl:pt-20 xl:pb-4'>
       <div className='container mx-auto px-2 xl:px-0'>
@@ -77,10 +105,28 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Pass statsData to Stats component */}
-      <Stats statsData={statsData} />
-      <BriefInfo />
-      <WhyMe />
+      {/* async-suspense-boundaries: Stats fetches GitHub commits, wrap in Suspense so hero renders immediately */}
+      <Suspense fallback={StatsFallback}>
+        <StatsSection />
+      </Suspense>
+
+      {/* rendering-content-visibility: below-fold sections with content-visibility for rendering performance */}
+      <div
+        style={{
+          contentVisibility: 'auto',
+          containIntrinsicSize: '0 600px',
+        }}
+      >
+        <BriefInfo />
+      </div>
+      <div
+        style={{
+          contentVisibility: 'auto',
+          containIntrinsicSize: '0 600px',
+        }}
+      >
+        <WhyMe />
+      </div>
     </section>
   )
 }

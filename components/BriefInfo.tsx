@@ -2,7 +2,9 @@
 import { useEffect, useRef } from 'react'
 import { skills } from '@/constants/skill'
 import {
-  motion,
+  domAnimation,
+  LazyMotion,
+  m,
   useAnimation,
   useInView,
   type Transition,
@@ -86,53 +88,55 @@ export default function BriefInfo() {
   }, [controls, inView])
 
   return (
-    <motion.section
-      ref={sectionRef}
-      initial='hidden'
-      animate={controls}
-      variants={sectionVariants}
-      className='xl:pt-50 pt-10 xl:pb-50 pb-10'
-    >
-      <div className='p-10 xl:p-20 bg-[#202020]'>
-        <motion.h2
-          className='text-5xl font-bold mb-3 text-center text-accent-default'
-          variants={textVariants}
-        >
-          What I Do ?
-        </motion.h2>
-        <motion.p
-          className='mt-10 text-base text-muted-foreground text-center'
-          variants={textVariants}
-        >
-          Find out who I am and what I&apos;m good at
-        </motion.p>
-        <motion.div
-          className='grid grid-cols-1 xl:grid-cols-4 xl:gap-8 xl:mt-40 mt-33 gap-30'
-          variants={skillContainerVariants}
-        >
-          {skills.map((skill) => (
-            <motion.div
-              key={skill.key}
-              variants={skillVariants}
-            >
-              <div className='flex items-center text-center flex-row'>
-                <span
-                  aria-hidden
-                  className='-translate-y-12 text-[160px] leading-none font-extrabold text-accent-default pointer-events-none select-none will-change-transform'
-                >
-                  {skill.key}
-                </span>
-                <h3 className='text-lg font-semibold tracking-tight'>
-                  {skill.title}
-                </h3>
-              </div>
-              <p className='-mt-6 pl-2 text-gray-500 text-left'>
-                {skill.body}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </motion.section>
+    <LazyMotion features={domAnimation}>
+      <m.section
+        ref={sectionRef}
+        initial='hidden'
+        animate={controls}
+        variants={sectionVariants}
+        className='xl:pt-50 pt-10 xl:pb-50 pb-10'
+      >
+        <div className='p-10 xl:p-20 bg-[#202020]'>
+          <m.h2
+            className='text-5xl font-bold mb-3 text-center text-accent-default'
+            variants={textVariants}
+          >
+            What I Do ?
+          </m.h2>
+          <m.p
+            className='mt-10 text-base text-muted-foreground text-center'
+            variants={textVariants}
+          >
+            Find out who I am and what I&apos;m good at
+          </m.p>
+          <m.div
+            className='grid grid-cols-1 xl:grid-cols-4 xl:gap-8 xl:mt-40 mt-33 gap-30'
+            variants={skillContainerVariants}
+          >
+            {skills.map((skill) => (
+              <m.div
+                key={skill.key}
+                variants={skillVariants}
+              >
+                <div className='flex items-center text-center flex-row'>
+                  <span
+                    aria-hidden
+                    className='-translate-y-12 text-[160px] leading-none font-extrabold text-accent-default pointer-events-none select-none will-change-transform'
+                  >
+                    {skill.key}
+                  </span>
+                  <h3 className='text-lg font-semibold tracking-tight'>
+                    {skill.title}
+                  </h3>
+                </div>
+                <p className='-mt-6 pl-2 text-gray-500 text-left'>
+                  {skill.body}
+                </p>
+              </m.div>
+            ))}
+          </m.div>
+        </div>
+      </m.section>
+    </LazyMotion>
   )
 }
