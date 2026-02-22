@@ -97,17 +97,18 @@ export default function WhyMe() {
     }
 
     updateViewportAmount()
-    window.addEventListener('resize', updateViewportAmount)
+    // client-passive-event-listeners: use passive listener since we don't call preventDefault
+    window.addEventListener(
+      'resize',
+      updateViewportAmount,
+      { passive: true },
+    )
     return () =>
       window.removeEventListener(
         'resize',
         updateViewportAmount,
       )
   }, [])
-
-  useEffect(() => {
-    console.log('Current viewport amount:', viewportAmount)
-  }, [viewportAmount])
 
   return (
     <motion.section

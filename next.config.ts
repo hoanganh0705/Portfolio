@@ -3,9 +3,6 @@ import BundleAnalyzer from '@next/bundle-analyzer';
 
 const nextConfig: NextConfig = {
   output: 'standalone',
-  experimental: {
-   
-  }
 };
 
 const withBundleAnalyzer = BundleAnalyzer({

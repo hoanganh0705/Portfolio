@@ -131,6 +131,7 @@ const ContactForm = () => {
         />
 
         <Textarea
+          name='message'
           className='h-[200px]'
           placeholder='Type your message here...'
         />

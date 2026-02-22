@@ -7,15 +7,7 @@ import {
   LazyMotion,
   motion,
 } from 'framer-motion'
-import { services } from '@/constants/services'
-
-// Define the Service type for TypeScript
-interface Service {
-  num: string
-  title: string
-  description: string
-  href: string
-}
+import { services, Service } from '@/constants/services'
 
 export default function ServicesClient() {
   return (
