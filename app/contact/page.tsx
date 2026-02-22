@@ -1,5 +1,10 @@
-import ContactClient from '@/components/ContactClient'
+import dynamic from 'next/dynamic'
 import { createMetadata } from '@/lib/metadata'
+
+// bundle-dynamic-imports: lazy-load heavy client component with motion animations
+const ContactClient = dynamic(
+  () => import('@/components/ContactClient'),
+)
 
 export const metadata = createMetadata({
   title: 'Contact',
@@ -15,8 +20,6 @@ export const metadata = createMetadata({
     'https://github.com/nguyennanhcd/image_container/blob/main/portfolio-image/contact.png?raw=true',
 })
 
-const Contact = () => {
+export default function Contact() {
   return <ContactClient />
 }
-
-export default Contact

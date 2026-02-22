@@ -40,7 +40,7 @@ export default function ServicesClient() {
                     <Link
                       aria-label={`View my ${service.title} works`}
                       href={service.href}
-                      className='lg:w-[60px] lg:h-[60px] w-[50px] h-[50px] rounded-full bg-white group-hover:bg-accent-default transition-all duration-500 flex justify-center items-center hover:-rotate-45 xl:-translate-x-0 -translate-x-3'
+                      className='lg:w-[60px] lg:h-[60px] w-[50px] h-[50px] rounded-full bg-white group-hover:bg-accent-default transition-all duration-500 flex justify-center items-center hover:-rotate-45 xl:translate-x-0 -translate-x-3'
                     >
                       <BsArrowDownRight className='text-primary text-2xl' />
                     </Link>
