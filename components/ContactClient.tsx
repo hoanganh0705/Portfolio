@@ -1,36 +1,38 @@
 'use client'
 
 import { info } from '@/constants/info'
-import {
-  domAnimation,
-  LazyMotion,
-  motion,
-} from 'framer-motion'
+import { domAnimation, LazyMotion, m } from 'framer-motion'
 import Form from './ContactForm'
 
-const ContactClient = () => {
+// rendering-hoist-jsx: hoist static animation config outside component
+const fadeInAnimation = {
+  opacity: 1,
+  transition: {
+    delay: 2.4,
+    duration: 0.4,
+    ease: 'easeInOut' as const,
+  },
+}
+
+const initialOpacity = { opacity: 0 }
+
+export default function ContactClient() {
   return (
+    // bundle-dynamic-imports: use m + LazyMotion instead of motion for smaller bundle
     <LazyMotion features={domAnimation}>
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{
-          opacity: 1,
-          transition: {
-            delay: 2.4,
-            duration: 0.4,
-            ease: 'easeInOut',
-          },
-        }}
-        className='py-6 '
+      <m.section
+        initial={initialOpacity}
+        animate={fadeInAnimation}
+        className='py-6'
       >
-        <div className='container mx-auto  px-2 xl:px-0'>
+        <div className='container mx-auto px-2 xl:px-0'>
           <div className='flex flex-col xl:flex-row gap-[30px]'>
             {/* form */}
             <Form />
 
             {/* info */}
-            <div className='flex-1 flex items-center xl:justify-end order-1 xl:order-none mb-8 xl:mb-0 xl:w-[40%]'>
-              <ul className='flex flex-col gap-10 xl:bg-[#27272c] xl:rounded-xl xl:h-full xl:w-full xl:justify-center '>
+            <div className='flex-1 flex items-center xl:justify-end order-1 xl:order-0 mb-8 xl:mb-0 xl:w-[40%]'>
+              <ul className='flex flex-col gap-10 xl:bg-[#27272c] xl:rounded-xl xl:h-full xl:w-full xl:justify-center'>
                 {info.map((item, index) => (
                   <li
                     key={index}
@@ -55,9 +57,7 @@ const ContactClient = () => {
             </div>
           </div>
         </div>
-      </motion.section>
+      </m.section>
     </LazyMotion>
   )
 }
-
-export default ContactClient

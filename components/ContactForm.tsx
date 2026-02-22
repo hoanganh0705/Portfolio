@@ -20,40 +20,51 @@ import {
   useState,
 } from 'react'
 import toast from 'react-hot-toast'
-import { FeedbackState } from '@/types/contact'
+import type { FeedbackState } from '@/types/contact'
 
+// rendering-hoist-jsx: hoist static initial state outside component
 const initialState: FeedbackState = {
   status: 'idle',
   message: '',
   timeStamp: Date.now(),
 }
 
-const ContactForm = () => {
+export default function ContactForm() {
   const [service, setService] = useState('')
   const [response, action, isPending] = useActionState(
     sendEmail,
     initialState,
   )
-
+  const formRef = useRef<HTMLFormElement>(null)
   const lastToastIdRef = useRef<string | null>(null)
 
   useEffect(() => {
-    if (response && response.message) {
-      if (lastToastIdRef.current) {
-        toast.dismiss(lastToastIdRef.current)
-      }
+    // js-early-exit: return early if no response message
+    if (!response?.message) return
 
-      const id =
-        response.status === 'success'
-          ? toast.success(response.message)
-          : toast.error(response.message)
+    if (lastToastIdRef.current) {
+      toast.dismiss(lastToastIdRef.current)
+    }
 
-      lastToastIdRef.current = id
+    // rendering-conditional-render: explicit ternary
+    const id =
+      response.status === 'success'
+        ? toast.success(response.message)
+        : toast.error(response.message)
+
+    lastToastIdRef.current = id
+
+    // Reset form on success
+    if (response.status === 'success') {
+      formRef.current?.reset()
+      setService('')
     }
   }, [response, response?.timeStamp])
+
   return (
-    <div className='xl:w-[70%] order-2 xl:order-none'>
+    <div className='xl:w-[70%] order-2 xl:order-0'>
       <form
+        ref={formRef}
         action={action}
         className='flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl'
       >
@@ -136,9 +147,17 @@ const ContactForm = () => {
           placeholder='Type your message here...'
         />
 
-        <Button className='max-w-40' disabled={isPending}>
+        <Button
+          className='max-w-40'
+          disabled={isPending}
+          aria-disabled={isPending}
+        >
           {isPending ? (
-            <div className='loader text-[3px]'></div>
+            <div
+              className='loader text-[3px]'
+              aria-label='Sending...'
+              role='status'
+            />
           ) : (
             'Send'
           )}
@@ -147,5 +166,3 @@ const ContactForm = () => {
     </div>
   )
 }
-
-export default ContactForm

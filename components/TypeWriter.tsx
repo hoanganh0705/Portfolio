@@ -60,7 +60,7 @@ const TypeWriter = ({ mySelf }: TypeWriterProps) => {
                 {l}
               </motion.span>
               <motion.span
-                className='absolute bottom-[3px] left-[1px] right-0 top-[3px] bg-accent-default'
+                className='absolute bottom-[3px] left-px right-0 top-[3px] bg-accent-default'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: [0, 1, 0] }}
                 transition={{
