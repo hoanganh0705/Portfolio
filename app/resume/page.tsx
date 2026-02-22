@@ -1,5 +1,10 @@
-import ResumeClient from '@/components/ResumeClient'
+import dynamic from 'next/dynamic'
 import { createMetadata } from '@/lib/metadata'
+
+// bundle-dynamic-imports: lazy-load heavy client component
+const ResumeClient = dynamic(
+  () => import('@/components/ResumeClient'),
+)
 
 export const metadata = createMetadata({
   title: 'Resume',
@@ -15,8 +20,6 @@ export const metadata = createMetadata({
     'https://github.com/nguyennanhcd/image_container/blob/main/portfolio-image/resume.png?raw=true',
 })
 
-const Resume = () => {
+export default function Resume() {
   return <ResumeClient />
 }
-
-export default Resume
