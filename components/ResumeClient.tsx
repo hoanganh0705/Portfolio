@@ -107,7 +107,7 @@ export default function ResumeClient() {
                           {item.position}
                         </h3>
                         <div>
-                          <span className='w-[6px] h-[6px] rounded-full bg-accent-default' />
+                          <span className='w-1.5 h-1.5 rounded-full bg-accent-default' />
                           <p className='text-white/60'>
                             {item.company}
                           </p>
@@ -137,7 +137,7 @@ export default function ResumeClient() {
                           {item.degree}
                         </h3>
                         <div>
-                          <span className='w-[6px] h-[6px] rounded-full bg-accent-default' />
+                          <span className='w-1.5 h-1.5 rounded-full bg-accent-default' />
                           <p className='text-white/60'>
                             {item.institution}
                           </p>
