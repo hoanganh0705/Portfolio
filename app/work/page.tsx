@@ -1,5 +1,9 @@
-import WorkClient from '@/components/WorkClient'
+import dynamic from 'next/dynamic'
 import { createMetadata } from '@/lib/metadata'
+
+const WorkClient = dynamic(
+  () => import('@/components/WorkClient'),
+)
 
 export const metadata = createMetadata({
   title: 'Work',
@@ -15,8 +19,6 @@ export const metadata = createMetadata({
     'https://github.com/nguyennanhcd/image_container/blob/main/portfolio-image/service.png?raw=true',
 })
 
-const Work = () => {
+export default function Work() {
   return <WorkClient />
 }
-
-export default Work

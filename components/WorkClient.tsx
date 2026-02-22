@@ -7,25 +7,29 @@ import {
   TooltipContent,
 } from '@/components/ui/tooltip'
 import { projects } from '@/constants/projects'
-import {
-  motion,
-  LazyMotion,
-  domAnimation,
-} from 'framer-motion'
+import { m, LazyMotion, domAnimation } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
 import { BsArrowUpRight, BsGithub } from 'react-icons/bs'
 
-// swiper
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 
 import Image from 'next/image'
 
-// components
 import WorkSliderBtns from './WorkSliderBtns'
 
-const WorkClient = () => {
+const initialOpacity = { opacity: 0 }
+const fadeInAnimation = {
+  opacity: 1,
+  transition: {
+    delay: 2.4,
+    duration: 0.4,
+    ease: 'easeInOut' as const,
+  },
+}
+
+export default function WorkClient() {
   const [project, setProject] = useState(projects[0])
 
   const handleSlideChange = (swiper: {
@@ -38,16 +42,9 @@ const WorkClient = () => {
   }
   return (
     <LazyMotion features={domAnimation}>
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{
-          opacity: 1,
-          transition: {
-            delay: 2.4,
-            duration: 0.4,
-            ease: 'easeInOut',
-          },
-        }}
+      <m.section
+        initial={initialOpacity}
+        animate={fadeInAnimation}
         className='min-h-[80vh] flex flex-col justify-center py-12 xl:py-0 '
       >
         <div className='container mx-auto  px-2 xl:px-0'>
@@ -70,11 +67,10 @@ const WorkClient = () => {
                 <ul className='flex gap-4'>
                   {project.stack.map((item, index) => (
                     <li
-                      key={index}
+                      key={item.name}
                       className='text-xl text-accent-default'
                     >
                       {item.name}
-                      {/* comma */}
                       {index !== project.stack.length - 1 &&
                         ','}
                     </li>
@@ -84,53 +80,45 @@ const WorkClient = () => {
                 <div className='border border-white/20'></div>
 
                 {/* buttons */}
-                <div className='flex items-center gap-4'>
-                  {/* live project button */}
-                  <Link
-                    href={project.live}
-                    aria-label='Open live project'
-                  >
-                    <TooltipProvider
-                      delayDuration={100}
-                      aria-label='Project repository'
+                <TooltipProvider delayDuration={100}>
+                  <div className='flex items-center gap-4'>
+                    {/* live project button */}
+                    <Link
+                      href={project.live}
+                      aria-label='Open live project'
                     >
-                      <Tooltip aria-label='Project repository'>
+                      <Tooltip>
                         <TooltipTrigger
                           aria-label='Open live project'
                           className='w-[70px] h-[70px] rounded-full bg-white/5 flex justify-center items-center group cursor-pointer'
                         >
-                          <BsArrowUpRight className='text-white text-xl group-hover:text-accent-default group-hover:scale-130  transition-all duration-500' />
+                          <BsArrowUpRight className='text-white text-xl group-hover:text-accent-default group-hover:scale-130 transition-all duration-500' />
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>Live project</p>
                         </TooltipContent>
                       </Tooltip>
-                    </TooltipProvider>
-                  </Link>
+                    </Link>
 
-                  {/* github project button */}
-                  <Link
-                    href={project.github}
-                    aria-label='Project repository'
-                  >
-                    <TooltipProvider
+                    {/* github project button */}
+                    <Link
+                      href={project.github}
                       aria-label='Project repository'
-                      delayDuration={100}
                     >
-                      <Tooltip aria-label='Project repository'>
+                      <Tooltip>
                         <TooltipTrigger
                           aria-label='Project repository'
                           className='w-[70px] h-[70px] rounded-full bg-white/5 flex justify-center items-center group cursor-pointer'
                         >
-                          <BsGithub className='text-white text-xl group-hover:text-accent-default group-hover:scale-130  transition-all duration-500' />
+                          <BsGithub className='text-white text-xl group-hover:text-accent-default group-hover:scale-130 transition-all duration-500' />
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>Github repository</p>
                         </TooltipContent>
                       </Tooltip>
-                    </TooltipProvider>
-                  </Link>
-                </div>
+                    </Link>
+                  </div>
+                </TooltipProvider>
               </div>
             </div>
             <div className='w-[95%] xl:w-[50%] container mx-auto '>
@@ -140,9 +128,9 @@ const WorkClient = () => {
                 className='xl:h-[520px] mb-12'
                 onSlideChange={handleSlideChange}
               >
-                {projects.map((project, index) => (
+                {projects.map((project) => (
                   <SwiperSlide
-                    key={index}
+                    key={project.num}
                     className='w-full'
                   >
                     <div className='h-[460px] relative group flex justify-center items-center bg-pink-50/20'>
@@ -156,7 +144,8 @@ const WorkClient = () => {
                           alt={project.title}
                           fill
                           className='object-cover'
-                        ></Image>
+                          sizes='(max-width: 1280px) 95vw, 50vw'
+                        />
                       </div>
                     </div>
                   </SwiperSlide>
@@ -171,9 +160,7 @@ const WorkClient = () => {
             </div>
           </div>
         </div>
-      </motion.section>
+      </m.section>
     </LazyMotion>
   )
 }
-
-export default WorkClient
