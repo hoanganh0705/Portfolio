@@ -7,6 +7,7 @@ import Script from 'next/script'
 import Header from '@/components/Header'
 import PageTransition from '@/components/PageTransition'
 import StairTransition from '@/components/StairTransition'
+import { ThemeProvider } from '@/components/ThemeProvider'
 import { json_ld } from '@/lib/json-ld'
 import { siteConfig } from '@/lib/site-config'
 
@@ -97,24 +98,26 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body className={jetbrainsMono.variable}>
-        <Header />
-        <StairTransition />
-        <PageTransition>{children}</PageTransition>
-        <Toaster
-          toastOptions={{
-            style: {
-              textAlign: 'center',
-            },
-          }}
-        />
-        <Script
-          id='organization-ld-json'
-          type='application/ld+json'
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(json_ld),
-          }}
-          strategy='afterInteractive'
-        />
+        <ThemeProvider>
+          <Header />
+          <StairTransition />
+          <PageTransition>{children}</PageTransition>
+          <Toaster
+            toastOptions={{
+              style: {
+                textAlign: 'center',
+              },
+            }}
+          />
+          <Script
+            id='organization-ld-json'
+            type='application/ld+json'
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(json_ld),
+            }}
+            strategy='afterInteractive'
+          />
+        </ThemeProvider>
       </body>
     </html>
   )
