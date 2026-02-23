@@ -10,17 +10,30 @@ const AnimatePresence = dynamic(() =>
   ),
 )
 import { usePathname } from 'next/navigation'
+import { useRef } from 'react'
 
 //components
 import Stairs from './Stairs'
 import dynamic from 'next/dynamic'
 
+/** Blog detail routes like /blog/some-slug should not trigger the stair transition */
+const isBlogDetail = (path: string) =>
+  /^\/blog\/.+/.test(path)
+
 const StairTransition = () => {
   const pathname = usePathname()
+  const skipTransition = isBlogDetail(pathname)
+  const stableKeyRef = useRef('blog-detail')
+  const animationKey = skipTransition
+    ? stableKeyRef.current
+    : pathname
+
+  if (skipTransition) return null
+
   return (
     <>
       <AnimatePresence mode='wait'>
-        <div key={pathname}>
+        <div key={animationKey}>
           <div className='h-screen w-screen fixed top-0 left-0 right-0 pointer-events-none z-40 flex'>
             <Stairs />
           </div>
