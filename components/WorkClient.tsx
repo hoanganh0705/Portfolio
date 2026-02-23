@@ -49,7 +49,7 @@ export default function WorkClient() {
       >
         <div className='container mx-auto  px-2 xl:px-0'>
           <div className='flex flex-col xl:flex-row xl:gap-[30px]'>
-            <div className='w-[95%] container mx-auto xl:w-[50%] xl:h-[460px] flex flex-col xl: justify-between order-2 xl:order-none '>
+            <div className='w-[95%] container mx-auto xl:w-[50%] xl:h-[460px] flex flex-col xl: justify-between order-2 xl:order-0 '>
               <div className='flex flex-col gap-[30px] h-[50%'>
                 {/*outline number */}
                 <div className='text-8xl leading-none font-extrabold text-transparent text-outline'>
