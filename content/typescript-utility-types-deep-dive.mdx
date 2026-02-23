@@ -12,7 +12,7 @@ image: "/images/ts-utility-types.jpg"
 import CodeBlock from '@/components/blog/CodeBlock.tsx';
 
 
-## **TypeScript Utility Types: Your Type-Level Superpowers**
+## 1. Introduction
 
 You don’t need to write every type from scratch.
 
@@ -23,7 +23,7 @@ They **transform**, **filter**, and **compose** types with surgical precision.
 Let’s go **deep**. With **real-world examples** you’ll use every day.
 
 
-## **Core Utility Types: Object Transformation**
+## 2. Core Utility Types: Object Transformation
 
 <div className="my-8 overflow-x-auto rounded-lg border border-border">
   <table className="w-full min-w-[600px] table-auto border-collapse">
@@ -65,7 +65,7 @@ Let’s go **deep**. With **real-world examples** you’ll use every day.
 </div>
 
 
-### **`Partial<T>`: Update Without Full Object**
+### 2.1 `Partial<T>`: Update Without Full Object
 
 <CodeBlock
   language="ts"
@@ -86,7 +86,7 @@ function updateUser(id: string, changes: Partial<User>) {
 </CodeBlock>
 
 
-### **`Required<T>`: Enforce All Fields**
+### 2.2 `Required<T>`: Enforce All Fields
 
 <CodeBlock
   language="ts"
@@ -106,7 +106,7 @@ const appConfig: Required<Config> = {
 </CodeBlock>
 
 
-### **`Pick<T, K>`: Extract What You Need**
+### 2.3 `Pick<T, K>`: Extract What You Need
 
 <CodeBlock
   language="ts"
@@ -125,7 +125,7 @@ type PublicUser = Pick<User, 'id' | 'name' | 'email'>;`}
 </CodeBlock>
 
 
-### **`Omit<T, K>`: Remove What You Don’t Want**
+### 2.4 `Omit<T, K>`: Remove What You Don't Want
 
 <CodeBlock
   language="ts"
@@ -138,7 +138,7 @@ type PublicUser = Pick<User, 'id' | 'name' | 'email'>;`}
 </CodeBlock>
 
 
-### **`Record<K, T>`: Type-Safe Dictionaries**
+### 2.5 `Record<K, T>`: Type-Safe Dictionaries
 
 <CodeBlock
   language="ts"
@@ -154,7 +154,7 @@ type PublicUser = Pick<User, 'id' | 'name' | 'email'>;`}
 </CodeBlock>
 
 
-## **Advanced Utility Types: Union & Function Magic**
+## 3. Advanced Utility Types: Union & Function Magic
 
 These work with **unions**, **functions**, and **classes**.
 
@@ -203,7 +203,7 @@ These work with **unions**, **functions**, and **classes**.
 </div>
 
 
-### **`Exclude<T, U>`: Filter Out Types**
+### 3.1 `Exclude<T, U>`: Filter Out Types
 
 <CodeBlock
   language="ts"
@@ -218,7 +218,7 @@ type MouseEvent = Exclude<Event, 'keydown'>;
 </CodeBlock>
 
 
-### **`Extract<T, U>`: Keep Matching Types**
+### 3.2 `Extract<T, U>`: Keep Matching Types
 
 <CodeBlock
   language="ts"
@@ -233,7 +233,7 @@ type Truthy = Extract<Primitive, boolean | number | string>;
 </CodeBlock>
 
 
-### **`NonNullable<T>`: Remove null/undefined**
+### 3.3 `NonNullable<T>`: Remove null/undefined
 
 <CodeBlock
   language="ts"
@@ -249,7 +249,7 @@ function processUser(user: NonNullable<ApiResponse>) {
 </CodeBlock>
 
 
-### **`ReturnType<T>`: Get What a Function Returns**
+### 3.4 `ReturnType<T>`: Get What a Function Returns
 
 <CodeBlock
   language="ts"
@@ -266,7 +266,7 @@ type UserResult = ReturnType<typeof getUser>;
 </CodeBlock>
 
 
-### **`Parameters<T>`: Get Function Args**
+### 3.5 `Parameters<T>`: Get Function Args
 
 <CodeBlock
   language="ts"
@@ -281,7 +281,7 @@ type ApiParams = Parameters<typeof apiCall>;
 </CodeBlock>
 
 
-### **`InstanceType<T>`: Class Instance Type**
+### 3.6 `InstanceType<T>`: Class Instance Type
 
 <CodeBlock
   language="ts"
@@ -298,9 +298,9 @@ type Service = InstanceType<typeof UserService>;
 </CodeBlock>
 
 
-## **Combine Utilities: Real-World Patterns**
+## 4. Combine Utilities: Real-World Patterns
 
-### **Patch DTO with Required ID**
+### 4.1 Patch DTO with Required ID
 
 <CodeBlock
   language="ts"
@@ -311,7 +311,7 @@ type Service = InstanceType<typeof UserService>;
 {`type UserPatch = Partial<Pick<User, 'name' | 'email'>> & { id: string };`}
 </CodeBlock>
 
-### **Safe API Handler**
+### 4.2 Safe API Handler
 
 <CodeBlock
   language="ts"
@@ -324,7 +324,7 @@ type HandlerParams = Parameters<Handler>;`}
 </CodeBlock>
 
 
-## **Don’t Do This**
+## 5. Common Mistakes
 
 <CodeBlock
   language="ts"
@@ -343,7 +343,7 @@ type Bad = Exclude<string | number, string | boolean>;`}
 </CodeBlock>
 
 
-## **Do This Instead**
+## 6. Best Practices
 
 <CodeBlock
   language="ts"
@@ -362,7 +362,7 @@ type UpdatePayload = { id: string } & Partial<User>;`}
 </CodeBlock>
 
 
-## **Utility Types Cheat Sheet**
+## 7. Utility Types Cheat Sheet
 
 * `Partial<T>` → **optional props**  
 * `Required<T>` → **all required**  
@@ -379,7 +379,7 @@ type UpdatePayload = { id: string } & Partial<User>;`}
 
 ---
 
-## **Final Thoughts**
+## 8. Conclusion
 
 **Utility types are not shortcuts — they’re leverage.**
 

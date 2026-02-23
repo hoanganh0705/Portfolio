@@ -13,7 +13,7 @@ image: "/react-performance.jpg"
 import CodeBlock from '@/components/blog/CodeBlock.tsx';
 
 
-## **React Performance: Don’t Guess — Measure**
+## 1. Introduction
 
 React apps **grow fast** — and so do performance problems.  
 A component that renders 10 times per second? A list with 10,000 items? A bundle over 2MB?
@@ -21,10 +21,11 @@ A component that renders 10 times per second? A list with 10,000 items? A bundle
 **Premature optimization is the root of all evil.**  
 But **measured, targeted optimization** is pure magic.
 
-Let’s master the **real tools** that make React apps **blazing fast**.
+Let's master the **real tools** that make React apps **blazing fast**.
 
+## 2. Understanding Re-Renders
 
-## **The Re-Render Trap**
+### 2.1 When Components Re-Render
 
 React re-renders a component when:
 - Its **state** changes
@@ -33,10 +34,7 @@ React re-renders a component when:
 
 Even if **nothing visually changes**.
 
-### **Good: Let React do its job**
-Most renders are **cheap**.
-
-### **Bad: Unnecessary child re-renders**
+### 2.2 Avoiding Unnecessary Re-Renders
 
 <CodeBlock
   language="tsx"
@@ -51,8 +49,7 @@ Most renders are **cheap**.
 
 → `ExpensiveChild` re-renders **every time `Parent` updates**, even if `hugeArray` never changes.
 
-
-## **`React.memo`: Stop Re-Rendering Static Props**
+## 3. React.memo
 
 Wrap functional components to **skip re-renders** when props are shallow-equal.
 
@@ -70,12 +67,11 @@ Wrap functional components to **skip re-renders** when props are shallow-equal.
 // Only re-renders if \`data\` reference changes`}
 </CodeBlock>
 
-**Warning: Don’t memo everything.**  
- Memoization has **memory + comparison cost**.  
+**Warning: Don't memo everything.**  
+Memoization has **memory + comparison cost**.  
 → **Profile first!**
 
-
-## **`useMemo` & `useCallback`: Cache What’s Expensive**
+## 4. Memoization Hooks
 
 <div className="my-8 overflow-x-auto rounded-lg border border-border">
   <table className="w-full min-w-[500px] table-auto border-collapse">
@@ -101,8 +97,7 @@ Wrap functional components to **skip re-renders** when props are shallow-equal.
   </table>
 </div>
 
-
-### **Good: Cache heavy filtering**
+### 4.1 useMemo
 
 <CodeBlock
   language="tsx"
@@ -115,21 +110,7 @@ Wrap functional components to **skip re-renders** when props are shallow-equal.
 }, [users]);`}
 </CodeBlock>
 
-
-
-### **Bad: Memoizing primitives**
-
-<CodeBlock
-  language="tsx"
-  highlight="3"
-  collapsible
-  defaultCollapsed={false}
->
-{`const count = useMemo(() => 42, []); // Useless overhead`}
-</CodeBlock>
-
-
-### **Good: Stabilize callback for child**
+### 4.2 useCallback
 
 <CodeBlock
   language="tsx"
@@ -144,8 +125,7 @@ Wrap functional components to **skip re-renders** when props are shallow-equal.
 return <Form onSave={handleSave} />;`}
 </CodeBlock>
 
-
-## **Code Splitting: Load Only What’s Needed**
+## 5. Code Splitting
 
 A 3MB bundle? Users wait.  
 Split it!
@@ -172,11 +152,10 @@ function App() {
 
 > **Next.js bonus**: `dynamic(() => import(...), { ssr: false })`
 
+## 6. Virtual Scrolling
 
-## **Virtual Scrolling: Render 10 Items, Not 10,000**
-
-Don’t render 10,000 list items.  
-Render **only what’s visible**.
+Don't render 10,000 list items.  
+Render **only what's visible**.
 
 ### **Use `react-window`**
 
@@ -203,8 +182,7 @@ Render **only what’s visible**.
 → DOM has **~20 nodes**, not 10,000  
 → **60 FPS smooth scroll**
 
-
-## **Profiling: Your Performance X-Ray**
+## 7. Profiling Tools
 
 **Never guess.** Use **React DevTools Profiler**.
 
@@ -222,8 +200,7 @@ Look for:
 
 > **Golden rule**: **Measure → Optimize → Measure again**
 
-
-## **Don’t Do This**
+## 8. Common Mistakes
 
 <CodeBlock
   language="tsx"
@@ -241,8 +218,7 @@ return <Child config={{ theme: 'dark' }} />; // New object every render!
 <React.lazy(...) /> {/* Crash on slow network */}`}
 </CodeBlock>
 
-
-## **Do This Instead**
+## 9. Best Practices
 
 <CodeBlock
   language="tsx"
@@ -263,8 +239,7 @@ return <Child config={darkTheme} />;
 </Suspense>`}
 </CodeBlock>
 
-
-## **Performance Checklist**
+## 10. Performance Checklist
 
 * Did you **profile** with React DevTools?
 * Are you using `React.memo` **only on expensive components**?
@@ -273,18 +248,16 @@ return <Child config={darkTheme} />;
 * Are large lists **virtualized**?
 * Are inline objects/functions **avoided** in render?
 
----
+## 11. Conclusion
 
-## **Final Thoughts**
-
-Performance isn’t about **making everything fast**.  
-It’s about **making the right things fast**.
+Performance isn't about **making everything fast**.  
+It's about **making the right things fast**.
 
 **Measure.**  
 **Target.**  
 **Optimize.**
 
-Your users don’t care about `useMemo`.  
+Your users don't care about `useMemo`.  
 They care about **snappy UIs**, **fast loads**, and **smooth scrolling**.
 
 Master these tools — and build React apps that **feel like native**.
