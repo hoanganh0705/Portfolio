@@ -8,20 +8,16 @@ const ServicesClient = dynamic(
 export const metadata = createMetadata({
   title: 'Services',
   description:
-    'Explore my professional services: full-stack web development, personalized tutoring, English teaching, and SEO optimization.',
+    'Professional services by Anh Nguyen Dev: full-stack web development, personalized tutoring, English teaching, and SEO optimization in Vietnam.',
   keywords: [
-    'web developer',
-    'portfolio',
-    'introduction',
-    'freelance',
-    'english teacher',
+    'web development services',
+    'freelance web developer',
+    'english teacher vietnam',
     'private tutor',
-    'web development',
-    'tutoring',
-    'seo',
-    'code',
-    'mathematics',
+    'seo optimization',
+    'hire developer',
   ],
+  path: '/services',
   ogImage:
     'https://gitlab.com/nguyennanhcd1/image-container/-/raw/main/portfolio-image/Screenshot%202025-06-21%20073227.png?ref_type=heads',
 })

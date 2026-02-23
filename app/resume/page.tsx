@@ -9,13 +9,17 @@ const ResumeClient = dynamic(
 export const metadata = createMetadata({
   title: 'Resume',
   description:
-    'Learn about my educational background and professional experience as a web developer and educator.',
+    'View the resume of Nguyen Hoang Anh (Anh Nguyen Dev) — education, professional experience, and technical skills in web development and teaching.',
   keywords: [
     'resume',
     'education',
     'experience',
-    'web developer',
+    'web developer skills',
+    'next.js',
+    'react',
+    'tailwind css',
   ],
+  path: '/resume',
   ogImage:
     'https://github.com/nguyennanhcd/image_container/blob/main/portfolio-image/resume.png?raw=true',
 })

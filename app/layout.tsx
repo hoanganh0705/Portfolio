@@ -4,11 +4,11 @@ import './globals.css'
 import { Toaster } from 'react-hot-toast'
 import Script from 'next/script'
 
-//components
 import Header from '@/components/Header'
 import PageTransition from '@/components/PageTransition'
 import StairTransition from '@/components/StairTransition'
 import { json_ld } from '@/lib/json-ld'
+import { siteConfig } from '@/lib/site-config'
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
@@ -28,8 +28,65 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Anh Portfolio',
-  description: 'Anh Portfolio',
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  keywords: [
+    'anh nguyen dev',
+    'anhnguyendev',
+    'nguyen hoang anh',
+    'web developer vietnam',
+    'full-stack developer',
+    'next.js developer',
+    'english teacher vietnam',
+    'private tutor',
+    'seo specialist',
+    'freelance developer',
+  ],
+  authors: [
+    { name: siteConfig.author.name, url: siteConfig.url },
+  ],
+  creator: siteConfig.author.name,
+  publisher: siteConfig.author.name,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: siteConfig.url,
+  },
+  openGraph: {
+    type: 'website',
+    locale: siteConfig.locale,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [
+      {
+        url: siteConfig.defaultOgImage,
+        width: 1200,
+        height: 630,
+        alt: siteConfig.title,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [siteConfig.defaultOgImage],
+  },
 }
 
 export default function RootLayout({
@@ -56,7 +113,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(json_ld),
           }}
-          strategy='lazyOnload'
+          strategy='afterInteractive'
         />
       </body>
     </html>

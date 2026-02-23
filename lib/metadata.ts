@@ -1,27 +1,66 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next'
+import { siteConfig } from './site-config'
 
 interface MetadataParams {
-  title: string;
-  description?: string;
-  keywords?: string[];
-  ogImage?: string;
+  title: string
+  description?: string
+  keywords?: string[]
+  ogImage?: string
+  path?: string
 }
 
-export const createMetadata = ({ title, description, keywords, ogImage }: MetadataParams): Metadata => ({
-  title: `${title} | Anh's Portfolio`,
-  description: description || "Nguyen's Portfolio - Web Development, Tutoring, and More",
-  keywords: keywords || ['portfolio', 'web development', 'freelance', 'tutoring'],
-  openGraph: {
-    title: title || "Nguyen's Portfolio",
-    description: description || "Nguyen's Portfolio - Web Development, Tutoring, and More",
-    url: `https://nguyen-portfolio.com${title === 'Home' ? '' : `/${  title.toLowerCase()}`}`,
-    type: 'website',
-    images: ogImage || 'https://nguyen-portfolio.com/og-default.jpg',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: title || "Nguyen's Portfolio",
-    description: description || "Nguyen's Portfolio - Web Development, Tutoring, and More",
-    images: ogImage || 'https://nguyen-portfolio.com/og-default.jpg',
-  },
-});
+/** Base keywords that should appear on every page for brand recognition */
+const brandKeywords = [
+  'anh nguyen dev',
+  'anhnguyendev',
+  'nguyen hoang anh',
+  'anh nguyen developer',
+]
+
+export const createMetadata = ({
+  title,
+  description,
+  keywords,
+  ogImage,
+  path = '',
+}: MetadataParams): Metadata => {
+  const fullTitle = `${title} | ${siteConfig.name}`
+  const desc = description || siteConfig.description
+  const image = ogImage || siteConfig.defaultOgImage
+  const canonicalUrl = `${siteConfig.url}${path}`
+
+  return {
+    title: fullTitle,
+    description: desc,
+    keywords: [...brandKeywords, ...(keywords || [])],
+    authors: [{ name: siteConfig.author.name, url: siteConfig.url }],
+    creator: siteConfig.author.name,
+    publisher: siteConfig.author.name,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: fullTitle,
+      description: desc,
+      url: canonicalUrl,
+      siteName: siteConfig.name,
+      type: 'website',
+      locale: siteConfig.locale,
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: fullTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: fullTitle,
+      description: desc,
+      images: [image],
+      creator: `@${siteConfig.author.name}`,
+    },
+  }
+}
