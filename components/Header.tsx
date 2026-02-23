@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { Button } from './ui/button'
+import { ThemeToggle } from './ThemeToggle'
 
 // components
 import Nav from './Nav'
@@ -22,7 +23,7 @@ const Header = () => {
 
   return (
     <header
-      className={` transition-all duration-300 ease-in-out ${hasScrolled ? 'sticky top-0 left-0 w-full z-50 bg-[oklch(0.8542_0.0517_199.29/_0.8)] shadow-lg backdrop-blur-md py-4 xl:py-6 text-primary/80 ' : 'bg-transparent py-8 xl:py-12 text-white'}`}
+      className={` transition-all duration-300 ease-in-out ${hasScrolled ? 'sticky top-0 left-0 w-full z-50 bg-accent-default/80 shadow-lg backdrop-blur-md py-4 xl:py-6 text-primary ' : 'bg-transparent py-8 xl:py-12 text-foreground'}`}
     >
       <div className='container mx-auto flex justify-between items-center'>
         {/* Logo */}
@@ -38,13 +39,15 @@ const Header = () => {
         {/* desktop nav & hire me button */}
         <div className='hidden xl:flex items-center gap-8'>
           <Nav scrolled={hasScrolled} />
+          <ThemeToggle scrolled={hasScrolled} />
           <Link href='/contact'>
             <Button className=''>Hire me</Button>
           </Link>
         </div>
 
         {/* mobile nav */}
-        <div className='xl:hidden'>
+        <div className='xl:hidden flex items-center gap-3'>
+          <ThemeToggle scrolled={hasScrolled} />
           <MobileNav scrolled={hasScrolled} />
         </div>
       </div>

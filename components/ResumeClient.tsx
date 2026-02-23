@@ -47,7 +47,7 @@ function TimelineSection({
   return (
     <div className='flex flex-col gap-[30px] text-center xl:text-left'>
       <h3 className='text-4xl font-bold'>{title}</h3>
-      <p className='max-w-[600px] text-white/60 mx-auto xl:mx-0'>
+      <p className='max-w-[600px] text-muted-foreground mx-auto xl:mx-0'>
         {description}
       </p>
       <ScrollArea className='h-[400px]'>
@@ -98,7 +98,7 @@ export default function ResumeClient() {
                     {experience.items.map((item, index) => (
                       <li
                         key={index}
-                        className='bg-[#232329] h-[148px] py-6 px-10 rounded-xl flex flex-col justify-center items-center xl:items-start gap-1'
+                        className='bg-secondary h-[148px] py-6 px-10 rounded-xl flex flex-col justify-center items-center xl:items-start gap-1'
                       >
                         <span className='text-accent-default'>
                           {item.duration}
@@ -108,7 +108,7 @@ export default function ResumeClient() {
                         </h3>
                         <div>
                           <span className='w-1.5 h-1.5 rounded-full bg-accent-default' />
-                          <p className='text-white/60'>
+                          <p className='text-muted-foreground'>
                             {item.company}
                           </p>
                         </div>
@@ -128,7 +128,7 @@ export default function ResumeClient() {
                     {education.items.map((item, index) => (
                       <li
                         key={index}
-                        className='bg-[#232329] h-[148px] py-6 px-10 rounded-xl flex flex-col justify-center items-center xl:items-start gap-1'
+                        className='bg-secondary h-[148px] py-6 px-10 rounded-xl flex flex-col justify-center items-center xl:items-start gap-1'
                       >
                         <span className='text-accent-default'>
                           {item.duration}
@@ -138,7 +138,7 @@ export default function ResumeClient() {
                         </h3>
                         <div>
                           <span className='w-1.5 h-1.5 rounded-full bg-accent-default' />
-                          <p className='text-white/60'>
+                          <p className='text-muted-foreground'>
                             {item.institution}
                           </p>
                         </div>
@@ -158,7 +158,7 @@ export default function ResumeClient() {
                     <h3 className='text-4xl font-bold'>
                       {skills.title}
                     </h3>
-                    <p className='max-w-[600px] text-white/60 mx-auto xl:mx-0'>
+                    <p className='max-w-[600px] text-muted-foreground mx-auto xl:mx-0'>
                       {skills.description}
                     </p>
                   </div>
@@ -168,7 +168,7 @@ export default function ResumeClient() {
                         (skill, index) => (
                           <li key={index}>
                             <Tooltip>
-                              <TooltipTrigger className='w-full h-[150px] bg-[#232329] rounded-xl flex justify-center items-center group'>
+                              <TooltipTrigger className='w-full h-[150px] bg-secondary rounded-xl flex justify-center items-center group'>
                                 <div className='text-5xl group-hover:text-accent-default transition-all duration-500'>
                                   {skill.icon}
                                 </div>
@@ -196,7 +196,7 @@ export default function ResumeClient() {
                   <h3 className='text-4xl font-bold'>
                     {about.title}
                   </h3>
-                  <p className='max-w-[600px] text-white/60 mx-auto xl:mx-0'>
+                  <p className='max-w-[600px] text-muted-foreground mx-auto xl:mx-0'>
                     {about.description}
                   </p>
                   <ul className='grid grid-cols-1 xl:grid-cols-2 gap-y-6 max-w-[620px] mx-auto xl:mx-0'>
@@ -205,7 +205,7 @@ export default function ResumeClient() {
                         key={index}
                         className='flex items-center justify-center xl:justify-start gap-4'
                       >
-                        <span className='text-white/60'>
+                        <span className='text-muted-foreground'>
                           {item.fieldName}
                         </span>
                         <span className='text-xl'>

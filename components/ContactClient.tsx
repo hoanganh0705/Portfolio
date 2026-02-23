@@ -32,7 +32,7 @@ export default function ContactClient() {
 
             {/* info */}
             <div className='flex-1 flex items-center xl:justify-end order-1 xl:order-0 mb-8 xl:mb-0 xl:w-[40%]'>
-              <ul className='flex flex-col gap-10 xl:bg-[#27272c] xl:rounded-xl xl:h-full xl:w-full xl:justify-center'>
+              <ul className='flex flex-col gap-10 xl:bg-secondary xl:rounded-xl xl:h-full xl:w-full xl:justify-center'>
                 {info.map((item, index) => (
                   <li
                     key={index}
@@ -44,7 +44,7 @@ export default function ContactClient() {
                       </div>
                     </div>
                     <div className='flex-1'>
-                      <p className='text-white/60'>
+                      <p className='text-muted-foreground'>
                         {item.title}
                       </p>
                       <h3 className='text-xl'>

@@ -56,11 +56,11 @@ export default function WorkClient() {
                   {project.num}
                 </div>
                 {/* project category */}
-                <h2 className='text-[42px] font-bold leading-none text-white group-hover:text-accent-default transition-all duration-500 capitalize'>
+                <h2 className='text-[42px] font-bold leading-none text-foreground group-hover:text-accent-default transition-all duration-500 capitalize'>
                   {project.category} project
                 </h2>
                 {/* project description */}
-                <p className='text-white/60'>
+                <p className='text-muted-foreground'>
                   {project.description}
                 </p>
                 {/* stack */}
@@ -77,7 +77,7 @@ export default function WorkClient() {
                   ))}
                 </ul>
                 {/* border */}
-                <div className='border border-white/20'></div>
+                <div className='border border-border'></div>
 
                 {/* buttons */}
                 <TooltipProvider delayDuration={100}>
@@ -90,9 +90,9 @@ export default function WorkClient() {
                       <Tooltip>
                         <TooltipTrigger
                           aria-label='Open live project'
-                          className='w-[70px] h-[70px] rounded-full bg-white/5 flex justify-center items-center group cursor-pointer'
+                          className='w-[70px] h-[70px] rounded-full bg-foreground/5 flex justify-center items-center group cursor-pointer'
                         >
-                          <BsArrowUpRight className='text-white text-xl group-hover:text-accent-default group-hover:scale-130 transition-all duration-500' />
+                          <BsArrowUpRight className='text-foreground text-xl group-hover:text-accent-default group-hover:scale-130 transition-all duration-500' />
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>Live project</p>
@@ -108,9 +108,9 @@ export default function WorkClient() {
                       <Tooltip>
                         <TooltipTrigger
                           aria-label='Project repository'
-                          className='w-[70px] h-[70px] rounded-full bg-white/5 flex justify-center items-center group cursor-pointer'
+                          className='w-[70px] h-[70px] rounded-full bg-foreground/5 flex justify-center items-center group cursor-pointer'
                         >
-                          <BsGithub className='text-white text-xl group-hover:text-accent-default group-hover:scale-130 transition-all duration-500' />
+                          <BsGithub className='text-foreground text-xl group-hover:text-accent-default group-hover:scale-130 transition-all duration-500' />
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>Github repository</p>

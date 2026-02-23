@@ -79,7 +79,7 @@ export function TableOfContents() {
 
   return (
     <nav className='space-y-1'>
-      <div className='flex items-center gap-2 mb-4 text-white/60'>
+      <div className='flex items-center gap-2 mb-4 text-muted-foreground'>
         <FiList size={16} />
         <span className='text-xs font-semibold uppercase tracking-wider'>
           On this page
@@ -108,7 +108,7 @@ export function TableOfContents() {
               } ${
                 activeId === heading.id
                   ? 'border-accent-default text-accent-default font-medium'
-                  : 'border-transparent text-white/40 hover:text-white/70 hover:border-white/20'
+                  : 'border-transparent text-muted-foreground hover:text-foreground/70 hover:border-border'
               }`}
             >
               {heading.text}

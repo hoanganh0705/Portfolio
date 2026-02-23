@@ -19,7 +19,7 @@ export const metadata = createMetadata({
   ],
   path: '/services',
   ogImage:
-    'https://gitlab.com/hoanganh07051/image-container/-/raw/main/portfolio-image/Screenshot%202025-06-21%20073227.png?ref_type=heads',
+    'https://gitlab.com/nguyennanhcd1/image-container/-/raw/main/portfolio-image/Screenshot%202025-06-21%20073227.png?ref_type=heads',
 })
 
 export default function Services() {

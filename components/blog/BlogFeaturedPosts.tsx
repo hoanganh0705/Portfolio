@@ -11,7 +11,7 @@ export async function BlogFeaturedPosts() {
 
   return (
     <section className='mb-16'>
-      <h2 className='text-2xl font-bold text-white mb-8'>
+      <h2 className='text-2xl font-bold text-foreground mb-8'>
         Featured Articles
       </h2>
       <div className='grid md:grid-cols-3 gap-6'>
@@ -21,13 +21,15 @@ export async function BlogFeaturedPosts() {
             key={post.slug}
             className='group'
           >
-            <div className='h-full rounded-xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:border-accent-default/50 hover:bg-accent-default/5 hover:scale-[1.02] hover:-translate-y-1'>
+            <div className='h-full rounded-xl border border-border bg-foreground/5 p-6 transition-all duration-300 hover:border-accent-default/50 hover:bg-accent-default/5 hover:scale-[1.02] hover:-translate-y-1'>
               <div className='flex items-center gap-3 mb-4'>
                 <span className='inline-flex items-center rounded-full bg-accent-default/20 px-3 py-1 text-xs font-medium text-accent-default'>
                   {post.category}
                 </span>
-                <span className='text-white/30'>•</span>
-                <span className='text-xs text-white/40'>
+                <span className='text-muted-foreground/50'>
+                  •
+                </span>
+                <span className='text-xs text-muted-foreground'>
                   {new Date(post.date).toLocaleDateString(
                     'en-US',
                     {
@@ -38,10 +40,10 @@ export async function BlogFeaturedPosts() {
                   )}
                 </span>
               </div>
-              <h3 className='text-xl font-bold text-white mb-3 transition-colors group-hover:text-accent-default'>
+              <h3 className='text-xl font-bold text-foreground mb-3 transition-colors group-hover:text-accent-default'>
                 {post.title}
               </h3>
-              <p className='text-sm text-white/60 leading-relaxed'>
+              <p className='text-sm text-muted-foreground leading-relaxed'>
                 {post.excerpt}
               </p>
             </div>

@@ -96,7 +96,7 @@ export default function BriefInfo() {
         variants={sectionVariants}
         className='xl:pt-50 pt-10 xl:pb-50 pb-10'
       >
-        <div className='p-10 xl:p-20 bg-[#202020]'>
+        <div className='p-10 xl:p-20 bg-secondary'>
           <m.h2
             className='text-5xl font-bold mb-3 text-center text-accent-default'
             variants={textVariants}

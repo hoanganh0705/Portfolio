@@ -66,7 +66,7 @@ export default function ServicePages({
                   key={idx}
                   className='flex items-start gap-4'
                 >
-                  <span className='shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white font-semibold'>
+                  <span className='shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-accent-default text-white font-semibold'>
                     {idx + 1}
                   </span>
                   <p className='text-base leading-7'>

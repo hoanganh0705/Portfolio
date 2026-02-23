@@ -41,7 +41,7 @@ export const metadata = createMetadata({
   ],
   path: '',
   ogImage:
-    'https://gitlab.com/hoanganh07051/image-container/-/raw/main/portfolio-image/Screenshot%202025-06-21%20072326.png?ref_type=heads',
+    'https://gitlab.com/nguyennanhcd1/image-container/-/raw/main/portfolio-image/Screenshot%202025-06-21%20072326.png?ref_type=heads',
 })
 
 // rendering-hoist-jsx: static fallback extracted outside component
@@ -54,8 +54,8 @@ const StatsFallback = (
             key={i}
             className='flex-1 flex gap-4 items-center justify-center xl:justify-start'
           >
-            <div className='h-12 w-20 bg-white/10 rounded' />
-            <div className='h-6 w-24 bg-white/10 rounded' />
+            <div className='h-12 w-20 bg-foreground/10 rounded' />
+            <div className='h-6 w-24 bg-foreground/10 rounded' />
           </div>
         ))}
       </div>
@@ -80,7 +80,7 @@ export default function Home() {
               Hi, I&apos;m <br />{' '}
               <TypeWriter mySelf={mySelf} />
             </h1>
-            <p className='mx-auto max-w-2xl mb-9 text-white/80'>
+            <p className='mx-auto max-w-2xl mb-9 text-muted-foreground'>
               Full-stack web developer and educator based in
               Vietnam. I craft elegant digital experiences
               with Next.js, React &amp; Tailwind CSS and

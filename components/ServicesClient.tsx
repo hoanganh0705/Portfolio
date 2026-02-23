@@ -44,15 +44,15 @@ export default function ServicesClient() {
                   </Link>
                 </div>
                 {/* Title */}
-                <h2 className='text-[42px] font-bold leading-none text-white group-hover:text-accent-default transition-all duration-500 '>
+                <h2 className='text-[42px] font-bold leading-none text-foreground group-hover:text-accent-default transition-all duration-500 '>
                   {service.title}
                 </h2>
                 {/* Description */}
-                <p className='text-white/60'>
+                <p className='text-muted-foreground'>
                   {service.description}
                 </p>
                 {/* Border */}
-                <div className='border-b border-white/20 w-full xl:mb-5'>
+                <div className='border-b border-border w-full xl:mb-5'>
                   {service.title}
                 </div>
               </div>

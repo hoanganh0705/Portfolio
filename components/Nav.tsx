@@ -24,7 +24,7 @@ const Nav = ({ scrolled }: NavProps) => {
           <Link
             key={link.path}
             href={link.path}
-            className={`capitalize font-medium transition-all ${activeClasses} ${scrolled ? 'text-primary/80 hover:text-primary hover:text-base font-bold transition-all' : 'text-white hover:text-accent-hover'}`}
+            className={`capitalize font-medium transition-all ${activeClasses} ${scrolled ? 'text-primary/80 hover:text-primary hover:text-base font-bold transition-all' : 'text-foreground hover:text-accent-hover'}`}
           >
             {link.name}
           </Link>

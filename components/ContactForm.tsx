@@ -66,12 +66,12 @@ export default function ContactForm() {
       <form
         ref={formRef}
         action={action}
-        className='flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl'
+        className='flex flex-col gap-6 p-10 bg-secondary rounded-xl'
       >
         <p className='text-4xl text-accent-default'>
           Let&rsquo;s work together
         </p>
-        <p className='text-white/60'>
+        <p className='text-muted-foreground'>
           Ready to bring your vision to life? Whether you
           need a stunning website, personalized tutoring,
           English mastery, or top-tier SEO, I’m here to

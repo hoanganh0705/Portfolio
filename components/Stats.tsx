@@ -34,7 +34,7 @@ const Stats = ({ statsData }: StatsProps) => {
                     stat.text.length < 15
                       ? 'max-w-[100px]'
                       : 'max-w-[159px]'
-                  } leading-snug text-white/80`}
+                  } leading-snug text-muted-foreground`}
                 >
                   {stat.text}
                 </p>
