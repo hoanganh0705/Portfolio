@@ -18,7 +18,7 @@ export const metadata = createMetadata({
   ],
   path: '/contact',
   ogImage:
-    'https://github.com/nguyennanhcd/image_container/blob/main/portfolio-image/contact.png?raw=true',
+    'https://github.com/hoanganh0705/image_container/blob/main/portfolio-image/contact.png?raw=true',
 })
 
 export default function Contact() {

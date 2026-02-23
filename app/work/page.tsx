@@ -18,7 +18,7 @@ export const metadata = createMetadata({
   ],
   path: '/work',
   ogImage:
-    'https://github.com/nguyennanhcd/image_container/blob/main/portfolio-image/service.png?raw=true',
+    'https://github.com/hoanganh0705/image_container/blob/main/portfolio-image/service.png?raw=true',
 })
 
 export default function Work() {

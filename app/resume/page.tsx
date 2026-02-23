@@ -21,7 +21,7 @@ export const metadata = createMetadata({
   ],
   path: '/resume',
   ogImage:
-    'https://github.com/nguyennanhcd/image_container/blob/main/portfolio-image/resume.png?raw=true',
+    'https://github.com/hoanganh0705/image_container/blob/main/portfolio-image/resume.png?raw=true',
 })
 
 export default function Resume() {

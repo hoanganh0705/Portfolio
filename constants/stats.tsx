@@ -4,9 +4,12 @@ import { fetchGitHubCommits } from '@/lib/fetchGithubCommits'
 let numOfCommits: number = 100 // Default fallback value
 
 try {
-  if (process.env.githubToken) {
+  if (
+    process.env.githubToken &&
+    process.env.githubUserName
+  ) {
     numOfCommits = await fetchGitHubCommits(
-      'nguyennanhcd',
+      process.env.githubUserName,
       process.env.githubToken,
     )
   }
