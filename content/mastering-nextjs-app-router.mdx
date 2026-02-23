@@ -1,0 +1,256 @@
+---
+title: "Mastering the Next.js App Router"
+excerpt: "Deep dive into the App Router: layouts, route groups, parallel routes, loading states, and advanced patterns for scalable apps."
+category: "Next.js"
+date: "2025-11-12"
+readTime: "10 min read"
+author: "Lina Chen"
+authorImage: "/images/author.jpeg"
+featured: true
+image: "/images/app-router.jpg"
+---
+import CodeBlock from '@/components/blog/CodeBlock.tsx';
+
+
+## **Next.js App Router: The Future Is Here**
+
+Since **Next.js 13**, the **App Router** (`app/` directory) has replaced the old `pages/` system.
+
+It’s not just a folder change — it’s a **complete paradigm shift** in routing, layouts, and data fetching.
+
+Let’s master it. Step by step.
+
+
+## **App Router vs Pages Router**
+
+<div className="my-8 overflow-x-auto rounded-lg border border-border">
+  <table className="w-full min-w-[600px] table-auto border-collapse">
+    <thead>
+      <tr className="bg-muted/50">
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Feature</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Pages Router</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">App Router</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 text-sm">Folder</td>
+        <td className="border border-border px-4 py-3 text-sm font-mono">pages/</td>
+        <td className="border border-border px-4 py-3 text-sm font-mono">app/</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 text-sm">Layouts</td>
+        <td className="border border-border px-4 py-3 text-sm">_app.tsx + _document.tsx</td>
+        <td className="border border-border px-4 py-3 text-sm">layout.tsx (nested!)</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 text-sm">Loading UI</td>
+        <td className="border border-border px-4 py-3 text-sm">Manual</td>
+        <td className="border border-border px-4 py-3 text-sm">loading.tsx (auto!)</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 text-sm">Route Groups</td>
+        <td className="border border-border px-4 py-3 text-sm">Not supported</td>
+        <td className="border border-border px-4 py-3 text-sm">(group) folders</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+## **Nested Layouts: No More Wrapper Hell**
+
+Every folder can have a `layout.tsx` → **automatically nested**.
+
+<CodeBlock
+  language="tsx"
+  highlight="3-7"
+  collapsible
+  defaultCollapsed={false}
+>
+{`app/
+├── layout.tsx          // Root layout (html, body)
+├── dashboard/
+│   ├── layout.tsx      // Dashboard shell (sidebar)
+│   └── page.tsx        // Dashboard home
+└── blog/
+    └── layout.tsx      // Blog layout (author bio)`}
+</CodeBlock>
+
+> **No prop drilling. No duplicate code.**  
+> Layouts **wrap children automatically**.
+
+
+## **Loading & Error States: Built-In UX**
+
+### **`loading.tsx` — Instant Feedback**
+
+<CodeBlock
+  language="tsx"
+  highlight="1"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// app/dashboard/loading.tsx
+export default function Loading() {
+    return <div className="animate-pulse">Loading dashboard...</div>;
+}`}
+</CodeBlock>
+
+→ Shows **while `page.tsx` is fetching**
+
+### **`error.tsx` — Graceful Recovery**
+
+```tsx
+// app/dashboard/error.tsx
+'use client';
+export default function Error({ error }: { error: Error }) {
+  return <p className="text-red-600">Error: {error.message}</p>;
+}
+```
+
+
+## **Route Groups: Organize Without Affecting URL**
+
+Use `(group)` folders to **group routes logically** — **without changing the URL**.
+
+<CodeBlock
+  language="bash"
+  highlight="2-3"
+  collapsible
+  defaultCollapsed={false}
+>
+{`app/
+├── (marketing)/
+│   ├── about/page.tsx     → /about
+│   └── contact/page.tsx   → /contact
+└── (app)/
+    └── dashboard/page.tsx → /dashboard`}
+</CodeBlock>
+
+> Perfect for **shared layouts**, **A/B testing**, or **team folders**
+
+
+## **Parallel Routes: Multiple Pages at Once**
+
+Render **multiple `page.tsx` in the same layout** using `@folder` syntax.
+
+<CodeBlock
+  language="tsx"
+  highlight="4-6"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// app/dashboard/@analytics/page.tsx
+export default function Analytics() { return <Chart />; }
+
+// app/dashboard/@team/page.tsx
+export default function Team() { return <TeamList />; }
+
+// app/dashboard/layout.tsx
+export default function Layout({
+    children,
+    analytics,
+    team,
+}: {
+    children: React.ReactNode;
+    analytics: React.ReactNode;
+    team: React.ReactNode;
+}) {
+  return (
+    <>
+      <Sidebar />
+      <main>{children}</main>
+      <aside>{analytics}</aside>
+      <footer>{team}</footer>
+    </>
+  );
+}`}
+</CodeBlock>
+
+→ `/dashboard` shows **main + analytics + team** simultaneously
+
+
+## **Route Interception: Modal Magic**
+
+Intercept a route **without navigating** — perfect for modals.
+
+<CodeBlock
+  language="tsx"
+  highlight="1"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// app/@modal/(.)photo/[id]/page.tsx
+// → /photo/123 → opens as modal, URL stays /feed`}
+</CodeBlock>
+
+> Click photo → **modal opens**, URL updates, **back button closes it**
+
+
+## **Don’t Do This**
+
+<CodeBlock
+  language="tsx"
+  highlight="1-3"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// 1. Mix app/ and pages/
+app/page.tsx + pages/api/hello.ts → Unpredictable
+
+// 2. Put page.tsx in root only
+app/nested/page.tsx → Must have folder!
+
+// 3. Forget 'use client' in client components`}
+</CodeBlock>
+
+
+## **Do This Instead**
+
+<CodeBlock
+  language="tsx"
+  highlight="2, 5"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// 1. Use loading.tsx everywhere
+app/settings/loading.tsx → Instant UX
+
+// 2. Use route groups for shared layouts
+app/(admin)/users/page.tsx
+app/(admin)/settings/page.tsx
+
+// 3. Always export default from page/layout`}
+</CodeBlock>
+
+
+## **Migration Checklist**
+
+* Migrate from `pages/` → `app/` gradually  
+* Use `(group)` folders for shared layouts  
+* Add `loading.tsx` to slow pages  
+* Replace `_app.tsx` with nested `layout.tsx`  
+* Use `@folder` for parallel routes  
+* Test modals with `(.)interception`  
+
+---
+
+## **Final Thoughts**
+
+The **App Router** isn’t just a new folder.
+
+It’s **React Server Components**, **streaming**, **nested layouts**, and **zero-JS modals** — all in one.
+
+Stop fighting with `_app.tsx`.  
+Stop wrapping layouts manually.  
+**Embrace the App Router.**
+
+Your app will be **faster**, **cleaner**, and **more maintainable**.
+
+The future of Next.js is here.  
+Are you ready?
+
+*Written by Lina Chen*
+
+*#NextJS #AppRouter #React #ServerComponents #WebDev #Frontend*
