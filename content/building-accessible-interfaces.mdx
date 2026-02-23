@@ -12,14 +12,15 @@ image: "/images/accessibility.webp"
 import CodeBlock from '@/components/blog/CodeBlock.tsx';
 
 
-## **Accessibility Is Not an Afterthought**
+## 1. Introduction
 
-**Digital accessibility** (often shortened to **“a11y”**) is the practice of designing and building websites, apps, and other digital tools so that they can be used by everyone — regardless of their abilities or disabilities.
+### 1.1 Background
 
-When you design with accessibility in mind, you don’t just make things better for people with disabilities. You improve the experience for **everyone**.
+**Digital accessibility** (often shortened to **"a11y"**) is the practice of designing and building websites, apps, and other digital tools so that they can be used by everyone — regardless of their abilities or disabilities.
 
+When you design with accessibility in mind, you don't just make things better for people with disabilities. You improve the experience for **everyone**.
 
-## **The “Curb-Cut Effect”**
+### 1.2 The Curb-Cut Effect
 
 This idea is often called the **curb-cut effect**.
 
@@ -31,17 +32,16 @@ Curb cuts — the sloped ramps on sidewalks — were originally designed for whe
 - Runners and cyclists
 
 The same principle applies to **digital design**.
-Features like **high-contrast text**, **clear labels**, and **video captions** don’t just help users with disabilities — they help anyone in challenging situations, like using a phone under bright sunlight or watching a video in a noisy café.
+Features like **high-contrast text**, **clear labels**, and **video captions** don't just help users with disabilities — they help anyone in challenging situations, like using a phone under bright sunlight or watching a video in a noisy café.
 
-Accessibility isn’t a final checklist item.
-It’s a **foundational part** of the entire design and development process.
+Accessibility isn't a final checklist item.
+It's a **foundational part** of the entire design and development process.
 
-
-## **Semantic HTML Is Your Foundation**
+## 2. Semantic HTML Foundation
 
 A truly accessible interface starts with **semantic HTML** — using the right elements for the right purpose.
 
- **Good semantics:**
+**Good semantics:**
 
 <CodeBlock
   language="html"
@@ -55,7 +55,7 @@ A truly accessible interface starts with **semantic HTML** — using the right e
 <button>Click me</button>`}
 </CodeBlock>
 
- **Bad semantics:**
+**Bad semantics:**
 
 <CodeBlock
   language="html"
@@ -69,17 +69,16 @@ A truly accessible interface starts with **semantic HTML** — using the right e
 Why does it matter?
 Because a **screen reader** knows how to announce a `<button>` — it says:
 
-> “Click me, button.”
+> "Click me, button."
 
-But a `<div>` styled like a button? It’s **silent and invisible** to assistive technology.
+But a `<div>` styled like a button? It's **silent and invisible** to assistive technology.
 
 Semantic HTML is the foundation for accessibility.
 It gives meaning to content and allows tools like screen readers to interpret it correctly.
 
+## 3. Color and Contrast
 
-## **Color and Contrast**
-
-### **Aim for 4.5:1**
+### 3.1 Aim for 4.5:1
 
 According to **WCAG Level AA**, text should have a **minimum contrast ratio of 4.5:1** against its background.
 This ensures readability for users with low vision or color deficiencies.
@@ -89,12 +88,11 @@ This ensures readability for users with low vision or color deficiencies.
 * [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
 * Chrome DevTools → Elements → Computed → Contrast
 
-### **Don’t Rely on Color Alone**
+### 3.2 Don't Rely on Color Alone
 
 Never use color as the **only indicator** of meaning.
 
 ❌ Example:
-
 
 <CodeBlock
   language="text"
@@ -108,8 +106,7 @@ Never use color as the **only indicator** of meaning.
 ✅ Better:
 Add **icons, text, or underline patterns** to reinforce meaning.
 
-
-## **Navigable by Keyboard Alone**
+## 4. Keyboard Navigation
 
 Not everyone uses a mouse.
 Some rely on **keyboard navigation** — using the **Tab**, **Shift+Tab**, and **Enter** keys to explore and interact with your interface.
@@ -117,7 +114,7 @@ Some rely on **keyboard navigation** — using the **Tab**, **Shift+Tab**, and *
 Test your site:
 👉 Can you reach every link, button, and input field using only your **keyboard**?
 
-### **Never do this:**
+### 4.1 Never do this:
 
 <CodeBlock
   language="tsx"
@@ -130,9 +127,9 @@ Test your site:
 
 This removes the **visible focus indicator**, which tells users where they are on the page — a major accessibility issue.
 
-### **Do this instead:**
+### 4.2 Do this instead:
 
-If you’re using Tailwind CSS:
+If you're using Tailwind CSS:
 
 <CodeBlock
   language="tsx"
@@ -147,13 +144,12 @@ If you’re using Tailwind CSS:
 
 This keeps your design clean while maintaining focus visibility.
 
-
-## **Form Accessibility**
+## 5. Form Accessibility
 
 Forms are one of the most common — and most overlooked — accessibility pain points.
-Here’s how to make them better:
+Here's how to make them better:
 
-### **1. Always Use `<label>`**
+### 5.1 Always Use `<label>`
 
 A visible and properly linked `<label>` tells both sighted users and screen readers what an input field is for.
 
@@ -175,12 +171,11 @@ A visible and properly linked `<label>` tells both sighted users and screen read
   />`}
 </CodeBlock>
 
-Without a `<label>`, a screen reader might just say “Edit text” — leaving the user unsure what the field does.
+Without a `<label>`, a screen reader might just say "Edit text" — leaving the user unsure what the field does.
 
+### 5.2 Provide Clear Error Messages
 
-### **2. Provide Clear Error Messages**
-
-Errors should be **specific and easy to understand** — not just “Invalid input.”
+Errors should be **specific and easy to understand** — not just "Invalid input."
 
 ✅ Example:
 
@@ -199,10 +194,9 @@ Errors should be **specific and easy to understand** — not just “Invalid inp
 
 </CodeBlock>
 
-Pair errors with icons or color **plus** descriptive text — don’t rely on color alone.
+Pair errors with icons or color **plus** descriptive text — don't rely on color alone.
 
-
-## **Accessibility Testing Tips**
+## 6. Testing Tips
 
 Here are a few simple checks you can do today:
 
@@ -210,17 +204,16 @@ Here are a few simple checks you can do today:
 * 🗣️ **Screen Reader Test:** Try your site with VoiceOver (Mac) or NVDA (Windows).
 * 🎨 **Contrast Check:** Ensure all text meets the 4.5:1 ratio.
 * 🧩 **Semantic Check:** Use proper HTML elements — avoid `<div>` for interactive roles.
-* ⚙️ **ARIA Attributes:** Use them only when native HTML elements aren’t enough.
+* ⚙️ **ARIA Attributes:** Use them only when native HTML elements aren't enough.
 
-
-## **Final Thoughts**
+## 7. Conclusion
 
 Accessibility is not a **bonus feature**.
-It’s **good design**.
+It's **good design**.
 
 When we build accessible websites and apps, we make the web better for everyone — faster, clearer, and more usable in all situations.
 
-Accessibility isn’t about perfection; it’s about **progress**.
+Accessibility isn't about perfection; it's about **progress**.
 Every alt text, every focus ring, every semantic tag you add brings us closer to a web that **everyone** can enjoy.
 
 ✳️ *Written by [Your Name]*

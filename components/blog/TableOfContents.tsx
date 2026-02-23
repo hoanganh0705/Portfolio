@@ -18,7 +18,7 @@ export function TableOfContents() {
     const article = document.querySelector('article')
     if (!article) return
 
-    const elements = article.querySelectorAll('h2, h3')
+    const elements = article.querySelectorAll('h2, h3, h4')
     const items: TocItem[] = []
 
     elements.forEach((el) => {
@@ -39,7 +39,12 @@ export function TableOfContents() {
       items.push({
         id,
         text,
-        level: el.tagName === 'H2' ? 2 : 3,
+        level:
+          el.tagName === 'H2'
+            ? 2
+            : el.tagName === 'H3'
+              ? 3
+              : 4,
       })
     })
 
@@ -95,7 +100,11 @@ export function TableOfContents() {
                   })
               }}
               className={`block text-sm leading-relaxed transition-all duration-200 border-l-2 ${
-                heading.level === 3 ? 'pl-5' : 'pl-3'
+                heading.level === 3
+                  ? 'pl-5'
+                  : heading.level === 4
+                    ? 'pl-7'
+                    : 'pl-3'
               } ${
                 activeId === heading.id
                   ? 'border-accent-default text-accent-default font-medium'

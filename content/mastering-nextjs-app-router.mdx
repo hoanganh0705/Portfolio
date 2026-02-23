@@ -12,16 +12,15 @@ image: "/images/app-router.jpg"
 import CodeBlock from '@/components/blog/CodeBlock.tsx';
 
 
-## **Next.js App Router: The Future Is Here**
+## 1. Introduction
 
 Since **Next.js 13**, the **App Router** (`app/` directory) has replaced the old `pages/` system.
 
-It’s not just a folder change — it’s a **complete paradigm shift** in routing, layouts, and data fetching.
+It's not just a folder change — it's a **complete paradigm shift** in routing, layouts, and data fetching.
 
-Let’s master it. Step by step.
+Let's master it. Step by step.
 
-
-## **App Router vs Pages Router**
+## 2. App Router vs Pages Router
 
 <div className="my-8 overflow-x-auto rounded-lg border border-border">
   <table className="w-full min-w-[600px] table-auto border-collapse">
@@ -57,8 +56,7 @@ Let’s master it. Step by step.
   </table>
 </div>
 
-
-## **Nested Layouts: No More Wrapper Hell**
+## 3. Nested Layouts
 
 Every folder can have a `layout.tsx` → **automatically nested**.
 
@@ -80,10 +78,9 @@ Every folder can have a `layout.tsx` → **automatically nested**.
 > **No prop drilling. No duplicate code.**  
 > Layouts **wrap children automatically**.
 
+## 4. Loading and Error States
 
-## **Loading & Error States: Built-In UX**
-
-### **`loading.tsx` — Instant Feedback**
+### 4.1 Loading UI
 
 <CodeBlock
   language="tsx"
@@ -99,7 +96,7 @@ export default function Loading() {
 
 → Shows **while `page.tsx` is fetching**
 
-### **`error.tsx` — Graceful Recovery**
+### 4.2 Error Handling
 
 ```tsx
 // app/dashboard/error.tsx
@@ -109,8 +106,7 @@ export default function Error({ error }: { error: Error }) {
 }
 ```
 
-
-## **Route Groups: Organize Without Affecting URL**
+## 5. Route Groups
 
 Use `(group)` folders to **group routes logically** — **without changing the URL**.
 
@@ -130,8 +126,7 @@ Use `(group)` folders to **group routes logically** — **without changing the U
 
 > Perfect for **shared layouts**, **A/B testing**, or **team folders**
 
-
-## **Parallel Routes: Multiple Pages at Once**
+## 6. Parallel Routes
 
 Render **multiple `page.tsx` in the same layout** using `@folder` syntax.
 
@@ -170,8 +165,7 @@ export default function Layout({
 
 → `/dashboard` shows **main + analytics + team** simultaneously
 
-
-## **Route Interception: Modal Magic**
+## 7. Route Interception
 
 Intercept a route **without navigating** — perfect for modals.
 
@@ -187,8 +181,7 @@ Intercept a route **without navigating** — perfect for modals.
 
 > Click photo → **modal opens**, URL updates, **back button closes it**
 
-
-## **Don’t Do This**
+## 8. Common Mistakes
 
 <CodeBlock
   language="tsx"
@@ -205,8 +198,7 @@ app/nested/page.tsx → Must have folder!
 // 3. Forget 'use client' in client components`}
 </CodeBlock>
 
-
-## **Do This Instead**
+## 9. Best Practices
 
 <CodeBlock
   language="tsx"
@@ -224,8 +216,7 @@ app/(admin)/settings/page.tsx
 // 3. Always export default from page/layout`}
 </CodeBlock>
 
-
-## **Migration Checklist**
+## 10. Migration Guide
 
 * Migrate from `pages/` → `app/` gradually  
 * Use `(group)` folders for shared layouts  
@@ -234,13 +225,11 @@ app/(admin)/settings/page.tsx
 * Use `@folder` for parallel routes  
 * Test modals with `(.)interception`  
 
----
+## 11. Conclusion
 
-## **Final Thoughts**
+The **App Router** isn't just a new folder.
 
-The **App Router** isn’t just a new folder.
-
-It’s **React Server Components**, **streaming**, **nested layouts**, and **zero-JS modals** — all in one.
+It's **React Server Components**, **streaming**, **nested layouts**, and **zero-JS modals** — all in one.
 
 Stop fighting with `_app.tsx`.  
 Stop wrapping layouts manually.  

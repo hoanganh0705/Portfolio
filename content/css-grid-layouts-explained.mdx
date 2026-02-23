@@ -9,19 +9,17 @@ authorImage: "/images/author.jpeg"
 featured: true
 image: "/css-grid-layouts.jpg"
 ---
-
 import CodeBlock from '@/components/blog/CodeBlock.tsx';
 
 
-## **CSS Grid: The Modern Layout Revolution**
+## 1. Introduction
 
 CSS Grid has **revolutionized** how we build web layouts.  
 Forget floats, complex flexbox hacks, or fragile table layouts — **Grid gives you full 2D control** over your design.
 
 Once you master its core concepts, you'll wonder how you ever lived without it.
 
-
-## **The Foundation: Container & Items**
+## 2. Grid Container and Items
 
 Every grid starts with a **container** and its **items**.
 
@@ -42,8 +40,7 @@ Set `display: grid` on the parent → all **direct children** become **grid item
 
 > **Pro tip**: Only **direct children** are grid items. Nested elements? Use a new grid inside.
 
-
-## **The Magic of `fr` Unit**
+## 3. The fr Unit
 
 The `fr` unit = **fraction of available space**.
 
@@ -68,8 +65,7 @@ The `fr` unit = **fraction of available space**.
 grid-template-columns: 2fr 1fr;      /* 2:1 ratio */`}
 </CodeBlock>
 
-
-## **Grid Lines: Your Invisible Ruler**
+## 4. Grid Lines and Positioning
 
 Grid creates **numbered lines** around cells.
 
@@ -98,8 +94,7 @@ Use `span 2` to span across 2 columns/rows:
 {` grid-column: span 2;`}
 </CodeBlock>
 
-
-## **Named Grid Areas: Layout as Art**
+## 5. Named Grid Areas
 
 Define your layout **visually** with `grid-template-areas`.
 
@@ -136,8 +131,7 @@ Then assign items:
 
 > **Self-documenting layout** — anyone can read it like a blueprint!
 
-
-## **Responsive Grids with Media Queries**
+## 6. Responsive Design
 
 Change your grid at different breakpoints.
 
@@ -161,10 +155,9 @@ Change your grid at different breakpoints.
 }`}
 </CodeBlock>
 
+## 7. Auto-Placement
 
-## **Auto-Placement: Let the Browser Help**
-
-The browser **automatically places** items if you don’t specify.
+The browser **automatically places** items if you don't specify.
 
 Control flow with `grid-auto-flow`:
 
@@ -189,10 +182,9 @@ Set default size for auto-created rows/columns:
 {`grid-auto-rows: minmax(100px, auto);`}
 </CodeBlock>
 
+## 8. Common Patterns
 
-## **Common Patterns You’ll Use Every Day**
-
-### **Holy Grail Layout**
+### 8.1 Holy Grail Layout
 
 <CodeBlock
   language="css"
@@ -212,7 +204,7 @@ Set default size for auto-created rows/columns:
 }`}
 </CodeBlock>
 
-### **Card Grid (Responsive)**
+### 8.2 Card Grid (Responsive)
 
 <CodeBlock
   language="css"
@@ -225,8 +217,7 @@ Set default size for auto-created rows/columns:
 
 → Automatically wraps, never too narrow, never too wide.
 
-
-## **Don’t Do This**
+## 9. Common Mistakes
 
 <CodeBlock
   language="html"
@@ -242,8 +233,7 @@ Set default size for auto-created rows/columns:
 
 > Only **direct children** are grid items. Wrap content in a child if needed.
 
-
-## **Quick Testing Checklist**
+## 10. Testing Checklist
 
 * Does your layout use `display: grid`?
 * Are columns defined with `fr` or `minmax()`?
@@ -251,11 +241,9 @@ Set default size for auto-created rows/columns:
 * Are named areas clear and semantic?
 * Did you use `gap` instead of margins?
 
----
+## 11. Conclusion
 
-## **Final Thoughts**
-
-CSS Grid isn’t just a **layout tool** — it’s a **superpower**.
+CSS Grid isn't just a **layout tool** — it's a **superpower**.
 
 With `fr` units, named areas, and auto-placement, you can build **complex, responsive layouts** in **minutes**, not hours.
 
