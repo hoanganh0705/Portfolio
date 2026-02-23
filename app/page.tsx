@@ -41,7 +41,7 @@ export const metadata = createMetadata({
   ],
   path: '',
   ogImage:
-    'https://gitlab.com/nguyennanhcd1/image-container/-/raw/main/portfolio-image/Screenshot%202025-06-21%20072326.png?ref_type=heads',
+    'https://gitlab.com/hoanganh07051/image-container/-/raw/main/portfolio-image/Screenshot%202025-06-21%20072326.png?ref_type=heads',
 })
 
 // rendering-hoist-jsx: static fallback extracted outside component

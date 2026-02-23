@@ -8,7 +8,7 @@ export const socials = [
   {
     name: 'Github',
     icon: <FaGithub />,
-    path: 'https://github.com/nguyennanhcd',
+    path: 'https://github.com/hoanganh0705',
   },
   {
     name: 'Facebook',
