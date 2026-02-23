@@ -1,8 +1,10 @@
 import type { NextConfig } from 'next';
 import BundleAnalyzer from '@next/bundle-analyzer';
+import createMDX from '@next/mdx';
 
 const nextConfig: NextConfig = {
   output: 'standalone',
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   async redirects() {
     return [
       // Redirect www → non-www (covers both http and https)
@@ -20,4 +22,16 @@ const withBundleAnalyzer = BundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
-export default withBundleAnalyzer(nextConfig);
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [
+      'remark-gfm',
+      'remark-frontmatter',
+      ['remark-mdx-frontmatter', { name: 'metadata' }],
+    ],
+    rehypePlugins: [],
+  },
+});
+
+export default withMDX(withBundleAnalyzer(nextConfig));

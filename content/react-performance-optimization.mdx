@@ -1,0 +1,294 @@
+---
+title: "React Performance Optimization"
+excerpt: "Deep dive into rendering optimization, memoization strategies, and profiling tools to make your apps faster."
+category: "Development"
+date: "2024-10-18"
+readTime: "12 min read"
+author: "James Miller"
+authorImage: "/images/author.jpeg"
+featured: true
+image: "/react-performance.jpg"
+---
+
+import CodeBlock from '@/components/blog/CodeBlock.tsx';
+
+
+## **React Performance: Don’t Guess — Measure**
+
+React apps **grow fast** — and so do performance problems.  
+A component that renders 10 times per second? A list with 10,000 items? A bundle over 2MB?
+
+**Premature optimization is the root of all evil.**  
+But **measured, targeted optimization** is pure magic.
+
+Let’s master the **real tools** that make React apps **blazing fast**.
+
+
+## **The Re-Render Trap**
+
+React re-renders a component when:
+- Its **state** changes
+- Its **props** change
+- Its **parent** re-renders
+
+Even if **nothing visually changes**.
+
+### **Good: Let React do its job**
+Most renders are **cheap**.
+
+### **Bad: Unnecessary child re-renders**
+
+<CodeBlock
+  language="tsx"
+  highlight="3-7"
+  collapsible
+  defaultCollapsed={false}
+>
+{`<Parent>
+    <ExpensiveChild data={hugeArray} />
+</Parent>`}
+</CodeBlock>
+
+→ `ExpensiveChild` re-renders **every time `Parent` updates**, even if `hugeArray` never changes.
+
+
+## **`React.memo`: Stop Re-Rendering Static Props**
+
+Wrap functional components to **skip re-renders** when props are shallow-equal.
+
+<CodeBlock
+  language="tsx"
+  highlight="1, 4-6"
+  collapsible
+  defaultCollapsed={false}
+>
+{`const ExpensiveChild = React.memo(function ExpensiveChild({ data }) {
+    console.log('ExpensiveChild rendered');
+    return <HeavyChart data={data} />;
+});
+
+// Only re-renders if \`data\` reference changes`}
+</CodeBlock>
+
+**Warning: Don’t memo everything.**  
+ Memoization has **memory + comparison cost**.  
+→ **Profile first!**
+
+
+## **`useMemo` & `useCallback`: Cache What’s Expensive**
+
+<div className="my-8 overflow-x-auto rounded-lg border border-border">
+  <table className="w-full min-w-[500px] table-auto border-collapse">
+    <thead>
+      <tr className="bg-muted/50">
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Hook</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Caches</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Use When</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">useMemo</td>
+        <td className="border border-border px-4 py-3 text-sm"><strong>Values</strong> (arrays, objects, calculations)</td>
+        <td className="border border-border px-4 py-3 text-sm">Expensive computation</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">useCallback</td>
+        <td className="border border-border px-4 py-3 text-sm"><strong>Functions</strong></td>
+        <td className="border border-border px-4 py-3 text-sm">Passed to child components or <code>useEffect</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+### **Good: Cache heavy filtering**
+
+<CodeBlock
+  language="tsx"
+  highlight="3"
+  collapsible
+  defaultCollapsed={false}
+>
+{`const filteredUsers = useMemo(() => {
+  return users.filter(user => user.active && user.role === 'admin');
+}, [users]);`}
+</CodeBlock>
+
+
+
+### **Bad: Memoizing primitives**
+
+<CodeBlock
+  language="tsx"
+  highlight="3"
+  collapsible
+  defaultCollapsed={false}
+>
+{`const count = useMemo(() => 42, []); // Useless overhead`}
+</CodeBlock>
+
+
+### **Good: Stabilize callback for child**
+
+<CodeBlock
+  language="tsx"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`const handleSave = useCallback(() => {
+  saveUser(user);
+}, [user]); // Prevents child re-render
+
+return <Form onSave={handleSave} />;`}
+</CodeBlock>
+
+
+## **Code Splitting: Load Only What’s Needed**
+
+A 3MB bundle? Users wait.  
+Split it!
+
+### **Dynamic Imports + `React.lazy`**
+
+<CodeBlock
+  language="tsx"
+  highlight="1-2, 5"
+  collapsible
+  defaultCollapsed={false}
+>
+{`const HeavyChart = React.lazy(() => import('./HeavyChart'));
+const Dashboard = React.lazy(() => import('./Dashboard'));
+
+function App() {
+  return (
+    <Suspense fallback={<Spinner />}>
+      <HeavyChart />
+    </Suspense>
+  );
+}`}
+</CodeBlock>
+
+> **Next.js bonus**: `dynamic(() => import(...), { ssr: false })`
+
+
+## **Virtual Scrolling: Render 10 Items, Not 10,000**
+
+Don’t render 10,000 list items.  
+Render **only what’s visible**.
+
+### **Use `react-window`**
+
+<CodeBlock
+  language="tsx"
+  highlight="3-8"
+  collapsible
+  defaultCollapsed={false}
+>
+{`import { FixedSizeList } from 'react-window';
+
+<FixedSizeList
+    height={600}
+    itemCount={10000}
+    itemSize={50}
+    width="100%"
+  >
+    {({ index, style }) => (
+      <div style={style}>User #{index}</div>
+    )}
+  </FixedSizeList>`}
+</CodeBlock>
+
+→ DOM has **~20 nodes**, not 10,000  
+→ **60 FPS smooth scroll**
+
+
+## **Profiling: Your Performance X-Ray**
+
+**Never guess.** Use **React DevTools Profiler**.
+
+### **Steps:**
+
+1. Open **React DevTools** → **Profiler** tab
+2. Click **Record** (red circle)
+3. Interact with app
+4. Stop → See **flame graph**
+
+Look for:
+- Components rendering **many times**
+- Long render durations
+- Unnecessary re-renders
+
+> **Golden rule**: **Measure → Optimize → Measure again**
+
+
+## **Don’t Do This**
+
+<CodeBlock
+  language="tsx"
+  highlight="1-5"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// 1. Memoizing everything
+const Button = React.memo(({ onClick }) => <button onClick={onClick}>Click</button>);
+
+// 2. Inline objects in JSX
+return <Child config={{ theme: 'dark' }} />; // New object every render!
+
+// 3. No Suspense fallback
+<React.lazy(...) /> {/* Crash on slow network */}`}
+</CodeBlock>
+
+
+## **Do This Instead**
+
+<CodeBlock
+  language="tsx"
+  highlight="2, 5, 8"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// 1. Memoize expensive components only
+const Chart = React.memo(ExpensiveChart);
+
+// 2. Lift config outside
+const darkTheme = { theme: 'dark' };
+return <Child config={darkTheme} />;
+
+// 3. Always use Suspense
+<Suspense fallback={<Loading />}>
+    <LazyDashboard />
+</Suspense>`}
+</CodeBlock>
+
+
+## **Performance Checklist**
+
+* Did you **profile** with React DevTools?
+* Are you using `React.memo` **only on expensive components**?
+* Are `useMemo`/`useCallback` **justified by cost**?
+* Is your bundle **split** with dynamic imports?
+* Are large lists **virtualized**?
+* Are inline objects/functions **avoided** in render?
+
+---
+
+## **Final Thoughts**
+
+Performance isn’t about **making everything fast**.  
+It’s about **making the right things fast**.
+
+**Measure.**  
+**Target.**  
+**Optimize.**
+
+Your users don’t care about `useMemo`.  
+They care about **snappy UIs**, **fast loads**, and **smooth scrolling**.
+
+Master these tools — and build React apps that **feel like native**.
+
+*Written by James Miller*
+
+*#React #Performance #Optimization #Frontend #WebDev #ReactProfiler #CodeSplitting*

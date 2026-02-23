@@ -1,0 +1,397 @@
+---
+title: "TypeScript Utility Types Deep Dive"
+excerpt: "Master Partial, Pick, Omit, Record, Exclude, Extract, ReturnType, and more — with real-world patterns and best practices."
+category: "TypeScript"
+date: "2025-11-13"
+readTime: "11 min read"
+author: "Alex Kim"
+authorImage: "/images/author.jpeg"
+featured: true
+image: "/images/ts-utility-types.jpg"
+---
+import CodeBlock from '@/components/blog/CodeBlock.tsx';
+
+
+## **TypeScript Utility Types: Your Type-Level Superpowers**
+
+You don’t need to write every type from scratch.
+
+TypeScript ships with **built-in utility types** — like `Partial<T>`, `Pick<T, K>`, `Record<K, T>`, and even **union manipulators** like `Exclude<T, U>`.
+
+They **transform**, **filter**, and **compose** types with surgical precision.
+
+Let’s go **deep**. With **real-world examples** you’ll use every day.
+
+
+## **Core Utility Types: Object Transformation**
+
+<div className="my-8 overflow-x-auto rounded-lg border border-border">
+  <table className="w-full min-w-[600px] table-auto border-collapse">
+    <thead>
+      <tr className="bg-muted/50">
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Utility</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">What It Does</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Use Case</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Partial&lt;T&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Makes all properties optional</td>
+        <td className="border border-border px-4 py-3 text-sm">Form updates, patch APIs</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Required&lt;T&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Makes all properties required</td>
+        <td className="border border-border px-4 py-3 text-sm">Config validation</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Pick&lt;T, K&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Select specific keys</td>
+        <td className="border border-border px-4 py-3 text-sm">DTOs, props subsets</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Omit&lt;T, K&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Remove specific keys</td>
+        <td className="border border-border px-4 py-3 text-sm">Hide internal fields</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Record&lt;K, T&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Map keys to type</td>
+        <td className="border border-border px-4 py-3 text-sm">Dictionaries, lookups</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+### **`Partial<T>`: Update Without Full Object**
+
+<CodeBlock
+  language="ts"
+  highlight="5"
+  collapsible
+  defaultCollapsed={false}
+>
+{`interface User {
+    id: string;
+    name: string;
+    email: string;
+    role: 'admin' | 'user';
+}
+
+function updateUser(id: string, changes: Partial<User>) {
+  // Only update provided fields
+}`}
+</CodeBlock>
+
+
+### **`Required<T>`: Enforce All Fields**
+
+<CodeBlock
+  language="ts"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`interface Config {
+    apiUrl?: string;
+    timeout?: number;
+}
+
+const appConfig: Required<Config> = {
+    apiUrl: 'https://api.example.com',
+    timeout: 5000,
+};`}
+</CodeBlock>
+
+
+### **`Pick<T, K>`: Extract What You Need**
+
+<CodeBlock
+  language="ts"
+  highlight="3"
+  collapsible
+  defaultCollapsed={false}
+>
+{`interface User {
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+}
+
+type PublicUser = Pick<User, 'id' | 'name' | 'email'>;`}
+</CodeBlock>
+
+
+### **`Omit<T, K>`: Remove What You Don’t Want**
+
+<CodeBlock
+  language="ts"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`type UserWithoutPassword = Omit<User, 'password'>;
+// → { id: string; name: string; email: string; }`}
+</CodeBlock>
+
+
+### **`Record<K, T>`: Type-Safe Dictionaries**
+
+<CodeBlock
+  language="ts"
+  highlight="1"
+  collapsible
+  defaultCollapsed={false}
+>
+{`const statusLabels: Record<'pending' | 'success' | 'error', string> = {
+    pending: 'Đang xử lý',
+    success: 'Thành công',
+    error: 'Lỗi',
+};`}
+</CodeBlock>
+
+
+## **Advanced Utility Types: Union & Function Magic**
+
+These work with **unions**, **functions**, and **classes**.
+
+<div className="my-8 overflow-x-auto rounded-lg border border-border">
+  <table className="w-full min-w-[600px] table-auto border-collapse">
+    <thead>
+      <tr className="bg-muted/50">
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Utility</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">What It Does</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Use Case</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Exclude&lt;T, U&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Remove <code>U</code> from <code>T</code> union</td>
+        <td className="border border-border px-4 py-3 text-sm">Filter event types</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Extract&lt;T, U&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Keep only types assignable to <code>U</code></td>
+        <td className="border border-border px-4 py-3 text-sm">Extract string literals</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">NonNullable&lt;T&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Remove <code>null</code> and <code>undefined</code></td>
+        <td className="border border-border px-4 py-3 text-sm">API responses</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">ReturnType&lt;T&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Get function return type</td>
+        <td className="border border-border px-4 py-3 text-sm">Type-safe factories</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Parameters&lt;T&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Get function parameter tuple</td>
+        <td className="border border-border px-4 py-3 text-sm">HOC, mocks</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">InstanceType&lt;T&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Get instance type of class</td>
+        <td className="border border-border px-4 py-3 text-sm">DI, services</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+### **`Exclude<T, U>`: Filter Out Types**
+
+<CodeBlock
+  language="ts"
+  highlight="3"
+  collapsible
+  defaultCollapsed={false}
+>
+{`type Event = 'click' | 'hover' | 'scroll' | 'keydown';
+
+type MouseEvent = Exclude<Event, 'keydown'>;
+// → 'click' | 'hover' | 'scroll'`}
+</CodeBlock>
+
+
+### **`Extract<T, U>`: Keep Matching Types**
+
+<CodeBlock
+  language="ts"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`type Primitive = string | number | boolean | null;
+
+type Truthy = Extract<Primitive, boolean | number | string>;
+// → string | number | boolean`}
+</CodeBlock>
+
+
+### **`NonNullable<T>`: Remove null/undefined**
+
+<CodeBlock
+  language="ts"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`type ApiResponse = User | null;
+
+function processUser(user: NonNullable<ApiResponse>) {
+  // user is guaranteed to be User
+}`}
+</CodeBlock>
+
+
+### **`ReturnType<T>`: Get What a Function Returns**
+
+<CodeBlock
+  language="ts"
+  highlight="4"
+  collapsible
+  defaultCollapsed={false}
+>
+{`function getUser() {
+    return { id: '1', name: 'Alex' };
+}
+
+type UserResult = ReturnType<typeof getUser>;
+// → { id: string; name: string; }`}
+</CodeBlock>
+
+
+### **`Parameters<T>`: Get Function Args**
+
+<CodeBlock
+  language="ts"
+  highlight="3"
+  collapsible
+  defaultCollapsed={false}
+>
+{`function apiCall(url: string, method: 'GET' | 'POST') { }
+
+type ApiParams = Parameters<typeof apiCall>;
+// → [url: string, method: 'GET' | 'POST']`}
+</CodeBlock>
+
+
+### **`InstanceType<T>`: Class Instance Type**
+
+<CodeBlock
+  language="ts"
+  highlight="3"
+  collapsible
+  defaultCollapsed={false}
+>
+{`class UserService {
+    getUser() { return { name: 'Alex' }; }
+}
+
+type Service = InstanceType<typeof UserService>;
+// → UserService`}
+</CodeBlock>
+
+
+## **Combine Utilities: Real-World Patterns**
+
+### **Patch DTO with Required ID**
+
+<CodeBlock
+  language="ts"
+  highlight="1"
+  collapsible
+  defaultCollapsed={false}
+>
+{`type UserPatch = Partial<Pick<User, 'name' | 'email'>> & { id: string };`}
+</CodeBlock>
+
+### **Safe API Handler**
+
+<CodeBlock
+  language="ts"
+  highlight="1"
+  collapsible
+  defaultCollapsed={false}
+>
+{`type Handler = (req: Request) => Promise<Response>;
+type HandlerParams = Parameters<Handler>;`}
+</CodeBlock>
+
+
+## **Don’t Do This**
+
+<CodeBlock
+  language="ts"
+  highlight="1-4"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// 1. Manual duplication
+interface UserDTO { id: string; name: string; email: string; }
+
+// 2. any for maps
+const cache: any = {};
+
+// 3. Wrong Exclude
+type Bad = Exclude<string | number, string | boolean>;`}
+</CodeBlock>
+
+
+## **Do This Instead**
+
+<CodeBlock
+  language="ts"
+  highlight="2, 5"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// 1. Reuse with Pick/Omit
+type UserDTO = Pick<User, 'id' | 'name' | 'email'>;
+
+// 2. Record for lookups
+const routes: Record<string, () => void> = {};
+
+// 3. Combine for complex types
+type UpdatePayload = { id: string } & Partial<User>;`}
+</CodeBlock>
+
+
+## **Utility Types Cheat Sheet**
+
+* `Partial<T>` → **optional props**  
+* `Required<T>` → **all required**  
+* `Pick<T, K>` → **select keys**  
+* `Omit<T, K>` → **remove keys**  
+* `Record<K, T>` → **typed map**  
+* `Exclude<T, U>` → **remove from union**  
+* `Extract<T, U>` → **keep from union**  
+* `NonNullable<T>` → **remove null/undefined**  
+* `ReturnType<T>` → **get function return**  
+* `Parameters<T>` → **get function args**  
+* `InstanceType<T>` → **get class instance type**  
+* `ConstructorParameters<T>` → **get constructor args**
+
+---
+
+## **Final Thoughts**
+
+**Utility types are not shortcuts — they’re leverage.**
+
+You’re not just saving lines of code.  
+You’re **eliminating bugs**, **enforcing contracts**, and **scaling type safety**.
+
+From `Partial<Pick<T, K>>` to `ReturnType<typeof fn>`,  
+every utility is a **pattern distilled into a single word**.
+
+Master them.  
+**Your types will thank you.**
+
+*Written by Alex Kim*
+
+*#TypeScript #UtilityTypes #AdvancedTS #TypeSafety #Exclude #Extract #ReturnType #Pick #Omit #Record #WebDev*
