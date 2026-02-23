@@ -24,20 +24,22 @@ import { createMetadata } from '@/lib/metadata'
 export const revalidate = 864000 // 10*24*60*60
 
 export const metadata = createMetadata({
-  title: 'Web Developer Portfolio of Nguyen Hoang Anh ',
+  title:
+    'Anh Nguyen Dev — Full-Stack Web Developer & Educator',
   description:
-    "Welcome to Nguyen's Portfolio! I'm a passionate web developer and educator offering innovative web solutions and personalized tutoring.",
+    'Nguyen Hoang Anh (anhnguyendev) — a passionate full-stack web developer and educator based in Vietnam. Offering innovative web development, private tutoring, English teaching, and SEO services.',
   keywords: [
     'web developer',
     'portfolio',
-    'introduction',
-    'freelance',
+    'full-stack developer',
+    'freelance developer vietnam',
     'english teacher',
     'private tutor',
-    'web development',
-    'tutoring',
-    'seo',
+    'next.js developer',
+    'react developer',
+    'seo specialist',
   ],
+  path: '',
   ogImage:
     'https://gitlab.com/nguyennanhcd1/image-container/-/raw/main/portfolio-image/Screenshot%202025-06-21%20072326.png?ref_type=heads',
 })
@@ -79,9 +81,10 @@ export default function Home() {
               <TypeWriter mySelf={mySelf} />
             </h1>
             <p className='mx-auto max-w-2xl mb-9 text-white/80'>
-              I excel at crafting elegant digital
-              experiences and I am proficient in various
-              programming languages and technologies
+              Full-stack web developer and educator based in
+              Vietnam. I craft elegant digital experiences
+              with Next.js, React &amp; Tailwind CSS and
+              offer tutoring &amp; SEO services.
             </p>
 
             {/* Button and socials */}

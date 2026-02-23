@@ -9,13 +9,14 @@ const ContactClient = dynamic(
 export const metadata = createMetadata({
   title: 'Contact',
   description:
-    'Get in touch with me for collaboration, inquiries, or project discussions.',
+    'Get in touch with Anh Nguyen Dev for web development projects, tutoring inquiries, or collaboration opportunities.',
   keywords: [
     'contact',
-    'web developer',
+    'hire web developer',
     'collaboration',
-    'freelance',
+    'freelance inquiry',
   ],
+  path: '/contact',
   ogImage:
     'https://github.com/nguyennanhcd/image_container/blob/main/portfolio-image/contact.png?raw=true',
 })

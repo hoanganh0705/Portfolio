@@ -6,15 +6,17 @@ const WorkClient = dynamic(
 )
 
 export const metadata = createMetadata({
-  title: 'Work',
+  title: 'Work & Projects',
   description:
-    'Discover my portfolio of projects, showcasing innovative web development and creative solutions.',
+    'Browse the portfolio of Anh Nguyen Dev — showcasing innovative web development projects, creative solutions, and full-stack applications.',
   keywords: [
     'projects',
     'portfolio',
-    'web development',
-    'freelance',
+    'web development projects',
+    'full-stack applications',
+    'next.js projects',
   ],
+  path: '/work',
   ogImage:
     'https://github.com/nguyennanhcd/image_container/blob/main/portfolio-image/service.png?raw=true',
 })
