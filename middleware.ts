@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const locales = ['en', 'vi']
-const defaultLocale = 'en'
+const defaultLocale = 'vi'
 
 function getPreferredLocale(request: NextRequest): string {
   // 1. Cookie preference

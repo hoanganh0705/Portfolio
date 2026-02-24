@@ -21,6 +21,7 @@ import {
 } from 'react'
 import toast from 'react-hot-toast'
 import type { FeedbackState } from '@/types/contact'
+import { useLocale } from '@/lib/locale-context'
 
 // rendering-hoist-jsx: hoist static initial state outside component
 const initialState: FeedbackState = {
@@ -30,6 +31,7 @@ const initialState: FeedbackState = {
 }
 
 export default function ContactForm() {
+  const { dict } = useLocale()
   const [service, setService] = useState('')
   const [response, action, isPending] = useActionState(
     sendEmail,
@@ -69,66 +71,68 @@ export default function ContactForm() {
         className='flex flex-col gap-6 p-10 bg-secondary rounded-xl'
       >
         <p className='text-4xl text-accent-default'>
-          Let&rsquo;s work together
+          {dict.contact.title}
         </p>
         <p className='text-muted-foreground'>
-          Ready to bring your vision to life? Whether you
-          need a stunning website, personalized tutoring,
-          English mastery, or top-tier SEO, I’m here to
-          deliver exceptional results. Let’s connect and
-          create something extraordinary!
+          {dict.contact.description}
         </p>
 
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
           <Input
             name='firstName'
             type='text'
-            placeholder='First name'
+            placeholder={dict.contact.firstname}
             defaultValue=''
           />
           <Input
             name='lastName'
             type='text'
-            placeholder='Last name'
+            placeholder={dict.contact.lastname}
             defaultValue=''
           />
           <Input
             name='email'
             type='email'
-            placeholder='Email'
+            placeholder={dict.contact.email}
             defaultValue=''
           />
           <Input
             name='phone'
             type='text'
-            placeholder='Phone'
+            placeholder={dict.contact.phone}
             defaultValue=''
           />
         </div>
 
         <Select
-          aria-label='Choose a service'
+          aria-label={dict.contact.selectService}
           value={service}
           onValueChange={setService}
         >
           <SelectTrigger
             className='w-full'
-            aria-label='Choose a service'
+            aria-label={dict.contact.selectService}
           >
-            <SelectValue placeholder='Select a service' />
+            <SelectValue
+              placeholder={dict.contact.selectService}
+            />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Choose a service</SelectLabel>
+              <SelectLabel>
+                {dict.contact.selectService}
+              </SelectLabel>
               <SelectItem value='Web Development'>
-                Web Development
+                {dict.contact.serviceOptions.webDev}
               </SelectItem>
-              <SelectItem value='SEO'>SEO</SelectItem>
+              <SelectItem value='SEO'>
+                {dict.contact.serviceOptions.seo}
+              </SelectItem>
               <SelectItem value='English Teacher'>
-                English Teacher
+                {dict.contact.serviceOptions.teaching}
               </SelectItem>
               <SelectItem value='Private Tutor'>
-                Private Tutor
+                {dict.contact.serviceOptions.tutoring}
               </SelectItem>
             </SelectGroup>
           </SelectContent>
@@ -144,7 +148,7 @@ export default function ContactForm() {
         <Textarea
           name='message'
           className='h-[200px]'
-          placeholder='Type your message here...'
+          placeholder={dict.contact.message}
         />
 
         <Button
@@ -155,11 +159,11 @@ export default function ContactForm() {
           {isPending ? (
             <div
               className='loader text-[3px]'
-              aria-label='Sending...'
+              aria-label={dict.contact.sending}
               role='status'
             />
           ) : (
-            'Send'
+            dict.contact.send
           )}
         </Button>
       </form>
