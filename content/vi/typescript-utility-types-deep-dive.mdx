@@ -1,0 +1,397 @@
+---
+title: "TypeScript Utility Types Chuyên Sâu"
+excerpt: "Thành thạo Partial, Pick, Omit, Record, Exclude, Extract, ReturnType và nhiều hơn — với mẫu thực tế và best practices."
+category: "TypeScript"
+date: "2025-11-13"
+readTime: "11 phút đọc"
+author: "Alex Kim"
+authorImage: "/images/author.jpeg"
+featured: true
+image: "/images/ts-utility-types.jpg"
+---
+import CodeBlock from '@/components/blog/CodeBlock.tsx';
+
+
+## 1. Giới thiệu
+
+Bạn không cần viết mọi type từ đầu.
+
+TypeScript đi kèm **utility types tích hợp** — như `Partial<T>`, `Pick<T, K>`, `Record<K, T>`, và cả **union manipulators** như `Exclude<T, U>`.
+
+Chúng **biến đổi**, **lọc** và **kết hợp** types với độ chính xác phẫu thuật.
+
+Hãy cùng đi **sâu**. Với **ví dụ thực tế** bạn sẽ dùng mỗi ngày.
+
+
+## 2. Core Utility Types: Biến đổi Object
+
+<div className="my-8 overflow-x-auto rounded-lg border border-border">
+  <table className="w-full min-w-[600px] table-auto border-collapse">
+    <thead>
+      <tr className="bg-muted/50">
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Utility</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Chức năng</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Use Case</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Partial&lt;T&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Làm tất cả properties optional</td>
+        <td className="border border-border px-4 py-3 text-sm">Cập nhật form, patch APIs</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Required&lt;T&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Làm tất cả properties required</td>
+        <td className="border border-border px-4 py-3 text-sm">Xác thực config</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Pick&lt;T, K&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Chọn keys cụ thể</td>
+        <td className="border border-border px-4 py-3 text-sm">DTOs, props subsets</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Omit&lt;T, K&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Loại bỏ keys cụ thể</td>
+        <td className="border border-border px-4 py-3 text-sm">Ẩn trường nội bộ</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Record&lt;K, T&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Map keys sang type</td>
+        <td className="border border-border px-4 py-3 text-sm">Dictionaries, lookups</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+### 2.1 `Partial<T>`: Cập nhật Không Cần Đầy Đủ Object
+
+<CodeBlock
+  language="ts"
+  highlight="5"
+  collapsible
+  defaultCollapsed={false}
+>
+{`interface User {
+    id: string;
+    name: string;
+    email: string;
+    role: 'admin' | 'user';
+}
+
+function updateUser(id: string, changes: Partial<User>) {
+  // Chỉ cập nhật các trường được cung cấp
+}`}
+</CodeBlock>
+
+
+### 2.2 `Required<T>`: Bắt buộc Tất Cả Trường
+
+<CodeBlock
+  language="ts"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`interface Config {
+    apiUrl?: string;
+    timeout?: number;
+}
+
+const appConfig: Required<Config> = {
+    apiUrl: 'https://api.example.com',
+    timeout: 5000,
+};`}
+</CodeBlock>
+
+
+### 2.3 `Pick<T, K>`: Trích Xuất Những Gì Bạn Cần
+
+<CodeBlock
+  language="ts"
+  highlight="3"
+  collapsible
+  defaultCollapsed={false}
+>
+{`interface User {
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+}
+
+type PublicUser = Pick<User, 'id' | 'name' | 'email'>;`}
+</CodeBlock>
+
+
+### 2.4 `Omit<T, K>`: Loại Bỏ Những Gì Không Muốn
+
+<CodeBlock
+  language="ts"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`type UserWithoutPassword = Omit<User, 'password'>;
+// → { id: string; name: string; email: string; }`}
+</CodeBlock>
+
+
+### 2.5 `Record<K, T>`: Dictionaries An Toàn Kiểu
+
+<CodeBlock
+  language="ts"
+  highlight="1"
+  collapsible
+  defaultCollapsed={false}
+>
+{`const statusLabels: Record<'pending' | 'success' | 'error', string> = {
+    pending: 'Đang xử lý',
+    success: 'Thành công',
+    error: 'Lỗi',
+};`}
+</CodeBlock>
+
+
+## 3. Advanced Utility Types: Union & Function Magic
+
+Những utility này làm việc với **unions**, **functions** và **classes**.
+
+<div className="my-8 overflow-x-auto rounded-lg border border-border">
+  <table className="w-full min-w-[600px] table-auto border-collapse">
+    <thead>
+      <tr className="bg-muted/50">
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Utility</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Chức năng</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Use Case</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Exclude&lt;T, U&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Loại <code>U</code> khỏi union <code>T</code></td>
+        <td className="border border-border px-4 py-3 text-sm">Lọc event types</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Extract&lt;T, U&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Giữ chỉ types assignable cho <code>U</code></td>
+        <td className="border border-border px-4 py-3 text-sm">Trích xuất string literals</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">NonNullable&lt;T&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Loại bỏ <code>null</code> và <code>undefined</code></td>
+        <td className="border border-border px-4 py-3 text-sm">API responses</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">ReturnType&lt;T&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Lấy return type của function</td>
+        <td className="border border-border px-4 py-3 text-sm">Type-safe factories</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">Parameters&lt;T&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Lấy parameter tuple của function</td>
+        <td className="border border-border px-4 py-3 text-sm">HOC, mocks</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">InstanceType&lt;T&gt;</td>
+        <td className="border border-border px-4 py-3 text-sm">Lấy instance type của class</td>
+        <td className="border border-border px-4 py-3 text-sm">DI, services</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+### 3.1 `Exclude<T, U>`: Lọc Bỏ Types
+
+<CodeBlock
+  language="ts"
+  highlight="3"
+  collapsible
+  defaultCollapsed={false}
+>
+{`type Event = 'click' | 'hover' | 'scroll' | 'keydown';
+
+type MouseEvent = Exclude<Event, 'keydown'>;
+// → 'click' | 'hover' | 'scroll'`}
+</CodeBlock>
+
+
+### 3.2 `Extract<T, U>`: Giữ Types Khớp
+
+<CodeBlock
+  language="ts"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`type Primitive = string | number | boolean | null;
+
+type Truthy = Extract<Primitive, boolean | number | string>;
+// → string | number | boolean`}
+</CodeBlock>
+
+
+### 3.3 `NonNullable<T>`: Loại bỏ null/undefined
+
+<CodeBlock
+  language="ts"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`type ApiResponse = User | null;
+
+function processUser(user: NonNullable<ApiResponse>) {
+  // user được đảm bảo là User
+}`}
+</CodeBlock>
+
+
+### 3.4 `ReturnType<T>`: Lấy Kiểu Trả Về Hàm
+
+<CodeBlock
+  language="ts"
+  highlight="4"
+  collapsible
+  defaultCollapsed={false}
+>
+{`function getUser() {
+    return { id: '1', name: 'Alex' };
+}
+
+type UserResult = ReturnType<typeof getUser>;
+// → { id: string; name: string; }`}
+</CodeBlock>
+
+
+### 3.5 `Parameters<T>`: Lấy Tham Số Hàm
+
+<CodeBlock
+  language="ts"
+  highlight="3"
+  collapsible
+  defaultCollapsed={false}
+>
+{`function apiCall(url: string, method: 'GET' | 'POST') { }
+
+type ApiParams = Parameters<typeof apiCall>;
+// → [url: string, method: 'GET' | 'POST']`}
+</CodeBlock>
+
+
+### 3.6 `InstanceType<T>`: Kiểu Instance của Class
+
+<CodeBlock
+  language="ts"
+  highlight="3"
+  collapsible
+  defaultCollapsed={false}
+>
+{`class UserService {
+    getUser() { return { name: 'Alex' }; }
+}
+
+type Service = InstanceType<typeof UserService>;
+// → UserService`}
+</CodeBlock>
+
+
+## 4. Kết hợp Utilities: Mẫu Thực Tế
+
+### 4.1 Patch DTO với Required ID
+
+<CodeBlock
+  language="ts"
+  highlight="1"
+  collapsible
+  defaultCollapsed={false}
+>
+{`type UserPatch = Partial<Pick<User, 'name' | 'email'>> & { id: string };`}
+</CodeBlock>
+
+### 4.2 Safe API Handler
+
+<CodeBlock
+  language="ts"
+  highlight="1"
+  collapsible
+  defaultCollapsed={false}
+>
+{`type Handler = (req: Request) => Promise<Response>;
+type HandlerParams = Parameters<Handler>;`}
+</CodeBlock>
+
+
+## 5. Lỗi Thường Gặp
+
+<CodeBlock
+  language="ts"
+  highlight="1-4"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// 1. Duplicate thủ công
+interface UserDTO { id: string; name: string; email: string; }
+
+// 2. any cho maps
+const cache: any = {};
+
+// 3. Sai Exclude
+type Bad = Exclude<string | number, string | boolean>;`}
+</CodeBlock>
+
+
+## 6. Best Practices
+
+<CodeBlock
+  language="ts"
+  highlight="2, 5"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// 1. Tái sử dụng với Pick/Omit
+type UserDTO = Pick<User, 'id' | 'name' | 'email'>;
+
+// 2. Record cho lookups
+const routes: Record<string, () => void> = {};
+
+// 3. Kết hợp cho types phức tạp
+type UpdatePayload = { id: string } & Partial<User>;`}
+</CodeBlock>
+
+
+## 7. Bảng Tổng Hợp Utility Types
+
+* `Partial<T>` → **props optional**
+* `Required<T>` → **tất cả required**
+* `Pick<T, K>` → **chọn keys**
+* `Omit<T, K>` → **loại bỏ keys**
+* `Record<K, T>` → **typed map**
+* `Exclude<T, U>` → **loại khỏi union**
+* `Extract<T, U>` → **giữ trong union**
+* `NonNullable<T>` → **loại null/undefined**
+* `ReturnType<T>` → **lấy kiểu trả về**
+* `Parameters<T>` → **lấy tham số hàm**
+* `InstanceType<T>` → **kiểu instance class**
+* `ConstructorParameters<T>` → **tham số constructor**
+
+---
+
+## 8. Kết luận
+
+**Utility types không phải shortcuts — chúng là đòn bẩy.**
+
+Bạn không chỉ tiết kiệm dòng code.
+Bạn đang **loại trừ bugs**, **thực thi contracts** và **mở rộng type safety**.
+
+Từ `Partial<Pick<T, K>>` đến `ReturnType<typeof fn>`,
+mỗi utility là một **pattern được chưng cất thành một từ duy nhất**.
+
+Hãy thành thạo chúng.
+**Types của bạn sẽ cảm ơn bạn.**
+
+*Viết bởi Alex Kim*
+
+*#TypeScript #UtilityTypes #AdvancedTS #TypeSafety #Exclude #Extract #ReturnType #Pick #Omit #Record #WebDev*

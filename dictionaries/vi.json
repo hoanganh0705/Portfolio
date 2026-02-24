@@ -1,0 +1,134 @@
+{
+  "nav": {
+    "home": "trang chủ",
+    "resume": "hồ sơ",
+    "work": "dự án",
+    "blog": "blog",
+    "contact": "liên hệ"
+  },
+  "common": {
+    "hireMe": "Thuê tôi",
+    "downloadCV": "Tải CV",
+    "backToHome": "Về Trang Chủ",
+    "contactMe": "Liên Hệ"
+  },
+  "home": {
+    "greeting": "Xin chào, tôi là",
+    "description": "Lập trình viên full-stack và giảng viên tại Việt Nam. Tôi xây dựng những trải nghiệm số tinh tế với Next.js, Golang & Devops và cung cấp dịch vụ gia sư.",
+    "whatIDo": "Tôi làm gì ?",
+    "findOutAboutMe": "Tìm hiểu về tôi và những gì tôi giỏi",
+    "whyWorkWithMe": "Vì sao nên hợp tác với tôi ?"
+  },
+  "skills": {
+    "seo": {
+      "key": "T",
+      "title": "ối ưu SEO",
+      "body": "Tăng lưu lượng truy cập tự nhiên và cải thiện thứ hạng tìm kiếm thông qua nghiên cứu từ khóa chiến lược, tối ưu on-page và off-page, cùng các phương pháp SEO kỹ thuật tốt nhất."
+    },
+    "frontend": {
+      "key": "L",
+      "title": "ập trình Frontend",
+      "body": "Xây dựng giao diện người dùng responsive và tương tác với các công nghệ web hiện đại như HTML, CSS, React hoặc Next.js để mang lại trải nghiệm người dùng hấp dẫn."
+    },
+    "backend": {
+      "key": "P",
+      "title": "hát triển Backend",
+      "body": "Phát triển ứng dụng server-side mạnh mẽ và có khả năng mở rộng, quản lý cơ sở dữ liệu và thiết kế API để đảm bảo luồng dữ liệu và chức năng liền mạch."
+    },
+    "teaching": {
+      "key": "D",
+      "title": "ạy tiếng Anh",
+      "body": "Hỗ trợ việc học ngôn ngữ hiệu quả thông qua lập kế hoạch bài giảng hấp dẫn, phương pháp giảng dạy đa dạng và tạo môi trường học tập hỗ trợ."
+    }
+  },
+  "whyMe": {
+    "problemSolving": {
+      "title": "Tư duy giải quyết vấn đề",
+      "description": "Các thách thức được giải quyết thông qua tư duy chiến lược và giải pháp sáng tạo, tận dụng nghiên cứu và kinh nghiệm để đáp ứng các yêu cầu phức tạp một cách hiệu quả."
+    },
+    "fastService": {
+      "title": "Dịch vụ nhanh chóng",
+      "description": "Niềm đam mê của tôi nằm ở việc tạo ra các giải pháp web chất lượng cao. Tôi luôn không ngừng học hỏi, nâng cao kỹ năng để mang đến cho bạn những công nghệ mới nhất và hiệu quả nhất."
+    },
+    "secureSolutions": {
+      "title": "Giải pháp bảo mật",
+      "description": "Được xây dựng với sự ổn định và bảo vệ dữ liệu, sử dụng các giao thức bảo mật tiêu chuẩn ngành và quy trình kiểm thử nghiêm ngặt."
+    },
+    "transparent": {
+      "title": "Minh bạch và rõ ràng",
+      "description": "Duy trì cập nhật thường xuyên và hợp tác minh bạch để đảm bảo tất cả các bên liên quan luôn đồng bộ trong suốt quá trình phát triển."
+    }
+  },
+  "stats": {
+    "yearsOfExperience": "Năm kinh nghiệm",
+    "projectsCompleted": "Dự án hoàn thành",
+    "technologiesMastered": "Công nghệ thành thạo",
+    "codeCommits": "Code commits"
+  },
+  "blog": {
+    "pageTitle": "Blog",
+    "pageDescription": "Khám phá các bài viết về phát triển web, lập trình và xu hướng công nghệ mới nhất. Mẹo, hướng dẫn và chia sẻ từ một lập trình viên full-stack.",
+    "featured": "Bài viết nổi bật",
+    "allPosts": "Tất cả bài viết",
+    "backToArticles": "Quay lại danh sách",
+    "onThisPage": "Trong trang này",
+    "shareArticle": "Chia sẻ bài viết",
+    "enjoyedArticle": "Bạn thích bài viết này?",
+    "enjoyedDescription": "Tôi viết về phát triển web, React, Next.js và nhiều hơn nữa. Hãy cùng hợp tác trong dự án tiếp theo của bạn.",
+    "readMoreArticles": "Đọc thêm bài viết",
+    "getInTouch": "Liên hệ →",
+    "moreArticles": "Thêm bài viết",
+    "recommended": "Đề xuất",
+    "authorBio": "Lập trình viên Full-Stack & Giảng viên tại Việt Nam. Đam mê Next.js, React và xây dựng trải nghiệm web tuyệt vời.",
+    "published": "Đăng ngày"
+  },
+  "contact": {
+    "title": "Hãy hợp tác cùng nhau",
+    "description": "Điền vào biểu mẫu bên dưới để liên hệ với tôi. Tôi sẽ phản hồi bạn sớm nhất có thể.",
+    "firstname": "Họ",
+    "lastname": "Tên",
+    "email": "Địa chỉ email",
+    "phone": "Số điện thoại",
+    "message": "Nhập tin nhắn của bạn tại đây.",
+    "send": "Gửi tin nhắn",
+    "selectService": "Chọn dịch vụ",
+    "serviceOptions": {
+      "webDev": "Phát triển Web",
+      "seo": "Tối ưu SEO",
+      "teaching": "Dạy tiếng Anh",
+      "tutoring": "Gia sư riêng"
+    },
+    "infoLabels": {
+      "phone": "Điện thoại",
+      "email": "Email",
+      "address": "Địa chỉ"
+    }
+  },
+  "resume": {
+    "experience": "Kinh nghiệm",
+    "education": "Học vấn",
+    "skills": "Kỹ năng",
+    "aboutMe": "Về tôi",
+    "myExperience": "Kinh nghiệm của tôi",
+    "myEducation": "Học vấn của tôi",
+    "mySkills": "Kỹ năng của tôi",
+    "aboutTitle": "Về Tôi"
+  },
+  "work": {
+    "pageTitle": "Dự án của tôi",
+    "liveProject": "Xem dự án",
+    "githubRepo": "Mã nguồn Github"
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Không tìm thấy trang",
+    "description": "Trang bạn đang tìm kiếm không tồn tại hoặc đã được di chuyển. Hãy quay lại trang chủ."
+  },
+  "mySelf": [
+    "Nguyễn Hoàng Anh",
+    "Anh Nguyen Dev",
+    "Lập trình viên Web",
+    "Giáo viên tiếng Anh",
+    "Chuyên gia SEO"
+  ]
+}

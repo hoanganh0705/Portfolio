@@ -2,6 +2,8 @@ import { Suspense } from 'react'
 import { BlogFeaturedPosts } from '@/components/blog/BlogFeaturedPosts'
 import { BlogPostGrid } from '@/components/blog/BlogPostGrid'
 import { createMetadata } from '@/lib/metadata'
+import type { Locale } from '@/lib/i18n'
+import { getDictionary } from '@/lib/dictionaries'
 
 export const metadata = createMetadata({
   title: 'Blog — Thoughts on Development & Technology',
@@ -46,37 +48,45 @@ const FeaturedFallback = (
   </div>
 )
 
-export default function BlogPage() {
+export default async function BlogPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  const dict = await getDictionary(locale as Locale)
+
   return (
     <section className='min-h-screen'>
       <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
         {/* Hero */}
         <div className='py-12 xl:py-16'>
           <h1 className='text-3xl xl:text-4xl font-bold mb-6'>
-            My{' '}
+            {dict.blog.pageTitle.split(' ')[0]}{' '}
             <span className='text-accent-default'>
-              Blog
+              {dict.blog.pageTitle
+                .split(' ')
+                .slice(1)
+                .join(' ') || 'Blog'}
             </span>
           </h1>
           <p className='text-lg text-muted-foreground max-w-2xl leading-relaxed'>
-            Thoughts on design, development, and the web.
-            Exploring the intersection of thoughtful design
-            and robust engineering.
+            {dict.blog.pageDescription}
           </p>
         </div>
 
         {/* Featured Posts */}
         <Suspense fallback={FeaturedFallback}>
-          <BlogFeaturedPosts />
+          <BlogFeaturedPosts locale={locale as Locale} />
         </Suspense>
 
         {/* All Posts */}
         <section className='pb-16'>
           <h2 className='text-2xl font-bold text-foreground mb-8'>
-            All Articles
+            {dict.blog.allPosts}
           </h2>
           <Suspense fallback={PostGridFallback}>
-            <BlogPostGrid />
+            <BlogPostGrid locale={locale as Locale} />
           </Suspense>
         </section>
       </div>

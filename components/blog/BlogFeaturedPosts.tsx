@@ -3,9 +3,17 @@ import {
   getFeaturedPosts,
   PostMetadata,
 } from '@/lib/getPosts'
+import type { Locale } from '@/lib/i18n'
 
-export async function BlogFeaturedPosts() {
-  const posts: PostMetadata[] = await getFeaturedPosts(3)
+interface Props {
+  locale: Locale
+}
+
+export async function BlogFeaturedPosts({ locale }: Props) {
+  const posts: PostMetadata[] = await getFeaturedPosts(
+    locale,
+    3,
+  )
 
   if (posts.length === 0) return null
 
@@ -17,7 +25,7 @@ export async function BlogFeaturedPosts() {
       <div className='grid md:grid-cols-3 gap-6'>
         {posts.map((post) => (
           <Link
-            href={`/blog/${post.slug}`}
+            href={`/${locale}/blog/${post.slug}`}
             key={post.slug}
             className='group'
           >

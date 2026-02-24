@@ -3,8 +3,9 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import type { Locale } from './i18n'
 
-const postsDirectory = path.join(process.cwd(), 'content')
+const contentRoot = path.join(process.cwd(), 'content')
 
 export interface PostMetadata {
   slug: string
@@ -16,7 +17,8 @@ export interface PostMetadata {
   featured?: boolean
 }
 
-export async function getAllPosts(): Promise<PostMetadata[]> {
+export async function getAllPosts(locale: Locale = 'en'): Promise<PostMetadata[]> {
+  const postsDirectory = path.join(contentRoot, locale)
   if (!fs.existsSync(postsDirectory)) {
     return []
   }
@@ -47,9 +49,10 @@ export async function getAllPosts(): Promise<PostMetadata[]> {
 }
 
 export async function getFeaturedPosts(
+  locale: Locale = 'en',
   limit = 3
 ): Promise<PostMetadata[]> {
-  const allPosts = await getAllPosts()
+  const allPosts = await getAllPosts(locale)
   const featured = allPosts.filter((post) => post.featured)
   return featured.length > 0
     ? featured.slice(0, limit)
@@ -59,10 +62,10 @@ export async function getFeaturedPosts(
 export async function getRelatedPosts(
   currentSlug: string,
   category: string,
-  limit = 4
+  limit = 4,
+  locale: Locale = 'en'
 ): Promise<PostMetadata[]> {
-  const allPosts = await getAllPosts()
-  // Prefer same category, exclude current post
+  const allPosts = await getAllPosts(locale)
   const sameCategory = allPosts.filter(
     (p) => p.slug !== currentSlug && p.category === category
   )

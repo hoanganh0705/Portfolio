@@ -1,18 +1,33 @@
 'use client'
 
-import { links } from '@/constants/navLinks'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useLocale } from '@/lib/locale-context'
 
 type NavProps = { scrolled: boolean }
 
 const Nav = ({ scrolled }: NavProps) => {
   const pathname = usePathname()
+  const { locale, dict } = useLocale()
+
+  const links = [
+    { name: dict.nav.home, path: `/${locale}` },
+    { name: dict.nav.resume, path: `/${locale}/resume` },
+    { name: dict.nav.work, path: `/${locale}/work` },
+    { name: dict.nav.blog, path: `/${locale}/blog` },
+    {
+      name: dict.nav.contact,
+      path: `/${locale}/contact`,
+    },
+  ]
 
   return (
     <nav className='flex gap-8'>
       {links.map((link) => {
-        const isActive = link.path === pathname
+        const isActive =
+          link.path === pathname ||
+          (link.path === `/${locale}` &&
+            pathname === `/${locale}/`)
 
         const activeClasses = isActive
           ? scrolled

@@ -1,9 +1,14 @@
 import Link from 'next/link'
 import { FiCalendar, FiClock } from 'react-icons/fi'
 import { getAllPosts, PostMetadata } from '@/lib/getPosts'
+import type { Locale } from '@/lib/i18n'
 
-export async function BlogPostGrid() {
-  const posts: PostMetadata[] = await getAllPosts()
+interface Props {
+  locale: Locale
+}
+
+export async function BlogPostGrid({ locale }: Props) {
+  const posts: PostMetadata[] = await getAllPosts(locale)
 
   if (posts.length === 0) {
     return (
@@ -19,7 +24,7 @@ export async function BlogPostGrid() {
     <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
       {posts.map((post) => (
         <Link
-          href={`/blog/${post.slug}`}
+          href={`/${locale}/blog/${post.slug}`}
           key={post.slug}
           className='group'
         >

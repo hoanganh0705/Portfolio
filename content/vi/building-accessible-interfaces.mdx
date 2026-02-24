@@ -1,0 +1,219 @@
+---
+title: "Accessibility Không Phải Là Việc Bổ Sung Sau"
+excerpt: "Tìm hiểu tại sao accessibility (a11y) rất quan trọng cho thiết kế bao trùm và cách triển khai với HTML ngữ nghĩa, tương phản màu sắc và điều hướng bàn phím."
+category: "Accessibility"
+date: "2025-11-09"
+readTime: "8 phút đọc"
+author: "Nguyễn Hoàng Anh"
+authorImage: "/images/author.jpeg"
+featured: true
+image: "/images/accessibility.webp"
+---
+import CodeBlock from '@/components/blog/CodeBlock.tsx';
+
+
+## 1. Giới thiệu
+
+### 1.1 Bối cảnh
+
+**Khả năng tiếp cận số** (thường viết tắt là **"a11y"**) là việc thiết kế và xây dựng website, ứng dụng và các công cụ số để mọi người đều có thể sử dụng — bất kể khả năng hay khuyết tật của họ.
+
+Khi bạn thiết kế với tư duy accessibility, bạn không chỉ làm mọi thứ tốt hơn cho người khuyết tật. Bạn cải thiện trải nghiệm cho **tất cả mọi người**.
+
+### 1.2 Hiệu ứng Curb-Cut
+
+Ý tưởng này thường được gọi là **hiệu ứng curb-cut**.
+
+Curb cuts — những lối dốc trên vỉa hè — ban đầu được thiết kế cho người sử dụng xe lăn. Nhưng ai khác cũng sử dụng chúng?
+
+- Cha mẹ đẩy xe nôi
+- Du khách kéo hành lý
+- Nhân viên giao hàng với xe đẩy
+- Người chạy bộ và đạp xe
+
+Nguyên tắc tương tự áp dụng cho **thiết kế số**.
+Các tính năng như **văn bản tương phản cao**, **nhãn rõ ràng** và **phụ đề video** không chỉ giúp người khuyết tật — chúng giúp bất kỳ ai trong các tình huống khó khăn, như sử dụng điện thoại dưới ánh nắng mặt trời hoặc xem video trong quán cà phê ồn ào.
+
+Accessibility không phải là mục kiểm tra cuối cùng.
+Đó là **phần nền tảng** của toàn bộ quy trình thiết kế và phát triển.
+
+## 2. Nền tảng HTML Ngữ nghĩa
+
+Một giao diện thực sự accessible bắt đầu với **HTML ngữ nghĩa** — sử dụng đúng phần tử cho đúng mục đích.
+
+**Ngữ nghĩa tốt:**
+
+<CodeBlock
+  language="html"
+  highlight="3-5, 8"
+  collapsible
+  defaultCollapsed={false}
+>
+{`<nav>...</nav>
+<main>...</main>
+<article>...</article>
+<button>Click me</button>`}
+</CodeBlock>
+
+**Ngữ nghĩa xấu:**
+
+<CodeBlock
+  language="html"
+  highlight="3-5, 8"
+  collapsible
+  defaultCollapsed={false}
+>
+{`<div class="button">Click me</div>`}
+</CodeBlock>
+
+Tại sao điều này quan trọng?
+Vì **trình đọc màn hình** biết cách thông báo một `<button>` — nó nói:
+
+> "Click me, button."
+
+Nhưng một `<div>` được tạo kiểu như nút? Nó **im lặng và vô hình** với công nghệ hỗ trợ.
+
+HTML ngữ nghĩa là nền tảng cho accessibility.
+Nó mang lại ý nghĩa cho nội dung và cho phép các công cụ như trình đọc màn hình diễn giải nó chính xác.
+
+## 3. Màu sắc và Tương phản
+
+### 3.1 Nhắm đến tỷ lệ 4.5:1
+
+Theo **WCAG Level AA**, văn bản nên có **tỷ lệ tương phản tối thiểu 4.5:1** so với nền.
+Điều này đảm bảo khả năng đọc cho người dùng có thị lực kém hoặc thiếu hụt màu sắc.
+
+**Công cụ kiểm tra tương phản:**
+
+* [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
+* Chrome DevTools → Elements → Computed → Contrast
+
+### 3.2 Không Chỉ Dựa Vào Màu Sắc
+
+Không bao giờ sử dụng màu sắc là **chỉ báo duy nhất** của ý nghĩa.
+
+❌ Ví dụ:
+
+<CodeBlock
+  language="text"
+  highlight="3-5, 8"
+  collapsible
+  defaultCollapsed={false}
+>
+{`This field is required`}
+</CodeBlock>
+
+✅ Tốt hơn:
+Thêm **biểu tượng, văn bản hoặc mẫu gạch chân** để củng cố ý nghĩa.
+
+## 4. Điều hướng Bàn phím
+
+Không phải ai cũng sử dụng chuột.
+Một số dựa vào **điều hướng bàn phím** — sử dụng phím **Tab**, **Shift+Tab** và **Enter** để khám phá và tương tác với giao diện.
+
+Kiểm tra trang web của bạn:
+👉 Bạn có thể truy cập mọi liên kết, nút và trường nhập liệu chỉ bằng **bàn phím** không?
+
+### 4.1 Không bao giờ làm thế này:
+
+<CodeBlock
+  language="tsx"
+  highlight="3-5, 8"
+  collapsible
+  defaultCollapsed={false}
+>
+{`outline: none; /* Ẩn vòng focus */`}
+</CodeBlock>
+
+Điều này loại bỏ **chỉ báo focus nhìn thấy được**, cho người dùng biết họ đang ở đâu trên trang — một vấn đề accessibility nghiêm trọng.
+
+### 4.2 Hãy làm thế này:
+
+Nếu bạn sử dụng Tailwind CSS:
+
+<CodeBlock
+  language="tsx"
+  highlight="3-5, 8"
+  collapsible
+  defaultCollapsed={false}
+>
+{`<button className="focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+    Click me
+</button>`}
+</CodeBlock>
+
+Điều này giữ thiết kế sạch sẽ trong khi duy trì khả năng hiển thị focus.
+
+## 5. Accessibility cho Form
+
+Form là một trong những điểm đau accessibility phổ biến nhất — và bị bỏ qua nhiều nhất.
+Đây là cách làm chúng tốt hơn:
+
+### 5.1 Luôn Sử Dụng `<label>`
+
+Một `<label>` có thể nhìn thấy và được liên kết đúng cách cho cả người dùng nhìn thấy và trình đọc màn hình biết trường nhập liệu dùng cho gì.
+
+✅ Ví dụ:
+
+<CodeBlock
+  language="tsx"
+  highlight="3-5, 8"
+  collapsible
+  defaultCollapsed={false}
+>
+{`<label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+    Email Address
+  </label>
+  <input
+    id="email"
+    type="email"
+    className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+  />`}
+</CodeBlock>
+
+Không có `<label>`, trình đọc màn hình có thể chỉ nói "Edit text" — khiến người dùng không chắc trường đó dùng để làm gì.
+
+### 5.2 Cung Cấp Thông Báo Lỗi Rõ Ràng
+
+Lỗi nên **cụ thể và dễ hiểu** — không chỉ "Invalid input."
+
+✅ Ví dụ:
+
+<CodeBlock
+  language="tsx"
+  highlight="3-5, 8"
+  collapsible
+  defaultCollapsed={false}
+>
+{`
+<p id="email-error" className="mt-1 text-sm text-red-600 flex items-center gap-1">
+    <span className="text-xl">❌</span>
+    Please enter a valid email (e.g., name@example.com)
+</p>
+`}
+
+</CodeBlock>
+
+Kết hợp lỗi với biểu tượng hoặc màu sắc **cộng** văn bản mô tả — không chỉ dựa vào màu sắc.
+
+## 6. Mẹo Kiểm tra
+
+Đây là một vài kiểm tra đơn giản bạn có thể làm ngay hôm nay:
+
+* 🔍 **Kiểm tra bàn phím:** Điều hướng toàn bộ trang web chỉ bằng Tab và Enter.
+* 🗣️ **Kiểm tra trình đọc màn hình:** Thử trang web với VoiceOver (Mac) hoặc NVDA (Windows).
+* 🎨 **Kiểm tra tương phản:** Đảm bảo tất cả văn bản đạt tỷ lệ 4.5:1.
+* 🧩 **Kiểm tra ngữ nghĩa:** Sử dụng đúng phần tử HTML — tránh `<div>` cho vai trò tương tác.
+* ⚙️ **Thuộc tính ARIA:** Chỉ sử dụng khi các phần tử HTML gốc không đủ.
+
+## 7. Kết luận
+
+Accessibility không phải là **tính năng bonus**.
+Đó là **thiết kế tốt**.
+
+Khi chúng ta xây dựng website và ứng dụng accessible, chúng ta làm web tốt hơn cho mọi người — nhanh hơn, rõ ràng hơn và dễ sử dụng hơn trong mọi tình huống.
+
+Accessibility không phải về sự hoàn hảo; đó là về **tiến bộ**.
+Mỗi alt text, mỗi focus ring, mỗi thẻ ngữ nghĩa bạn thêm đưa chúng ta gần hơn đến một web mà **mọi người** đều có thể thưởng thức.
+
+*#Accessibility #WebDesign #InclusiveDesign #a11y #Frontend*

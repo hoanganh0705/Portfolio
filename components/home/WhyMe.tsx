@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useRef, useEffect, useState } from 'react'
-import { whyMe } from '@/constants/whyme'
+import { whyMe as whyMeData } from '@/constants/whyme'
 import {
   m,
   LazyMotion,
@@ -10,6 +10,7 @@ import {
   useReducedMotion,
   type Variants,
 } from 'framer-motion'
+import { useLocale } from '@/lib/locale-context'
 
 const loadFeatures = () =>
   import('framer-motion').then((mod) => mod.domMax)
@@ -74,6 +75,21 @@ export default function WhyMe() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const prefersReducedMotion = useReducedMotion()
   const [viewportAmount, setViewportAmount] = useState(0.8)
+  const { dict } = useLocale()
+
+  const whyMeKeys = [
+    'problemSolving',
+    'fastService',
+    'secureSolutions',
+    'transparent',
+  ] as const
+  const whyMe = whyMeData.map((item, i) => ({
+    ...item,
+    whyMe: dict.whyMe[whyMeKeys[i]]?.title || item.whyMe,
+    briefDesc:
+      dict.whyMe[whyMeKeys[i]]?.description ||
+      item.briefDesc,
+  }))
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -135,7 +151,7 @@ export default function WhyMe() {
               className='text-3xl font-bold text-center text-primary/90 mb-8 xl:mb-12'
               variants={iconVariants}
             >
-              Why Choose Me?
+              {dict.home.whyWorkWithMe}
             </m.h2>
 
             <m.div

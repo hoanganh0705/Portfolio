@@ -16,9 +16,9 @@ import { useRef } from 'react'
 import Stairs from './Stairs'
 import dynamic from 'next/dynamic'
 
-/** Blog detail routes like /blog/some-slug should not trigger the stair transition */
+/** Blog detail routes like /en/blog/some-slug should not trigger the stair transition */
 const isBlogDetail = (path: string) =>
-  /^\/blog\/.+/.test(path)
+  /^\/(en|vi)\/blog\/.+/.test(path)
 
 const StairTransition = () => {
   const pathname = usePathname()

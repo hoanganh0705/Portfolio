@@ -1,0 +1,242 @@
+---
+title: "Thành Thạo Next.js App Router"
+excerpt: "Tìm hiểu sâu về App Router: layouts, route groups, parallel routes, loading states và các mẫu nâng cao cho ứng dụng có khả năng mở rộng."
+category: "Next.js"
+date: "2025-11-12"
+readTime: "10 phút đọc"
+author: "Lina Chen"
+authorImage: "/images/author.jpeg"
+featured: true
+image: "/images/app-router.jpg"
+---
+import CodeBlock from '@/components/blog/CodeBlock.tsx';
+
+
+## 1. Giới thiệu
+
+Từ **Next.js 13**, **App Router** (thư mục `app/`) đã thay thế hệ thống `pages/` cũ.
+
+Đây không chỉ là thay đổi thư mục — đó là **sự thay đổi mô hình hoàn toàn** trong routing, layouts và data fetching.
+
+Hãy cùng thành thạo nó. Từng bước một.
+
+## 2. App Router vs Pages Router
+
+<div className="my-8 overflow-x-auto rounded-lg border border-border">
+  <table className="w-full min-w-[600px] table-auto border-collapse">
+    <thead>
+      <tr className="bg-muted/50">
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Tính năng</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Pages Router</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">App Router</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 text-sm">Thư mục</td>
+        <td className="border border-border px-4 py-3 text-sm font-mono">pages/</td>
+        <td className="border border-border px-4 py-3 text-sm font-mono">app/</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 text-sm">Layouts</td>
+        <td className="border border-border px-4 py-3 text-sm">_app.tsx + _document.tsx</td>
+        <td className="border border-border px-4 py-3 text-sm">layout.tsx (lồng nhau!)</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 text-sm">Loading UI</td>
+        <td className="border border-border px-4 py-3 text-sm">Thủ công</td>
+        <td className="border border-border px-4 py-3 text-sm">loading.tsx (tự động!)</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 text-sm">Route Groups</td>
+        <td className="border border-border px-4 py-3 text-sm">Không hỗ trợ</td>
+        <td className="border border-border px-4 py-3 text-sm">Thư mục (group)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## 3. Nested Layouts
+
+Mỗi thư mục có thể có `layout.tsx` → **tự động lồng nhau**.
+
+<CodeBlock
+  language="tsx"
+  highlight="3-7"
+  collapsible
+  defaultCollapsed={false}
+>
+{`app/
+├── layout.tsx          // Root layout (html, body)
+├── dashboard/
+│   ├── layout.tsx      // Dashboard shell (sidebar)
+│   └── page.tsx        // Dashboard home
+└── blog/
+    └── layout.tsx      // Blog layout (author bio)`}
+</CodeBlock>
+
+> **Không truyền props. Không code trùng lặp.**
+> Layouts **wrap children tự động**.
+
+## 4. Loading và Error States
+
+### 4.1 Loading UI
+
+<CodeBlock
+  language="tsx"
+  highlight="1"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// app/dashboard/loading.tsx
+export default function Loading() {
+    return <div className="animate-pulse">Đang tải dashboard...</div>;
+}`}
+</CodeBlock>
+
+→ Hiển thị **trong khi `page.tsx` đang fetch dữ liệu**
+
+### 4.2 Xử lý Lỗi
+
+```tsx
+// app/dashboard/error.tsx
+'use client';
+export default function Error({ error }: { error: Error }) {
+  return <p className="text-red-600">Lỗi: {error.message}</p>;
+}
+```
+
+## 5. Route Groups
+
+Sử dụng thư mục `(group)` để **nhóm routes logic** — **không thay đổi URL**.
+
+<CodeBlock
+  language="bash"
+  highlight="2-3"
+  collapsible
+  defaultCollapsed={false}
+>
+{`app/
+├── (marketing)/
+│   ├── about/page.tsx     → /about
+│   └── contact/page.tsx   → /contact
+└── (app)/
+    └── dashboard/page.tsx → /dashboard`}
+</CodeBlock>
+
+> Hoàn hảo cho **shared layouts**, **A/B testing**, hoặc **thư mục theo nhóm**
+
+## 6. Parallel Routes
+
+Render **nhiều `page.tsx` trong cùng layout** sử dụng cú pháp `@folder`.
+
+<CodeBlock
+  language="tsx"
+  highlight="4-6"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// app/dashboard/@analytics/page.tsx
+export default function Analytics() { return <Chart />; }
+
+// app/dashboard/@team/page.tsx
+export default function Team() { return <TeamList />; }
+
+// app/dashboard/layout.tsx
+export default function Layout({
+    children,
+    analytics,
+    team,
+}: {
+    children: React.ReactNode;
+    analytics: React.ReactNode;
+    team: React.ReactNode;
+}) {
+  return (
+    <>
+      <Sidebar />
+      <main>{children}</main>
+      <aside>{analytics}</aside>
+      <footer>{team}</footer>
+    </>
+  );
+}`}
+</CodeBlock>
+
+→ `/dashboard` hiển thị **main + analytics + team** đồng thời
+
+## 7. Route Interception
+
+Chặn một route **mà không điều hướng** — hoàn hảo cho modals.
+
+<CodeBlock
+  language="tsx"
+  highlight="1"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// app/@modal/(.)photo/[id]/page.tsx
+// → /photo/123 → mở như modal, URL giữ nguyên /feed`}
+</CodeBlock>
+
+> Click ảnh → **modal mở**, URL cập nhật, **nút back đóng nó**
+
+## 8. Lỗi Thường Gặp
+
+<CodeBlock
+  language="tsx"
+  highlight="1-3"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// 1. Trộn app/ và pages/
+app/page.tsx + pages/api/hello.ts → Không thể đoán trước
+
+// 2. Chỉ đặt page.tsx ở root
+app/nested/page.tsx → Phải có thư mục!
+
+// 3. Quên 'use client' trong client components`}
+</CodeBlock>
+
+## 9. Best Practices
+
+<CodeBlock
+  language="tsx"
+  highlight="2, 5"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// 1. Sử dụng loading.tsx mọi nơi
+app/settings/loading.tsx → UX tức thì
+
+// 2. Dùng route groups cho shared layouts
+app/(admin)/users/page.tsx
+app/(admin)/settings/page.tsx
+
+// 3. Luôn export default từ page/layout`}
+</CodeBlock>
+
+## 10. Hướng dẫn Migration
+
+* Chuyển dần từ `pages/` → `app/`
+* Sử dụng thư mục `(group)` cho shared layouts
+* Thêm `loading.tsx` cho các trang chậm
+* Thay thế `_app.tsx` bằng nested `layout.tsx`
+* Sử dụng `@folder` cho parallel routes
+* Test modals với `(.)interception`
+
+## 11. Kết luận
+
+**App Router** không chỉ là một thư mục mới.
+
+Đó là **React Server Components**, **streaming**, **nested layouts** và **modals không có JS** — tất cả trong một.
+
+Ngừng chiến đấu với `_app.tsx`.
+Ngừng wrap layouts thủ công.
+**Hãy đón nhận App Router.**
+
+Ứng dụng của bạn sẽ **nhanh hơn**, **sạch hơn** và **dễ bảo trì hơn**.
+
+*Viết bởi Lina Chen*
+
+*#NextJS #AppRouter #React #ServerComponents #WebDev #Frontend*

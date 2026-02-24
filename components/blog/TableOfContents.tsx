@@ -14,46 +14,68 @@ export function TableOfContents() {
   const [activeId, setActiveId] = useState<string>('')
 
   useEffect(() => {
-    // Extract headings from the article content
+    function extractHeadings(): TocItem[] {
+      const article = document.querySelector('article')
+      if (!article) return []
+
+      const elements =
+        article.querySelectorAll('h2, h3, h4')
+      const items: TocItem[] = []
+      const footer = document.querySelector('footer')
+
+      elements.forEach((el) => {
+        if (footer?.contains(el)) return
+        const text =
+          el.textContent?.replace(/\*\*/g, '').trim() || ''
+        if (!text) return
+
+        let id = el.id
+        if (!id) {
+          id = text
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)/g, '')
+          el.id = id
+        }
+
+        items.push({
+          id,
+          text,
+          level:
+            el.tagName === 'H2'
+              ? 2
+              : el.tagName === 'H3'
+                ? 3
+                : 4,
+        })
+      })
+      return items
+    }
+
+    // Try immediately — content may already be rendered
+    const initial = extractHeadings()
+    if (initial.length > 0) {
+      setHeadings(initial)
+      return
+    }
+
+    // Content not yet in DOM (first navigation) — observe for changes
     const article = document.querySelector('article')
     if (!article) return
 
-    const elements = article.querySelectorAll('h2, h3, h4')
-    const items: TocItem[] = []
-    // Get the footer element to exclude its headings from TOC
-    const footer = article.querySelector('footer')
-
-    elements.forEach((el) => {
-      // Skip headings inside the post footer (share, CTA sections)
-      if (footer?.contains(el)) return
-
-      // Generate ID from text content if not present
-      const text =
-        el.textContent?.replace(/\*\*/g, '').trim() || ''
-      if (!text) return
-
-      let id = el.id
-      if (!id) {
-        id = text
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/(^-|-$)/g, '')
-        el.id = id
+    const observer = new MutationObserver(() => {
+      const items = extractHeadings()
+      if (items.length > 0) {
+        setHeadings(items)
+        observer.disconnect()
       }
-
-      items.push({
-        id,
-        text,
-        level:
-          el.tagName === 'H2'
-            ? 2
-            : el.tagName === 'H3'
-              ? 3
-              : 4,
-      })
     })
 
-    setHeadings(items)
+    observer.observe(article, {
+      childList: true,
+      subtree: true,
+    })
+    return () => observer.disconnect()
   }, [])
 
   useEffect(() => {

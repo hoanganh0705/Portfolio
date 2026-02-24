@@ -2,14 +2,20 @@ import { notFound } from 'next/navigation'
 import { PostDetailLayout } from '@/components/blog/PostDetailLayout'
 import type { Metadata } from 'next'
 import { siteConfig } from '@/lib/site-config'
-import { getRelatedPosts } from '@/lib/getPosts'
+import {
+  getRelatedPosts,
+  getAllPosts,
+} from '@/lib/getPosts'
+import type { Locale } from '@/lib/i18n'
 
 export const dynamicParams = false
 
-export async function generateStaticParams() {
-  const { getAllPosts } = await import('@/lib/getPosts')
-  const posts = await getAllPosts()
-
+export async function generateStaticParams({
+  params,
+}: {
+  params: { locale: string }
+}) {
+  const posts = await getAllPosts(params.locale as Locale)
   return posts.map((post) => ({
     id: post.slug,
   }))
@@ -18,12 +24,14 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ id: string }>
+  params: Promise<{ locale: string; id: string }>
 }): Promise<Metadata> {
-  const { id } = await params
+  const { locale, id } = await params
 
   try {
-    const mod = await import(`@/content/${id}.mdx`)
+    const mod = await import(
+      `@/content/${locale}/${id}.mdx`
+    )
     const metadata = mod.metadata
 
     if (!metadata) {
@@ -33,7 +41,7 @@ export async function generateMetadata({
       }
     }
 
-    const postUrl = `${siteConfig.url}/blog/${id}`
+    const postUrl = `${siteConfig.url}/${locale}/blog/${id}`
 
     return {
       title: `${metadata.title} | ${siteConfig.name}`,
@@ -54,7 +62,8 @@ export async function generateMetadata({
         url: postUrl,
         siteName: siteConfig.name,
         type: 'article',
-        locale: siteConfig.locale,
+        locale:
+          locale === 'vi' ? 'vi_VN' : siteConfig.locale,
         images: metadata.image
           ? [
               {
@@ -99,6 +108,10 @@ export async function generateMetadata({
       },
       alternates: {
         canonical: postUrl,
+        languages: {
+          en: `${siteConfig.url}/en/blog/${id}`,
+          vi: `${siteConfig.url}/vi/blog/${id}`,
+        },
       },
     }
   } catch {
@@ -112,15 +125,17 @@ export async function generateMetadata({
 export default async function PostPage({
   params,
 }: {
-  params: Promise<{ id: string }>
+  params: Promise<{ locale: string; id: string }>
 }) {
-  const { id } = await params
+  const { locale, id } = await params
 
   let PostComponent
   let metadata
 
   try {
-    const mod = await import(`@/content/${id}.mdx`)
+    const mod = await import(
+      `@/content/${locale}/${id}.mdx`
+    )
     PostComponent = mod.default
     metadata = mod.metadata
   } catch {
@@ -133,6 +148,7 @@ export default async function PostPage({
     id,
     metadata.category,
     4,
+    locale as Locale,
   )
 
   return (

@@ -3,7 +3,7 @@ export default function WorkLoading() {
     <div className='container mx-auto px-4 py-12'>
       <div className='flex flex-col xl:flex-row gap-8'>
         {/* Project info skeleton */}
-        <div className='xl:w-1/2 space-y-6 order-2 xl:order-none'>
+        <div className='xl:w-1/2 space-y-6 order-2 xl:order-0'>
           <div className='h-6 w-20 bg-foreground/10 rounded animate-pulse' />
           <div className='h-10 w-3/4 bg-foreground/10 rounded animate-pulse' />
           <div className='h-4 w-full bg-foreground/10 rounded animate-pulse' />

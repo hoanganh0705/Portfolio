@@ -17,6 +17,7 @@ import { AuthorAvatar } from './AuthorAvatar'
 import { TableOfContents } from './TableOfContents'
 import { Recommendations } from './Recommendations'
 import type { PostMetadata } from '@/lib/getPosts'
+import { useLocale } from '@/lib/locale-context'
 
 export interface Frontmatter {
   title: string
@@ -40,25 +41,29 @@ export function PostDetailLayout({
   children,
   recommendations = [],
 }: Props) {
+  const { locale, dict } = useLocale()
   const formatted = new Date(
     metadata.date,
-  ).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
+  ).toLocaleDateString(
+    locale === 'vi' ? 'vi-VN' : 'en-US',
+    {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    },
+  )
 
   return (
     <div className='min-h-screen'>
       <div className='max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12'>
         {/* Back button — full width */}
-        <Link href='/blog'>
+        <Link href={`/${locale}/blog`}>
           <Button
             variant='outline'
             className='mb-8 -ml-2 cursor-pointer border-border text-accent-default hover:bg-accent-default/10 hover:text-accent-hover'
           >
             <FiArrowLeft size={20} className='mr-2' />
-            Back to Articles
+            {dict.blog.backToArticles}
           </Button>
         </Link>
 
@@ -106,7 +111,7 @@ export function PostDetailLayout({
                     {metadata.author}
                   </p>
                   <p className='text-sm text-muted-foreground'>
-                    Published {formatted}
+                    {dict.blog.published} {formatted}
                   </p>
                 </div>
               </div>
@@ -145,11 +150,11 @@ export function PostDetailLayout({
               <div>
                 <h3 className='text-lg font-semibold text-foreground mb-4 flex items-center gap-2'>
                   <FiShare2 size={18} />
-                  Share this article
+                  {dict.blog.shareArticle}
                 </h3>
                 <div className='flex gap-3'>
                   <a
-                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(metadata.title)}&url=${encodeURIComponent(`https://anhnguyendev.me/blog/${metadata.title.toLowerCase().replace(/\s+/g, '-')}`)}`}
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(metadata.title)}&url=${encodeURIComponent(`https://anhnguyendev.me/${locale}/blog/${metadata.title.toLowerCase().replace(/\s+/g, '-')}`)}`}
                     target='_blank'
                     rel='noopener noreferrer'
                     className='inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-foreground/5 border border-border text-foreground hover:bg-accent-default/10 hover:text-accent-default transition-colors text-sm'
@@ -157,7 +162,7 @@ export function PostDetailLayout({
                     <FiTwitter size={16} /> Twitter
                   </a>
                   <a
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://anhnguyendev.me/blog/${metadata.title.toLowerCase().replace(/\s+/g, '-')}`)}`}
+                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://anhnguyendev.me/${locale}/blog/${metadata.title.toLowerCase().replace(/\s+/g, '-')}`)}`}
                     target='_blank'
                     rel='noopener noreferrer'
                     className='inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-foreground/5 border border-border text-foreground hover:bg-accent-default/10 hover:text-accent-default transition-colors text-sm'
@@ -165,7 +170,7 @@ export function PostDetailLayout({
                     <FiLinkedin size={16} /> LinkedIn
                   </a>
                   <a
-                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://anhnguyendev.me/blog/${metadata.title.toLowerCase().replace(/\s+/g, '-')}`)}`}
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://anhnguyendev.me/${locale}/blog/${metadata.title.toLowerCase().replace(/\s+/g, '-')}`)}`}
                     target='_blank'
                     rel='noopener noreferrer'
                     className='inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-foreground/5 border border-border text-foreground hover:bg-accent-default/10 hover:text-accent-default transition-colors text-sm'
@@ -188,23 +193,20 @@ export function PostDetailLayout({
                       {metadata.author}
                     </p>
                     <p className='text-muted-foreground text-sm mt-1'>
-                      Full-Stack Web Developer & Educator
-                      based in Vietnam. Passionate about
-                      Next.js, React, and building great web
-                      experiences.
+                      {dict.blog.authorBio}
                     </p>
                     <div className='flex gap-3 mt-3'>
                       <Link
-                        href='/contact'
+                        href={`/${locale}/contact`}
                         className='text-accent-default hover:text-accent-hover text-sm font-medium transition-colors'
                       >
-                        Get in touch →
+                        {dict.blog.getInTouch}
                       </Link>
                       <Link
-                        href='/blog'
+                        href={`/${locale}/blog`}
                         className='text-muted-foreground hover:text-foreground text-sm font-medium transition-colors'
                       >
-                        More articles
+                        {dict.blog.moreArticles}
                       </Link>
                     </div>
                   </div>
@@ -214,25 +216,23 @@ export function PostDetailLayout({
               {/* CTA */}
               <div className='rounded-xl bg-accent-default/10 border border-accent-default/20 p-6 text-center'>
                 <h3 className='text-lg font-semibold text-foreground mb-2'>
-                  Enjoyed this article?
+                  {dict.blog.enjoyedArticle}
                 </h3>
                 <p className='text-muted-foreground text-sm mb-4'>
-                  I write about web development, React,
-                  Next.js, and more. Let&apos;s work
-                  together on your next project.
+                  {dict.blog.enjoyedDescription}
                 </p>
                 <div className='flex justify-center gap-3'>
-                  <Link href='/contact'>
+                  <Link href={`/${locale}/contact`}>
                     <Button className='cursor-pointer'>
-                      Hire me
+                      {dict.common.hireMe}
                     </Button>
                   </Link>
-                  <Link href='/blog'>
+                  <Link href={`/${locale}/blog`}>
                     <Button
                       variant='outline'
                       className='cursor-pointer border-accent-default/30 text-accent-default hover:bg-accent-default/10'
                     >
-                      Read more articles
+                      {dict.blog.readMoreArticles}
                     </Button>
                   </Link>
                 </div>
@@ -243,7 +243,10 @@ export function PostDetailLayout({
           {/* Right sidebar — Recommendations */}
           <aside className='hidden xl:block'>
             <div className='sticky top-24'>
-              <Recommendations posts={recommendations} />
+              <Recommendations
+                posts={recommendations}
+                locale={locale}
+              />
             </div>
           </aside>
         </div>

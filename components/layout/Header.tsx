@@ -3,14 +3,17 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from './ThemeToggle'
+import { LanguageSwitcher } from './LanguageSwitcher'
 
 // components
 import Nav from './Nav'
 import MobileNav from './MobileNav'
 import { useEffect, useState } from 'react'
+import { useLocale } from '@/lib/locale-context'
 
 const Header = () => {
   const [hasScrolled, setHasScrolled] = useState(false)
+  const { locale, dict } = useLocale()
 
   useEffect(() => {
     const onScroll = () => {
@@ -27,7 +30,7 @@ const Header = () => {
     >
       <div className='container mx-auto flex justify-between items-center'>
         {/* Logo */}
-        <Link href='/'>
+        <Link href={`/${locale}`}>
           <h1
             className={`font-semibold  ${hasScrolled ? 'text-3xl' : 'text-4xl'}`}
           >
@@ -39,14 +42,18 @@ const Header = () => {
         {/* desktop nav & hire me button */}
         <div className='hidden xl:flex items-center gap-8'>
           <Nav scrolled={hasScrolled} />
+          <LanguageSwitcher scrolled={hasScrolled} />
           <ThemeToggle scrolled={hasScrolled} />
-          <Link href='/contact'>
-            <Button className=''>Hire me</Button>
+          <Link href={`/${locale}/contact`}>
+            <Button className=''>
+              {dict.common.hireMe}
+            </Button>
           </Link>
         </div>
 
         {/* mobile nav */}
         <div className='xl:hidden flex items-center gap-3'>
+          <LanguageSwitcher scrolled={hasScrolled} />
           <ThemeToggle scrolled={hasScrolled} />
           <MobileNav scrolled={hasScrolled} />
         </div>
