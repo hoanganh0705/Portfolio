@@ -11,8 +11,8 @@
   --breakpoint-xxl: 1536px;
 
   --font-primary: "var(--font-jetbrainsMono)";
-  --color-accent-default: oklch(0.8542 0.0517 199.29);
-  --color-accent-hover: oklch(0.9066 0.0517 199.29);
+  --color-accent-default: var(--accent-brand);
+  --color-accent-hover: var(--accent-brand-hover);
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -33,12 +33,9 @@
   .h3 {
     @apply text-[20px] xl:text-[24px] leading-[1.1] font-semibold;
   }
-  .clip-path {
-    clip-path: circle(50% at 50% 50%);
-  }
   
   .text-outline-hover {
-    -webkit-text-stroke: 1px oklch(0.8542 0.0517 199.29);
+    -webkit-text-stroke: 1px var(--accent-brand);
   }
   
   .text-outline {
@@ -46,7 +43,7 @@
   }
 
   .group:hover .text-outline-hover {
-    -webkit-text-stroke: 1px oklch(0.8542 0.0517 199.29);
+    -webkit-text-stroke: 1px var(--accent-brand);
   }
 
   .loader {
@@ -106,6 +103,8 @@
   --font-jetbrainsMono: "JetBrains Mono", monospace;
   --font-primary: var(--font-jetbrainsMono);
   --radius: 0.625rem;
+  --accent-brand: oklch(0.8542 0.08 199.29);
+  --accent-brand-hover: oklch(0.9066 0.08 199.29);
   --background: oklch(0.985 0.002 247.858);
   --foreground: oklch(0.145 0.042 264.695);
   --card: oklch(1 0 0);
@@ -127,6 +126,8 @@
 }
 
 .dark {
+  --accent-brand: oklch(0.8542 0.0517 199.29);
+  --accent-brand-hover: oklch(0.9066 0.0517 199.29);
   --background: oklch(0.2291 0.0115 285.46);
   --foreground: oklch(0.984 0.003 247.858);
   --card: oklch(0.2291 0.0115 285.46);
