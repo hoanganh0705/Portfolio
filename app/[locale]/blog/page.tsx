@@ -63,12 +63,6 @@ export default async function BlogPage({
         <div className='py-12 xl:py-16'>
           <h1 className='text-3xl xl:text-4xl font-bold mb-6'>
             {dict.blog.pageTitle.split(' ')[0]}{' '}
-            <span className='text-accent-default'>
-              {dict.blog.pageTitle
-                .split(' ')
-                .slice(1)
-                .join(' ') || 'Blog'}
-            </span>
           </h1>
           <p className='text-lg text-muted-foreground max-w-2xl leading-relaxed'>
             {dict.blog.pageDescription}

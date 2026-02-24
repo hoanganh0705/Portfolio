@@ -91,6 +91,7 @@
     "phone": "Số điện thoại",
     "message": "Nhập tin nhắn của bạn tại đây.",
     "send": "Gửi tin nhắn",
+    "sending": "Đang gửi...",
     "selectService": "Chọn dịch vụ",
     "serviceOptions": {
       "webDev": "Phát triển Web",

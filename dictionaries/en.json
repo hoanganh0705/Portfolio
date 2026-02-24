@@ -91,6 +91,7 @@
     "phone": "Phone number",
     "message": "Type your message here.",
     "send": "Send message",
+    "sending": "Sending...",
     "selectService": "Select a service",
     "serviceOptions": {
       "webDev": "Web Development",
