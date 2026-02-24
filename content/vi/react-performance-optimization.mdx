@@ -1,0 +1,267 @@
+---
+title: "Tối Ưu Hiệu Năng React"
+excerpt: "Tìm hiểu sâu về tối ưu rendering, chiến lược memoization và công cụ profiling để làm ứng dụng nhanh hơn."
+category: "Development"
+date: "2024-10-18"
+readTime: "12 phút đọc"
+author: "James Miller"
+authorImage: "/images/author.jpeg"
+featured: true
+image: "/react-performance.jpg"
+---
+
+import CodeBlock from '@/components/blog/CodeBlock.tsx';
+
+
+## 1. Giới thiệu
+
+Ứng dụng React **phát triển nhanh** — và các vấn đề hiệu năng cũng vậy.
+Một component render 10 lần mỗi giây? Một danh sách 10.000 items? Bundle trên 2MB?
+
+**Tối ưu sớm là nguồn gốc của mọi điều xấu.**
+Nhưng **tối ưu có đo lường, có mục tiêu** chính là phép màu.
+
+Hãy cùng thành thạo **những công cụ thực sự** để làm ứng dụng React **cực nhanh**.
+
+## 2. Hiểu về Re-Renders
+
+### 2.1 Khi nào Components Re-Render
+
+React re-render một component khi:
+- **State** của nó thay đổi
+- **Props** của nó thay đổi
+- **Component cha** re-render
+
+Ngay cả khi **không có gì thay đổi trực quan**.
+
+### 2.2 Tránh Re-Renders Không Cần Thiết
+
+<CodeBlock
+  language="tsx"
+  highlight="3-7"
+  collapsible
+  defaultCollapsed={false}
+>
+{`<Parent>
+    <ExpensiveChild data={hugeArray} />
+</Parent>`}
+</CodeBlock>
+
+→ `ExpensiveChild` re-render **mỗi khi `Parent` cập nhật**, ngay cả khi `hugeArray` không bao giờ thay đổi.
+
+## 3. React.memo
+
+Wrap functional components để **bỏ qua re-renders** khi props shallow-equal.
+
+<CodeBlock
+  language="tsx"
+  highlight="1, 4-6"
+  collapsible
+  defaultCollapsed={false}
+>
+{`const ExpensiveChild = React.memo(function ExpensiveChild({ data }) {
+    console.log('ExpensiveChild rendered');
+    return <HeavyChart data={data} />;
+});
+
+// Chỉ re-render nếu reference của \`data\` thay đổi`}
+</CodeBlock>
+
+**Cảnh báo: Không memo tất cả.**
+Memoization có **chi phí bộ nhớ + so sánh**.
+→ **Profile trước!**
+
+## 4. Memoization Hooks
+
+<div className="my-8 overflow-x-auto rounded-lg border border-border">
+  <table className="w-full min-w-[500px] table-auto border-collapse">
+    <thead>
+      <tr className="bg-muted/50">
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Hook</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Cache</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Dùng khi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">useMemo</td>
+        <td className="border border-border px-4 py-3 text-sm"><strong>Giá trị</strong> (arrays, objects, tính toán)</td>
+        <td className="border border-border px-4 py-3 text-sm">Tính toán tốn kém</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 font-mono text-sm">useCallback</td>
+        <td className="border border-border px-4 py-3 text-sm"><strong>Hàm</strong></td>
+        <td className="border border-border px-4 py-3 text-sm">Truyền cho child components hoặc <code>useEffect</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### 4.1 useMemo
+
+<CodeBlock
+  language="tsx"
+  highlight="3"
+  collapsible
+  defaultCollapsed={false}
+>
+{`const filteredUsers = useMemo(() => {
+  return users.filter(user => user.active && user.role === 'admin');
+}, [users]);`}
+</CodeBlock>
+
+### 4.2 useCallback
+
+<CodeBlock
+  language="tsx"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`const handleSave = useCallback(() => {
+  saveUser(user);
+}, [user]); // Ngăn child re-render
+
+return <Form onSave={handleSave} />;`}
+</CodeBlock>
+
+## 5. Code Splitting
+
+Bundle 3MB? Người dùng phải chờ.
+Chia nhỏ nó!
+
+### **Dynamic Imports + `React.lazy`**
+
+<CodeBlock
+  language="tsx"
+  highlight="1-2, 5"
+  collapsible
+  defaultCollapsed={false}
+>
+{`const HeavyChart = React.lazy(() => import('./HeavyChart'));
+const Dashboard = React.lazy(() => import('./Dashboard'));
+
+function App() {
+  return (
+    <Suspense fallback={<Spinner />}>
+      <HeavyChart />
+    </Suspense>
+  );
+}`}
+</CodeBlock>
+
+> **Bonus Next.js**: `dynamic(() => import(...), { ssr: false })`
+
+## 6. Virtual Scrolling
+
+Đừng render 10.000 list items.
+Chỉ render **những gì nhìn thấy**.
+
+### **Sử dụng `react-window`**
+
+<CodeBlock
+  language="tsx"
+  highlight="3-8"
+  collapsible
+  defaultCollapsed={false}
+>
+{`import { FixedSizeList } from 'react-window';
+
+<FixedSizeList
+    height={600}
+    itemCount={10000}
+    itemSize={50}
+    width="100%"
+  >
+    {({ index, style }) => (
+      <div style={style}>User #{index}</div>
+    )}
+  </FixedSizeList>`}
+</CodeBlock>
+
+→ DOM chỉ có **~20 nodes**, không phải 10.000
+→ **Cuộn mượt 60 FPS**
+
+## 7. Công cụ Profiling
+
+**Không bao giờ đoán.** Sử dụng **React DevTools Profiler**.
+
+### **Các bước:**
+
+1. Mở **React DevTools** → Tab **Profiler**
+2. Click **Record** (vòng tròn đỏ)
+3. Tương tác với ứng dụng
+4. Dừng → Xem **flame graph**
+
+Tìm kiếm:
+- Components render **nhiều lần**
+- Thời gian render dài
+- Re-renders không cần thiết
+
+> **Quy tắc vàng**: **Đo lường → Tối ưu → Đo lường lại**
+
+## 8. Lỗi Thường Gặp
+
+<CodeBlock
+  language="tsx"
+  highlight="1-5"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// 1. Memo hóa mọi thứ
+const Button = React.memo(({ onClick }) => <button onClick={onClick}>Click</button>);
+
+// 2. Inline objects trong JSX
+return <Child config={{ theme: 'dark' }} />; // Object mới mỗi render!
+
+// 3. Không có Suspense fallback
+<React.lazy(...) /> {/* Crash khi mạng chậm */}`}
+</CodeBlock>
+
+## 9. Best Practices
+
+<CodeBlock
+  language="tsx"
+  highlight="2, 5, 8"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// 1. Chỉ memo hóa components tốn kém
+const Chart = React.memo(ExpensiveChart);
+
+// 2. Đưa config ra ngoài
+const darkTheme = { theme: 'dark' };
+return <Child config={darkTheme} />;
+
+// 3. Luôn dùng Suspense
+<Suspense fallback={<Loading />}>
+    <LazyDashboard />
+</Suspense>`}
+</CodeBlock>
+
+## 10. Danh sách Kiểm tra Hiệu năng
+
+* Bạn đã **profile** với React DevTools chưa?
+* Bạn có sử dụng `React.memo` **chỉ trên components tốn kém**?
+* `useMemo`/`useCallback` có **được biện minh bởi chi phí**?
+* Bundle có được **chia nhỏ** với dynamic imports?
+* Các danh sách lớn có được **ảo hóa**?
+* Inline objects/functions **đã tránh** trong render?
+
+## 11. Kết luận
+
+Hiệu năng không phải là **làm mọi thứ nhanh**.
+Đó là **làm đúng thứ nhanh**.
+
+**Đo lường.**
+**Nhắm mục tiêu.**
+**Tối ưu.**
+
+Người dùng không quan tâm đến `useMemo`.
+Họ quan tâm đến **UI phản hồi nhanh**, **tải nhanh** và **cuộn mượt**.
+
+Thành thạo những công cụ này — và xây dựng ứng dụng React **mượt như native**.
+
+*Viết bởi James Miller*
+
+*#React #Performance #Optimization #Frontend #WebDev #ReactProfiler #CodeSplitting*

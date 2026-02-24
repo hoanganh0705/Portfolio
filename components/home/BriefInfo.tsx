@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useRef } from 'react'
-import { skills } from '@/constants/skill'
 import {
   domAnimation,
   LazyMotion,
@@ -10,6 +9,7 @@ import {
   type Transition,
   type Variants,
 } from 'framer-motion'
+import { useLocale } from '@/lib/locale-context'
 
 const smoothEase: [number, number, number, number] = [
   0.22, 1, 0.36, 1,
@@ -75,6 +75,15 @@ const skillVariants: Variants = {
 export default function BriefInfo() {
   const sectionRef = useRef<HTMLElement | null>(null)
   const controls = useAnimation()
+  const { dict } = useLocale()
+
+  const skills = [
+    dict.skills.seo,
+    dict.skills.frontend,
+    dict.skills.backend,
+    dict.skills.teaching,
+  ]
+
   const inView = useInView(sectionRef, {
     once: true,
     // Start animating just before the section fully enters the viewport to avoid a late trigger.
@@ -101,13 +110,13 @@ export default function BriefInfo() {
             className='text-4xl font-bold mb-3 text-center'
             variants={textVariants}
           >
-            What I Do ?
+            {dict.home.whatIDo}
           </m.h2>
           <m.p
             className='mt-5 text-base text-muted-foreground text-center'
             variants={textVariants}
           >
-            Find out who I am and what I&apos;m good at
+            {dict.home.findOutAboutMe}
           </m.p>
           <m.div
             className='grid grid-cols-1 xl:grid-cols-4 xl:gap-8 xl:mt-40 mt-33 gap-30'

@@ -1,0 +1,134 @@
+{
+  "nav": {
+    "home": "home",
+    "resume": "resume",
+    "work": "work",
+    "blog": "blog",
+    "contact": "contact"
+  },
+  "common": {
+    "hireMe": "Hire me",
+    "downloadCV": "Download CV",
+    "backToHome": "Back to Home",
+    "contactMe": "Contact Me"
+  },
+  "home": {
+    "greeting": "Hi, I'm",
+    "description": "Full-stack web developer and educator based in Vietnam. I craft elegant digital experiences with Next.js, Golang & Devops and offer tutoring.",
+    "whatIDo": "What I Do ?",
+    "findOutAboutMe": "Find out who I am and what I'm good at",
+    "whyWorkWithMe": "Why work with me ?"
+  },
+  "skills": {
+    "seo": {
+      "key": "S",
+      "title": "eo optimization",
+      "body": "Driving organic traffic and improving search engine rankings through strategic keyword research, on-page and off-page optimization, and technical SEO best practices."
+    },
+    "frontend": {
+      "key": "F",
+      "title": "rontend coding",
+      "body": "Building responsive and interactive user interfaces with modern web technologies like HTML, CSS, and React or Nextjs to deliver engaging user experiences."
+    },
+    "backend": {
+      "key": "B",
+      "title": "ackend coding",
+      "body": "Developing robust and scalable server-side applications, managing databases, and designing APIs to ensure seamless data flow and functionality."
+    },
+    "teaching": {
+      "key": "E",
+      "title": "nglish teaching",
+      "body": "Facilitating effective language acquisition through engaging lesson planning, diverse teaching methodologies, and fostering a supportive learning environment."
+    }
+  },
+  "whyMe": {
+    "problemSolving": {
+      "title": "Problem-solving mindset",
+      "description": "Challenges are addressed through strategic thinking and creative solutions, leveraging research and experience to meet complex requirements effectively."
+    },
+    "fastService": {
+      "title": "Fast Service",
+      "description": "My passion lies in crafting high-quality web solutions. I'm a lifelong learner, constantly honing my skills to bring you the most current and effective technologies."
+    },
+    "secureSolutions": {
+      "title": "Secure solutions",
+      "description": "Built with stability and data protection in mind, using industry-standard security protocols and robust testing procedures."
+    },
+    "transparent": {
+      "title": "Transparent and clear",
+      "description": "Maintains consistent updates and transparent collaboration to ensure all stakeholders remain aligned throughout the development process."
+    }
+  },
+  "stats": {
+    "yearsOfExperience": "Years of experience",
+    "projectsCompleted": "Projects Completed",
+    "technologiesMastered": "Technologies Mastered",
+    "codeCommits": "Code commits"
+  },
+  "blog": {
+    "pageTitle": "Blog",
+    "pageDescription": "Explore articles about web development, programming, and the latest technology trends. Tips, tutorials, and insights from a full-stack developer.",
+    "featured": "Featured Posts",
+    "allPosts": "All Posts",
+    "backToArticles": "Back to Articles",
+    "onThisPage": "On this page",
+    "shareArticle": "Share this article",
+    "enjoyedArticle": "Enjoyed this article?",
+    "enjoyedDescription": "I write about web development, React, Next.js, and more. Let's work together on your next project.",
+    "readMoreArticles": "Read more articles",
+    "getInTouch": "Get in touch →",
+    "moreArticles": "More articles",
+    "recommended": "Recommended",
+    "authorBio": "Full-Stack Web Developer & Educator based in Vietnam. Passionate about Next.js, React, and building great web experiences.",
+    "published": "Published"
+  },
+  "contact": {
+    "title": "Let's work together",
+    "description": "Fill in the form below to get in touch with me. I'll get back to you as soon as possible.",
+    "firstname": "Firstname",
+    "lastname": "Lastname",
+    "email": "Email address",
+    "phone": "Phone number",
+    "message": "Type your message here.",
+    "send": "Send message",
+    "selectService": "Select a service",
+    "serviceOptions": {
+      "webDev": "Web Development",
+      "seo": "SEO Optimization",
+      "teaching": "English Teaching",
+      "tutoring": "Private Tutoring"
+    },
+    "infoLabels": {
+      "phone": "Phone",
+      "email": "Email",
+      "address": "Address"
+    }
+  },
+  "resume": {
+    "experience": "Experience",
+    "education": "Education",
+    "skills": "Skills",
+    "aboutMe": "About Me",
+    "myExperience": "My experience",
+    "myEducation": "My education",
+    "mySkills": "My skills",
+    "aboutTitle": "About Me"
+  },
+  "work": {
+    "pageTitle": "My Projects",
+    "liveProject": "Live project",
+    "githubRepo": "Github repository"
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Page not found",
+    "description": "The page you're looking for doesn't exist or has been moved. Let's get you back on track."
+  },
+  "mySelf": [
+    "Nguyễn Hoàng Anh",
+    "Anh Nguyen Dev",
+    "Web Developer",
+    "English Teacher",
+    "SEO Specialist"
+  ]
+}

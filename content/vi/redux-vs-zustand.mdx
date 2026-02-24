@@ -1,0 +1,303 @@
+---
+title: "Zustand vs Redux: Lựa Chọn Đúng Trong 2025"
+excerpt: "So sánh Zustand và Redux Toolkit: đơn giản vs cấu trúc, hiệu năng, boilerplate và mẫu thực tế để chọn công cụ tốt nhất cho ứng dụng React của bạn."
+category: "React"
+date: "2025-11-14"
+readTime: "10 phút đọc"
+author: "Sophia Rodriguez"
+authorImage: "/images/author.jpeg"
+featured: true
+image: "/images/zustand-redux.jpg"
+---
+import CodeBlock from '@/components/blog/CodeBlock.tsx';
+
+
+## 1. Giới thiệu
+
+Năm 2025, quản lý state React không còn là độc quyền của Redux.
+
+Zustand đã **bùng nổ** với **cách tiếp cận hooks-first tối giản**, trong khi Redux Toolkit (RTK) đã **tiến hóa** để loại bỏ tiếng xấu về boilerplate.
+
+Cả hai đều **immutable, hiệu năng cao và sẵn sàng production**.
+Nhưng cái nào **chiến thắng** cho ứng dụng của bạn?
+Hãy cùng đào sâu vào **code, mẫu và đánh đổi**.
+
+
+## 2. So sánh Nhanh
+
+<div className="my-8 overflow-x-auto rounded-lg border border-border">
+  <table className="w-full min-w-[600px] table-auto border-collapse">
+    <thead>
+      <tr className="bg-muted/50">
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Khía cạnh</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Zustand</th>
+        <th className="border border-border px-4 py-3 text-left text-sm font-semibold text-foreground">Redux Toolkit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 text-sm">Boilerplate</td>
+        <td className="border border-border px-4 py-3 text-sm">Tối thiểu (1 file)</td>
+        <td className="border border-border px-4 py-3 text-sm">Thấp (slices + store)</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 text-sm">Kích thước Bundle</td>
+        <td className="border border-border px-4 py-3 text-sm">~1.5KB</td>
+        <td className="border border-border px-4 py-3 text-sm">~10KB</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 text-sm">Độ khó học</td>
+        <td className="border border-border px-4 py-3 text-sm">Dễ (chỉ hooks)</td>
+        <td className="border border-border px-4 py-3 text-sm">Trung bình (actions/reducers)</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 text-sm">DevTools</td>
+        <td className="border border-border px-4 py-3 text-sm">Cơ bản (tương thích Redux DevTools)</td>
+        <td className="border border-border px-4 py-3 text-sm">Nâng cao (time-travel, middleware)</td>
+      </tr>
+      <tr className="hover:bg-muted/30 transition-colors">
+        <td className="border border-border px-4 py-3 text-sm">Phù hợp nhất</td>
+        <td className="border border-border px-4 py-3 text-sm">App nhỏ-vừa, prototypes</td>
+        <td className="border border-border px-4 py-3 text-sm">Team lớn, logic phức tạp</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+## 3. Cài đặt và Cấu hình
+
+### 3.1 Cài đặt Zustand
+
+<CodeBlock
+  language="tsx"
+  highlight="1-3, 6"
+  collapsible
+  defaultCollapsed={false}
+>
+{`import { create } from 'zustand';
+    const useCounterStore = create((set) => ({
+        count: 0,
+        increment: () => set((state) => ({ count: state.count + 1 })),
+        decrement: () => set((state) => ({ count: state.count - 1 })),
+    }));`}
+</CodeBlock>
+
+<div style={{ marginBottom: '20px' }}>
+</div>
+
+<CodeBlock
+  language="tsx"
+  highlight="1-3, 6"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// Trong component
+    function Counter() {
+    const { count, increment, decrement } = useCounterStore();
+    return (
+        <div>
+        <p>Count: {count}</p>
+        <button onClick={increment}>+</button>
+        <button onClick={decrement}>-</button>
+        </div>
+    );
+    }`}
+</CodeBlock>
+
+> **Không `<Provider>`**. Không slices. Chỉ **pure functions**.
+
+
+### 3.2 Cài đặt Redux Toolkit
+
+<CodeBlock
+  language="tsx"
+  highlight="1-10, 13-15"
+  collapsible
+  defaultCollapsed={false}
+>
+{`import { createSlice, configureStore } from '@reduxjs/toolkit';
+  const counterSlice = createSlice({
+    name: 'counter',
+    initialState: { count: 0 },
+    reducers: {
+      increment: (state) => { state.count += 1; },
+      decrement: (state) => { state.count -= 1; },
+    },
+  });
+
+const store = configureStore({
+  reducer: { counter: counterSlice.reducer },
+});
+
+export const { increment, decrement } = counterSlice.actions;
+
+// Trong component
+import { useSelector, useDispatch } from 'react-redux';
+function Counter() {
+  const count = useSelector((state) => state.counter.count);
+  const dispatch = useDispatch();
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => dispatch(increment())}>+</button>
+      <button onClick={() => dispatch(decrement())}>-</button>
+    </div>
+  );
+}`}
+</CodeBlock>
+
+> **Immer xử lý immutability**. Nhưng vẫn cần **cấu hình store**.
+
+
+## 4. Xử lý Async Actions
+
+### 4.1 Zustand Async
+
+<CodeBlock
+  language="tsx"
+  highlight="3-5"
+  collapsible
+  defaultCollapsed={false}
+>
+{`const useUserStore = create((set) => ({
+  users: [],
+  fetchUsers: async () => {
+    const response = await fetch('/api/users');
+    const data = await response.json();
+    set({ users: data });
+  },
+}));`}
+</CodeBlock>
+
+> **Async trực tiếp**. Không cần middleware bổ sung cho tác vụ cơ bản.
+
+
+### 4.2 Redux RTK Query
+
+<CodeBlock
+  language="tsx"
+  highlight="1-6"
+  collapsible
+  defaultCollapsed={false}
+>
+{`import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+    export const userApi = createApi({
+        reducerPath: 'userApi',
+        baseQuery: fetchBaseQuery({ baseUrl: '/api/' }),
+        endpoints: (builder) => ({
+        getUsers: builder.query({ query: () => 'users' }),
+        }),
+    });
+    export const { useGetUsersQuery } = userApi;`}
+</CodeBlock>
+
+**Caching, optimistic updates, auto-refetch** — **cấp enterprise**.
+
+
+## 5. Hiệu năng và Selectors
+
+Cả hai sử dụng **shallow equality** để giảm thiểu re-renders.
+
+### 5.1 Zustand Selectors
+
+<CodeBlock
+  language="tsx"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`const count = useCounterStore((state) => state.count);`}
+</CodeBlock>
+
+### 5.2 Redux Selectors
+
+<CodeBlock
+  language="tsx"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`import { useSelector } from 'react-redux';
+const count = useSelector((state) => state.counter.count);`}
+</CodeBlock>
+
+> **Zustand nhỉnh hơn** về bundle size, nhưng **Redux thắng** ở complex selectors.
+
+
+## 6. DevTools và Debugging
+
+### 6.1 Zustand DevTools
+
+<CodeBlock
+  language="tsx"
+  highlight="1"
+  collapsible
+  defaultCollapsed={false}
+>
+{`import { devtools } from 'zustand/middleware';
+
+const useStore = create(devtools((set) => ({ ... })));`}
+</CodeBlock>
+
+### 6.2 Redux DevTools
+
+> **Profiler tích hợp** của Redux theo dõi actions qua thời gian.
+> Hoàn hảo cho **team lớn debug race conditions**.
+
+
+## 7. Lỗi Thường Gặp
+
+<CodeBlock
+  language="tsx"
+  highlight="1-5, 8-12"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// 1. Zustand không dùng selectors
+function BadComponent() {
+  const { count, users } = useCounterStore(); // Re-render khi BẤT KỲ thay đổi
+}
+
+// 2. Redux không dùng RTK
+// Reducers thủ công, thunks → Địa ngục boilerplate`}
+</CodeBlock>
+
+
+## 8. Best Practices
+
+<CodeBlock
+  language="tsx"
+  highlight="2, 5"
+  collapsible
+  defaultCollapsed={false}
+>
+{`// 1. Zustand: Luôn select cụ thể
+const count = useCounterStore((state) => state.count);
+
+// 2. Redux: Dùng RTK Query cho data
+const { data } = useGetUsersQuery();`}
+</CodeBlock>
+
+
+## 9. Chọn Đúng Công Cụ
+
+* **Zustand**: Prototypes, app nhỏ-vừa, dev solo. **Tốc độ hơn cấu trúc**.
+* **Redux**: Enterprise, async phức tạp (RTK Query), team lớn. **Khả năng dự đoán hơn đơn giản**.
+* **Hybrid**: Zustand cho UI state + React Query cho server data.
+* **Chuyển đổi?** Bắt đầu với Zustand — dễ mở rộng lên hơn thu nhỏ xuống.
+
+---
+
+## 10. Kết luận
+
+**Zustand không giết chết Redux — nó bổ sung cho Redux.**
+
+Năm 2025, **đơn giản thắng trận đánh**, nhưng **cấu trúc thắng cuộc chiến**.
+Zustand giúp bạn **ship nhanh hơn**. Redux giúp bạn **scale mãi mãi**.
+
+Đừng over-engineer app nhỏ.
+Đừng under-engineer app lớn.
+**Đo lường nhu cầu. Chọn khôn ngoan.**
+
+*Viết bởi Sophia Rodriguez*

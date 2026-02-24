@@ -14,9 +14,9 @@ import dynamic from 'next/dynamic'
 import { usePathname } from 'next/navigation'
 import { useRef } from 'react'
 
-/** Blog detail routes like /blog/some-slug should not trigger the full-page transition */
+/** Blog detail routes like /en/blog/some-slug should not trigger the full-page transition */
 const isBlogDetail = (path: string) =>
-  /^\/blog\/.+/.test(path)
+  /^\/(en|vi)\/blog\/.+/.test(path)
 
 const PageTransition = ({
   children,

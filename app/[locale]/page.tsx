@@ -18,35 +18,14 @@ const WhyMe = dynamic(
   () => import('@/components/home/WhyMe'),
 )
 
-// Constants
-import { mySelf } from '@/constants/mySelf'
-
 // Utils
-import { createMetadata } from '@/lib/metadata'
+import { getDictionary } from '@/lib/dictionaries'
+import type { Locale } from '@/lib/i18n'
 
 // Export revalidate to enable ISR for 10 days
 export const revalidate = 864000 // 10*24*60*60
 
-export const metadata = createMetadata({
-  title:
-    'Anh Nguyen Dev — Full-Stack Web Developer & Educator',
-  description:
-    'Nguyen Hoang Anh (anhnguyendev) — a passionate full-stack web developer and educator based in Vietnam. Offering innovative web development, private tutoring, English teaching, and SEO services.',
-  keywords: [
-    'web developer',
-    'portfolio',
-    'full-stack developer',
-    'freelance developer vietnam',
-    'english teacher',
-    'private tutor',
-    'next.js developer',
-    'react developer',
-    'seo specialist',
-  ],
-  path: '',
-  ogImage:
-    'https://gitlab.com/nguyennanhcd1/image-container/-/raw/main/portfolio-image/Screenshot%202025-06-21%20072326.png?ref_type=heads',
-})
+export { metadata } from './metadata'
 
 // rendering-hoist-jsx: static fallback extracted outside component
 const StatsFallback = (
@@ -68,12 +47,36 @@ const StatsFallback = (
 )
 
 // server-parallel-fetching: async server component fetches data independently
-async function StatsSection() {
+async function StatsSection({
+  locale,
+}: {
+  locale: Locale
+}) {
+  const dict = await getDictionary(locale)
   const { stats } = await import('@/constants/stats')
-  return <Stats statsData={stats} />
+  const labels = [
+    dict.stats.yearsOfExperience,
+    dict.stats.projectsCompleted,
+    dict.stats.technologiesMastered,
+    dict.stats.codeCommits,
+  ]
+  const localizedStats = stats.map(
+    (s: { num: number; text: string }, i: number) => ({
+      ...s,
+      text: labels[i] || s.text,
+    }),
+  )
+  return <Stats statsData={localizedStats} />
 }
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  const dict = await getDictionary(locale as Locale)
+
   return (
     <section className='h-full xl:pt-20 xl:pb-4'>
       <div className='container mx-auto px-2 xl:px-0'>
@@ -81,14 +84,11 @@ export default function Home() {
           {/* Text */}
           <div className='w-full max-w-3xl'>
             <h1 className='h1 mb-6'>
-              Hi, I&apos;m <br />{' '}
-              <TypeWriter mySelf={mySelf} />
+              {dict.home.greeting} <br />{' '}
+              <TypeWriter mySelf={dict.mySelf} />
             </h1>
             <p className='mx-auto max-w-2xl mb-9 text-muted-foreground'>
-              Full-stack web developer and educator based in
-              Vietnam. I craft elegant digital experiences
-              with Next.js, Golang &amp; Devops and offer
-              tutoring.
+              {dict.home.description}
             </p>
 
             {/* Button and socials */}
@@ -98,7 +98,7 @@ export default function Home() {
                 size='lg'
                 className='uppercase flex items-center gap-2'
               >
-                <span>Download CV</span>
+                <span>{dict.common.downloadCV}</span>
                 <FiDownload className='text-xl cursor-pointer' />
               </Button>
               <div>
@@ -114,7 +114,7 @@ export default function Home() {
 
       {/* async-suspense-boundaries: Stats fetches GitHub commits, wrap in Suspense so hero renders immediately */}
       <Suspense fallback={StatsFallback}>
-        <StatsSection />
+        <StatsSection locale={locale as Locale} />
       </Suspense>
 
       {/* rendering-content-visibility: below-fold sections with content-visibility for rendering performance */}

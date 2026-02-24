@@ -1,0 +1,256 @@
+---
+title: "Giải Thích CSS Grid Layouts"
+excerpt: "Làm chủ CSS Grid hiện đại với các ví dụ thực tế và mẫu phổ biến."
+category: "CSS"
+date: "2024-10-15"
+readTime: "6 phút đọc"
+author: "Maria Garcia"
+authorImage: "/images/author.jpeg"
+featured: true
+image: "/css-grid-layouts.jpg"
+---
+import CodeBlock from '@/components/blog/CodeBlock.tsx';
+
+
+## 1. Giới thiệu
+
+CSS Grid đã **cách mạng hóa** cách chúng ta xây dựng bố cục web.
+Quên float, các hack flexbox phức tạp, hoặc bố cục bảng mỏng manh — **Grid cho bạn toàn quyền kiểm soát 2D** trên thiết kế của mình.
+
+Khi bạn thành thạo các khái niệm cốt lõi của nó, bạn sẽ tự hỏi làm sao mình từng sống mà không có nó.
+
+## 2. Grid Container và Items
+
+Mọi grid bắt đầu với một **container** và các **items** của nó.
+
+Đặt `display: grid` trên phần tử cha → tất cả **phần tử con trực tiếp** trở thành **grid items**.
+
+<CodeBlock
+  language="css"
+  highlight="3-5"
+  collapsible
+  defaultCollapsed={false}
+>
+{`.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}`}
+</CodeBlock>
+
+> **Mẹo**: Chỉ **phần tử con trực tiếp** là grid items. Phần tử lồng nhau? Sử dụng grid mới bên trong.
+
+## 3. Đơn vị fr
+
+Đơn vị `fr` = **phần của không gian có sẵn**.
+
+<CodeBlock
+  language="css"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`grid-template-columns: 1fr 2fr;`}
+</CodeBlock>
+→ Cột đầu tiên: 1 phần
+→ Cột thứ hai: 2 phần → **rộng gấp đôi**
+
+<CodeBlock
+  language="css"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`grid-template-columns: 1fr 1fr 1fr;  /* 3 cột bằng nhau */
+grid-template-columns: 2fr 1fr;      /* tỷ lệ 2:1 */`}
+</CodeBlock>
+
+## 4. Grid Lines và Định vị
+
+Grid tạo **các đường đánh số** xung quanh các ô.
+
+Sử dụng `grid-column` và `grid-row` để đặt items **bất kỳ đâu**.
+
+<CodeBlock
+  language="css"
+  highlight="3-4"
+  collapsible
+  defaultCollapsed={false}
+>
+{`.hero {
+    grid-column: 1 / 3;   /* trải từ dòng 1 đến dòng 3 */
+    grid-row: 1 / 2;
+}`}
+</CodeBlock>
+
+Sử dụng `span 2` để trải dài qua 2 cột/hàng:
+
+ <CodeBlock
+  language="css"
+  highlight="3-7"
+  collapsible
+  defaultCollapsed={false}
+>
+{` grid-column: span 2;`}
+</CodeBlock>
+
+## 5. Named Grid Areas
+
+Định nghĩa bố cục **trực quan** với `grid-template-areas`.
+
+<CodeBlock
+  language="css"
+  highlight="3-7"
+  collapsible
+  defaultCollapsed={false}
+>
+{`.container {
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "sidebar main"
+        "footer footer";
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: auto 1fr auto;
+}`}
+</CodeBlock>
+
+Sau đó gán các item:
+
+<CodeBlock
+  language="html"
+  highlight="2-4"
+  collapsible
+  defaultCollapsed={false}
+>
+{`<header style="grid-area: header">...</header>
+<aside style="grid-area: sidebar">...</aside>
+<main style="grid-area: main">...</main>
+<footer style="grid-area: footer">...</footer>`}
+</CodeBlock>
+
+> **Bố cục tự mô tả** — bất kỳ ai cũng có thể đọc nó như một bản vẽ!
+
+## 6. Thiết kế Responsive
+
+Thay đổi grid tại các breakpoint khác nhau.
+
+<CodeBlock
+  language="css"
+  highlight="8-12"
+  collapsible
+  defaultCollapsed={false}
+>
+{`.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+/* Tablet trở lên */
+@media (min-width: 768px) {
+    .container {
+        grid-template-columns: 1fr 1fr;
+    }
+}`}
+</CodeBlock>
+
+## 7. Auto-Placement
+
+Trình duyệt **tự động đặt** items nếu bạn không chỉ định.
+
+Kiểm soát luồng với `grid-auto-flow`:
+
+<CodeBlock
+  language="css"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`grid-auto-flow: column;     /* điền cột trước */
+grid-auto-flow: dense;      /* điền khoảng trống thông minh */`}
+</CodeBlock>
+
+Đặt kích thước mặc định cho các hàng/cột tự động tạo:
+
+<CodeBlock
+  language="css"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`grid-auto-rows: minmax(100px, auto);`}
+</CodeBlock>
+
+## 8. Các Mẫu Phổ biến
+
+### 8.1 Bố cục Holy Grail
+
+<CodeBlock
+  language="css"
+  highlight="3-7"
+  collapsible
+  defaultCollapsed={false}
+>
+{`.layout {
+    display: grid;
+    grid-template-areas:
+        "header header header"
+        "nav    main   aside"
+        "footer footer footer";
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 200px 1fr 200px;
+    min-height: 100vh;
+}`}
+</CodeBlock>
+
+### 8.2 Card Grid (Responsive)
+
+<CodeBlock
+  language="css"
+  highlight="2"
+  collapsible
+  defaultCollapsed={false}
+>
+{`grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));`}
+</CodeBlock>
+
+→ Tự động wrap, không bao giờ quá hẹp, không bao giờ quá rộng.
+
+## 9. Lỗi Thường Gặp
+
+<CodeBlock
+  language="html"
+  highlight="1-5"
+  collapsible
+  defaultCollapsed={false}
+>
+{`<div class="grid">
+  <div class="item">...</div>
+  <p>Nested text here</p> <!-- Không phải grid item! -->
+</div>`}
+</CodeBlock>
+
+> Chỉ **phần tử con trực tiếp** là grid items. Wrap nội dung trong phần tử con nếu cần.
+
+## 10. Danh sách Kiểm tra
+
+* Bố cục của bạn có sử dụng `display: grid`?
+* Các cột có được định nghĩa với `fr` hoặc `minmax()`?
+* Bạn đã kiểm tra trên mobile, tablet, desktop?
+* Các named areas có rõ ràng và ngữ nghĩa?
+* Bạn đã sử dụng `gap` thay vì margins?
+
+## 11. Kết luận
+
+CSS Grid không chỉ là **công cụ bố cục** — nó là một **siêu năng lực**.
+
+Với đơn vị `fr`, named areas và auto-placement, bạn có thể xây dựng **bố cục phức tạp, responsive** trong **phút**, không phải giờ.
+
+Ngừng chiến đấu với floats.
+Ngừng lồng flexboxes.
+**Hãy bắt đầu tư duy theo grid.**
+
+*Viết bởi Maria Garcia*
+
+*#CSS #WebDesign #Frontend #GridLayout #Responsive*

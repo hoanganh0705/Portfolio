@@ -1,12 +1,17 @@
 import Link from 'next/link'
 import { FiArrowRight } from 'react-icons/fi'
 import type { PostMetadata } from '@/lib/getPosts'
+import type { Locale } from '@/lib/i18n'
 
 interface Props {
   posts: PostMetadata[]
+  locale?: Locale
 }
 
-export function Recommendations({ posts }: Props) {
+export function Recommendations({
+  posts,
+  locale = 'en',
+}: Props) {
   if (posts.length === 0) return null
 
   return (
@@ -21,7 +26,7 @@ export function Recommendations({ posts }: Props) {
         {posts.map((post) => (
           <li key={post.slug}>
             <Link
-              href={`/blog/${post.slug}`}
+              href={`/${locale}/blog/${post.slug}`}
               className='group block rounded-lg border border-border/50 bg-foreground/2 p-3 transition-all duration-200 hover:border-accent-default/30 hover:bg-accent-default/5'
             >
               <span className='inline-flex items-center rounded-full bg-accent-default/15 px-2 py-0.5 text-[10px] font-medium text-accent-default mb-2'>
