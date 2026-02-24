@@ -61,7 +61,8 @@ export default function ContactForm() {
       formRef.current?.reset()
       setService('')
     }
-  }, [response, response?.timeStamp])
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- timeStamp is the trigger; response ref is stable per submission
+  }, [response?.timeStamp])
 
   return (
     <div className='xl:w-[70%] order-2 xl:order-0'>
