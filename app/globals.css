@@ -103,8 +103,8 @@
   --font-jetbrainsMono: "JetBrains Mono", monospace;
   --font-primary: var(--font-jetbrainsMono);
   --radius: 0.625rem;
-  --accent-brand: oklch(0.8542 0.08 199.29);
-  --accent-brand-hover: oklch(0.9066 0.08 199.29);
+  --accent-brand: oklch(0.8471 0.0418 131.7);
+  --accent-brand-hover: oklch(0.9066 0.0418 131.7);
   --background: oklch(0.985 0.002 247.858);
   --foreground: oklch(0.145 0.042 264.695);
   --card: oklch(1 0 0);
