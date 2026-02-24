@@ -41,7 +41,11 @@ export default async function CodeBlock({
   try {
     highlightedHtml = await codeToHtml(code, {
       lang: propLanguage,
-      theme: 'github-dark',
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
+      defaultColor: false,
     })
     // Shiki puts \n between .line spans. Inside <pre> (white-space:pre),
     // these render as line breaks ON TOP of .line being display:block → double spacing.

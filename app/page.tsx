@@ -87,8 +87,8 @@ export default function Home() {
             <p className='mx-auto max-w-2xl mb-9 text-muted-foreground'>
               Full-stack web developer and educator based in
               Vietnam. I craft elegant digital experiences
-              with Next.js, React &amp; Tailwind CSS and
-              offer tutoring &amp; SEO services.
+              with Next.js, Golang &amp; Devops and offer
+              tutoring.
             </p>
 
             {/* Button and socials */}

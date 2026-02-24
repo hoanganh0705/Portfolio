@@ -20,8 +20,13 @@ export function TableOfContents() {
 
     const elements = article.querySelectorAll('h2, h3, h4')
     const items: TocItem[] = []
+    // Get the footer element to exclude its headings from TOC
+    const footer = article.querySelector('footer')
 
     elements.forEach((el) => {
+      // Skip headings inside the post footer (share, CTA sections)
+      if (footer?.contains(el)) return
+
       // Generate ID from text content if not present
       const text =
         el.textContent?.replace(/\*\*/g, '').trim() || ''

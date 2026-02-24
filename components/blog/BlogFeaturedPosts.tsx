@@ -40,7 +40,7 @@ export async function BlogFeaturedPosts() {
                   )}
                 </span>
               </div>
-              <h3 className='text-xl font-bold text-foreground mb-3 transition-colors group-hover:text-accent-default'>
+              <h3 className='text-xl font-bold text-foreground mb-3 transition-colors dark:group-hover:text-accent-default'>
                 {post.title}
               </h3>
               <p className='text-sm text-muted-foreground leading-relaxed'>

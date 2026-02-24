@@ -136,8 +136,10 @@ export function PostDetailLayout({
             <div className='prose dark:prose-invert max-w-none mb-12 prose-headings:text-foreground prose-headings:font-bold prose-headings:mt-12 prose-headings:mb-6 prose-p:text-foreground/80 prose-a:text-accent-default prose-strong:text-foreground prose-code:text-accent-default'>
               {children}
             </div>
+          </article>
 
-            {/* Post footer */}
+          {/* Post footer — outside article so TOC doesn't pick up these headings */}
+          <div className='min-w-0 max-w-3xl mx-auto w-full col-start-2'>
             <footer className='border-t border-border pt-8 mt-12 space-y-8'>
               {/* Share */}
               <div>
@@ -236,7 +238,7 @@ export function PostDetailLayout({
                 </div>
               </div>
             </footer>
-          </article>
+          </div>
 
           {/* Right sidebar — Recommendations */}
           <aside className='hidden xl:block'>
