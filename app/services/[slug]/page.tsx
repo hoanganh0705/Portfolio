@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import { siteConfig } from '@/lib/site-config'
 
 const ServicePages = dynamic(
-  () => import('@/components/PagesService'),
+  () => import('@/components/services/ServiceDetail'),
 )
 
 export async function generateStaticParams() {

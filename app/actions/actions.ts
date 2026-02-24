@@ -1,7 +1,7 @@
  
 'use server'
 
-import ContactResponseEmail from '@/components/EmailTemplate'
+import ContactResponseEmail from '@/components/contact/EmailTemplate'
 import { FeedbackState } from '@/types/contact'
 import { Resend } from 'resend'
 import { after } from 'next/server'

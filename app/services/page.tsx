@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import { createMetadata } from '@/lib/metadata'
 
 const ServicesClient = dynamic(
-  () => import('@/components/ServicesClient'),
+  () => import('@/components/services/ServicesClient'),
 )
 
 export const metadata = createMetadata({

@@ -4,15 +4,19 @@ import { FiDownload } from 'react-icons/fi'
 import dynamic from 'next/dynamic'
 
 // Components
-import Social from '@/components/Social'
-import TypeWriter from '@/components/TypeWriter'
+import Social from '@/components/home/Social'
+import TypeWriter from '@/components/home/TypeWriter'
 
 // bundle-dynamic-imports: lazy-load heavy below-fold client components
-const Stats = dynamic(() => import('@/components/Stats'))
-const BriefInfo = dynamic(
-  () => import('@/components/BriefInfo'),
+const Stats = dynamic(
+  () => import('@/components/home/Stats'),
 )
-const WhyMe = dynamic(() => import('@/components/WhyMe'))
+const BriefInfo = dynamic(
+  () => import('@/components/home/BriefInfo'),
+)
+const WhyMe = dynamic(
+  () => import('@/components/home/WhyMe'),
+)
 
 // Constants
 import { mySelf } from '@/constants/mySelf'
@@ -100,7 +104,7 @@ export default function Home() {
               <div>
                 <Social
                   containerStyles='flex gap-6 justify-center m-8'
-                  iconStyles='w-9 h-9 border border-accent-default rounded-full flex justify-center items-center text-accent text-base hover:bg-accent-default hover:text-primary hover:transition-all duration-500'
+                  iconStyles='w-9 h-9 border border-accent-default rounded-full flex justify-center items-center hover:bg-accent-default hover:text-primary hover:transition-all duration-500'
                 />
               </div>
             </div>
