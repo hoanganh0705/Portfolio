@@ -30,7 +30,7 @@ export async function BlogPostGrid() {
               </span>
             </div>
             <div className='flex-1 pb-4'>
-              <h3 className='text-lg font-bold text-foreground mb-2 transition-colors group-hover:text-accent-default line-clamp-2'>
+              <h3 className='text-lg font-bold text-foreground mb-2 transition-colors dark:group-hover:text-accent-default line-clamp-2'>
                 {post.title}
               </h3>
               <p className='text-sm text-muted-foreground line-clamp-2'>

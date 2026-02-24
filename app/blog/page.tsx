@@ -52,7 +52,7 @@ export default function BlogPage() {
       <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
         {/* Hero */}
         <div className='py-12 xl:py-16'>
-          <h1 className='h1 mb-6'>
+          <h1 className='text-3xl xl:text-4xl font-bold mb-6'>
             My{' '}
             <span className='text-accent-default'>
               Blog

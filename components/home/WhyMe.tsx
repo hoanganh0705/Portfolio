@@ -124,7 +124,7 @@ export default function WhyMe() {
       }
       className='mt-5 xl:mb-20'
     >
-      <div className='bg-accent-default/90 pt-8 pb-12 xl:pt-16 xl:pb-20 xl:px-10 xl:h-[600px]'>
+      <div className='pt-8 pb-12 xl:pt-16 xl:pb-20 xl:px-10 xl:h-[600px]'>
         <div className='container mx-auto px-4'>
           <motion.h2
             className='text-3xl font-bold text-center text-primary/90 mb-8 xl:mb-12'

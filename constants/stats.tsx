@@ -47,7 +47,7 @@ export const stats = [
   },
   {
     num: 5,
-    text: 'Years of experience',
+    text: 'Projects Completed',
   },
   {
     num: 4,

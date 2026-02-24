@@ -44,17 +44,17 @@ export default function CodeBlockClient({
   }
 
   return (
-    <div className='relative rounded-lg border border-white/10 overflow-hidden font-mono text-sm my-4 bg-[#0d1117]'>
+    <div className='relative rounded-lg border border-[#d1d5db] dark:border-white/10 overflow-hidden font-mono text-sm my-4 bg-[#f6f8fa] dark:bg-[#0d1117] shadow-sm dark:shadow-none'>
       {/* Header */}
-      <div className='flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-[#161b22]'>
+      <div className='flex items-center justify-between px-4 py-2.5 border-b border-[#d1d5db] dark:border-white/10 bg-[#ebeef1] dark:bg-[#161b22]'>
         <div className='flex items-center gap-3'>
-          <span className='text-xs font-semibold uppercase text-white/40'>
+          <span className='text-xs font-semibold uppercase text-[#57606a] dark:text-white/40'>
             {language}
           </span>
           {collapsible && (
             <button
               onClick={() => setCollapsed(!collapsed)}
-              className='p-1 rounded hover:bg-white/10 transition-colors text-white/40'
+              className='p-1 rounded hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-[#57606a] dark:text-white/40'
               aria-label={
                 collapsed ? 'Expand code' : 'Collapse code'
               }
@@ -73,7 +73,7 @@ export default function CodeBlockClient({
           className={`p-1.5 rounded transition-colors ${
             copied
               ? 'text-accent-default'
-              : 'text-white/40 hover:text-white hover:bg-white/10'
+              : 'text-[#57606a] dark:text-white/40 hover:text-[#24292f] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10'
           }`}
         >
           {copied ? (
@@ -90,7 +90,7 @@ export default function CodeBlockClient({
       >
         <div className='flex overflow-x-auto text-[13px]'>
           {showLineNumbers && (
-            <div className='shrink-0 py-3 pl-3 pr-1 select-none border-r border-white/10 bg-[#0d1117] text-white/30'>
+            <div className='shrink-0 py-3 pl-3 pr-1 select-none border-r border-[#d1d5db] dark:border-white/10 bg-[#ebeef1] dark:bg-[#0d1117] text-[#8b949e] dark:text-white/30'>
               {Array.from({ length: lineCount }, (_, i) => (
                 <div
                   key={i}
