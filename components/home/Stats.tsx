@@ -1,4 +1,3 @@
-// components/Stats.jsx
 'use client' // Required because react-countup uses client-side features
 
 import CountUp from 'react-countup'

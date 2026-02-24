@@ -22,7 +22,7 @@ const MobileNav = ({ scrolled }: NavProps) => {
         <SheetTrigger className='flex justify-center items-center'>
           <CiMenuFries
             aria-label='Open navigation menu'
-            className={`text-[32px] hover:cursor-pointer transition-all${
+            className={`text-[32px] hover:cursor-pointer transition-all ${
               scrolled
                 ? 'text-primary/80 hover:text-accent-default '
                 : 'text-accent-default hover:text-accent-hover'

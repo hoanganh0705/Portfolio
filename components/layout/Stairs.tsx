@@ -1,7 +1,6 @@
 'use client'
-import { motion } from 'framer-motion'
+import { domAnimation, LazyMotion, m } from 'framer-motion'
 
-// Animation sử dụng transform để tránh layout shift
 const stairAnimation = {
   initial: { y: 0 },
   animate: { y: '100%' },
@@ -15,9 +14,9 @@ const reversedIndex = (index: number) => {
 
 const Stairs = () => {
   return (
-    <>
+    <LazyMotion features={domAnimation}>
       {[...Array(6)].map((_, index) => (
-        <motion.div
+        <m.div
           key={index}
           variants={stairAnimation}
           initial='initial'
@@ -31,7 +30,7 @@ const Stairs = () => {
           className='h-full w-full bg-accent-default relative'
         />
       ))}
-    </>
+    </LazyMotion>
   )
 }
 

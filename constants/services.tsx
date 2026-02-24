@@ -1,4 +1,3 @@
-// constants/services.ts (Mutable version)
 export interface Service {
   num: string
   title: string

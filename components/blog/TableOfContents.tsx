@@ -97,12 +97,19 @@ export function TableOfContents() {
               href={`#${heading.id}`}
               onClick={(e) => {
                 e.preventDefault()
-                document
-                  .getElementById(heading.id)
-                  ?.scrollIntoView({
+                const el = document.getElementById(
+                  heading.id,
+                )
+                if (el) {
+                  const headerOffset = 100
+                  const elementPosition =
+                    el.getBoundingClientRect().top +
+                    window.scrollY
+                  window.scrollTo({
+                    top: elementPosition - headerOffset,
                     behavior: 'smooth',
-                    block: 'start',
                   })
+                }
               }}
               className={`block text-sm leading-relaxed transition-all duration-200 border-l-2 ${
                 heading.level === 3
