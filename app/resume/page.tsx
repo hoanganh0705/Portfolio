@@ -3,7 +3,7 @@ import { createMetadata } from '@/lib/metadata'
 
 // bundle-dynamic-imports: lazy-load heavy client component
 const ResumeClient = dynamic(
-  () => import('@/components/ResumeClient'),
+  () => import('@/components/resume/ResumeClient'),
 )
 
 export const metadata = createMetadata({

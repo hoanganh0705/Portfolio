@@ -3,7 +3,7 @@ import { createMetadata } from '@/lib/metadata'
 
 // bundle-dynamic-imports: lazy-load heavy client component with motion animations
 const ContactClient = dynamic(
-  () => import('@/components/ContactClient'),
+  () => import('@/components/contact/ContactClient'),
 )
 
 export const metadata = createMetadata({
