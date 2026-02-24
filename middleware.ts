@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
-
-const locales = ['en', 'vi']
-const defaultLocale = 'vi'
+import {
+  locales,
+  defaultLocale,
+  isValidLocale,
+} from '@/lib/i18n'
 
 function getPreferredLocale(request: NextRequest): string {
   // 1. Cookie preference
   const cookie = request.cookies.get('NEXT_LOCALE')?.value
-  if (cookie && locales.includes(cookie)) return cookie
+  if (cookie && isValidLocale(cookie)) return cookie
 
   // 2. Accept-Language header
   const accept = request.headers.get('Accept-Language')
@@ -15,7 +17,7 @@ function getPreferredLocale(request: NextRequest): string {
       .split(',')
       .map((l) => l.split(';')[0].trim().substring(0, 2))
     for (const lang of preferred) {
-      if (locales.includes(lang)) return lang
+      if (isValidLocale(lang)) return lang
     }
   }
 

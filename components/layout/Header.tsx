@@ -19,7 +19,9 @@ const Header = () => {
     const onScroll = () => {
       setHasScrolled(window.scrollY > 50)
     }
-    window.addEventListener('scroll', onScroll)
+    window.addEventListener('scroll', onScroll, {
+      passive: true,
+    })
     return () =>
       window.removeEventListener('scroll', onScroll)
   }, [])
