@@ -4,11 +4,7 @@ import {
   FiArrowLeft,
   FiCalendar,
   FiClock,
-  FiShare2,
-  FiTwitter,
-  FiLinkedin,
 } from 'react-icons/fi'
-import { FaFacebook } from 'react-icons/fa'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -16,6 +12,8 @@ import { ReactNode } from 'react'
 import { AuthorAvatar } from './AuthorAvatar'
 import { TableOfContents } from './TableOfContents'
 import { Recommendations } from './Recommendations'
+import { ReadingProgress } from './ReadingProgress'
+import { ShareButtons } from './ShareButtons'
 import type { PostMetadata } from '@/lib/getPosts'
 import { useLocale } from '@/lib/locale-context'
 
@@ -32,12 +30,14 @@ export interface Frontmatter {
 
 interface Props {
   metadata: Frontmatter
+  slug: string
   children: ReactNode
   recommendations?: PostMetadata[]
 }
 
 export function PostDetailLayout({
   metadata,
+  slug,
   children,
   recommendations = [],
 }: Props) {
@@ -55,6 +55,7 @@ export function PostDetailLayout({
 
   return (
     <div className='min-h-screen'>
+      <ReadingProgress />
       <div className='max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12'>
         {/* Back button — full width */}
         <Link href={`/${locale}/blog`}>
@@ -147,38 +148,10 @@ export function PostDetailLayout({
           <div className='min-w-0 max-w-3xl mx-auto w-full col-start-2'>
             <footer className='border-t border-border pt-8 mt-12 space-y-8'>
               {/* Share */}
-              <div>
-                <h3 className='text-lg font-semibold text-foreground mb-4 flex items-center gap-2'>
-                  <FiShare2 size={18} />
-                  {dict.blog.shareArticle}
-                </h3>
-                <div className='flex gap-3'>
-                  <a
-                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(metadata.title)}&url=${encodeURIComponent(`https://anhnguyendev.me/${locale}/blog/${metadata.title.toLowerCase().replace(/\s+/g, '-')}`)}`}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-foreground/5 border border-border text-foreground hover:bg-accent-default/10 hover:text-accent-default transition-colors text-sm'
-                  >
-                    <FiTwitter size={16} /> Twitter
-                  </a>
-                  <a
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://anhnguyendev.me/${locale}/blog/${metadata.title.toLowerCase().replace(/\s+/g, '-')}`)}`}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-foreground/5 border border-border text-foreground hover:bg-accent-default/10 hover:text-accent-default transition-colors text-sm'
-                  >
-                    <FiLinkedin size={16} /> LinkedIn
-                  </a>
-                  <a
-                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://anhnguyendev.me/${locale}/blog/${metadata.title.toLowerCase().replace(/\s+/g, '-')}`)}`}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-foreground/5 border border-border text-foreground hover:bg-accent-default/10 hover:text-accent-default transition-colors text-sm'
-                  >
-                    <FaFacebook size={16} /> Facebook
-                  </a>
-                </div>
-              </div>
+              <ShareButtons
+                title={metadata.title}
+                slug={slug}
+              />
 
               {/* Author bio */}
               <div className='rounded-xl border border-border bg-foreground/5 p-6'>
