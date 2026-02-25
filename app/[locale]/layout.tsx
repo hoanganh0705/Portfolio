@@ -5,6 +5,7 @@ import Script from 'next/script'
 import { notFound } from 'next/navigation'
 
 import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
 import PageTransition from '@/components/layout/PageTransition'
 import StairTransition from '@/components/layout/StairTransition'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
@@ -13,6 +14,8 @@ import { getDictionary } from '@/lib/dictionaries'
 import { json_ld } from '@/lib/json-ld'
 import { siteConfig } from '@/lib/site-config'
 import { locales, isValidLocale } from '@/lib/i18n'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
@@ -112,11 +115,22 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={jetbrainsMono.variable}>
+        <a
+          href='#main-content'
+          className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100 focus:px-4 focus:py-2 focus:bg-accent-default focus:text-primary focus:rounded-md focus:text-sm focus:font-medium'
+        >
+          Skip to content
+        </a>
         <ThemeProvider>
           <LocaleProvider locale={locale} dict={dict}>
             <Header />
             <StairTransition />
-            <PageTransition>{children}</PageTransition>
+            <main id='main-content'>
+              <PageTransition>{children}</PageTransition>
+            </main>
+            <Footer />
+            <Analytics />
+            <SpeedInsights />
             <Toaster
               toastOptions={{
                 style: {
