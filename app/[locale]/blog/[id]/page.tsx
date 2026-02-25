@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { PostDetailLayout } from '@/components/blog/PostDetailLayout'
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { siteConfig } from '@/lib/site-config'
 import {
   getRelatedPosts,
@@ -151,12 +152,56 @@ export default async function PostPage({
     locale as Locale,
   )
 
+  const postUrl = `${siteConfig.url}/${locale}/blog/${id}`
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: metadata.title,
+    description: metadata.excerpt,
+    image: metadata.image
+      ? metadata.image.startsWith('http')
+        ? metadata.image
+        : `${siteConfig.url}${metadata.image}`
+      : siteConfig.defaultOgImage,
+    datePublished: new Date(metadata.date).toISOString(),
+    dateModified: new Date(metadata.date).toISOString(),
+    author: {
+      '@type': 'Person',
+      name: metadata.author,
+      url: siteConfig.url,
+    },
+    publisher: {
+      '@type': 'Person',
+      name: siteConfig.author.name,
+      url: siteConfig.url,
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': postUrl,
+    },
+    url: postUrl,
+    inLanguage: locale === 'vi' ? 'vi-VN' : 'en-US',
+    articleSection: metadata.category,
+    wordCount: undefined,
+  }
+
   return (
-    <PostDetailLayout
-      metadata={metadata}
-      recommendations={recommendations}
-    >
-      <PostComponent />
-    </PostDetailLayout>
+    <>
+      <Script
+        id={`article-jsonld-${id}`}
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleJsonLd),
+        }}
+        strategy='afterInteractive'
+      />
+      <PostDetailLayout
+        metadata={metadata}
+        slug={id}
+        recommendations={recommendations}
+      >
+        <PostComponent />
+      </PostDetailLayout>
+    </>
   )
 }
