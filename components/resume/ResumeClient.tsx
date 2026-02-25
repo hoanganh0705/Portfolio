@@ -20,6 +20,7 @@ import {
   skills,
 } from '@/constants/about'
 import { domAnimation, LazyMotion, m } from 'framer-motion'
+import { useLocale } from '@/lib/locale-context'
 
 // rendering-hoist-jsx: hoist static animation config outside component
 const fadeInAnimation = {
@@ -58,6 +59,8 @@ function TimelineSection({
 }
 
 export default function ResumeClient() {
+  const { dict } = useLocale()
+
   return (
     // bundle-defer-third-party: use m + LazyMotion instead of motion
     <LazyMotion features={domAnimation}>
@@ -73,16 +76,16 @@ export default function ResumeClient() {
           >
             <TabsList className='flex flex-col w-full max-w-[380px] mx-auto xl:mx-0 gap-6'>
               <TabsTrigger value='experience'>
-                Experience
+                {dict.resume.experience}
               </TabsTrigger>
               <TabsTrigger value='education'>
-                Education
+                {dict.resume.education}
               </TabsTrigger>
               <TabsTrigger value='skills'>
-                Skills
+                {dict.resume.skills}
               </TabsTrigger>
               <TabsTrigger value='about'>
-                About me
+                {dict.resume.aboutMe}
               </TabsTrigger>
             </TabsList>
 
@@ -91,8 +94,8 @@ export default function ResumeClient() {
               {/* experience */}
               <TabsContent value='experience'>
                 <TimelineSection
-                  title={experience.title}
-                  description={experience.description}
+                  title={dict.resume.myExperience}
+                  description={dict.resume.experienceDesc}
                 >
                   <ul className='grid grid-cols-1 lg:grid-cols-2 gap-[30px]'>
                     {experience.items.map((item, index) => (
@@ -121,8 +124,8 @@ export default function ResumeClient() {
               {/* education */}
               <TabsContent value='education'>
                 <TimelineSection
-                  title={education.title}
-                  description={education.description}
+                  title={dict.resume.myEducation}
+                  description={dict.resume.educationDesc}
                 >
                   <ul className='grid grid-cols-1 lg:grid-cols-2 gap-[30px]'>
                     {education.items.map((item, index) => (
@@ -156,10 +159,10 @@ export default function ResumeClient() {
                 <div className='flex flex-col gap-[30px]'>
                   <div className='flex flex-col gap-[30px] text-center xl:text-left'>
                     <h3 className='text-4xl font-bold'>
-                      {skills.title}
+                      {dict.resume.mySkills}
                     </h3>
                     <p className='max-w-[600px] text-muted-foreground mx-auto xl:mx-0'>
-                      {skills.description}
+                      {dict.resume.skillsDesc}
                     </p>
                   </div>
                   <TooltipProvider delayDuration={100}>
@@ -194,10 +197,10 @@ export default function ResumeClient() {
               >
                 <div className='flex flex-col gap-[30px]'>
                   <h3 className='text-4xl font-bold'>
-                    {about.title}
+                    {dict.resume.aboutTitle}
                   </h3>
                   <p className='max-w-[600px] text-muted-foreground mx-auto xl:mx-0'>
-                    {about.description}
+                    {dict.resume.aboutDesc}
                   </p>
                   <ul className='grid grid-cols-1 xl:grid-cols-2 gap-y-6 max-w-[620px] mx-auto xl:mx-0'>
                     {about.info.map((item, index) => (

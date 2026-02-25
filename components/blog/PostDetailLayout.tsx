@@ -12,7 +12,6 @@ import { ReactNode } from 'react'
 import { AuthorAvatar } from './AuthorAvatar'
 import { TableOfContents } from './TableOfContents'
 import { Recommendations } from './Recommendations'
-import { ReadingProgress } from './ReadingProgress'
 import { ShareButtons } from './ShareButtons'
 import type { PostMetadata } from '@/lib/getPosts'
 import { useLocale } from '@/lib/locale-context'
@@ -55,7 +54,6 @@ export function PostDetailLayout({
 
   return (
     <div className='min-h-screen'>
-      <ReadingProgress />
       <div className='max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12'>
         {/* Back button — full width */}
         <Link href={`/${locale}/blog`}>

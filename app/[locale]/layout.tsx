@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { BackToTop } from '@/components/layout/BackToTop'
 import PageTransition from '@/components/layout/PageTransition'
 import StairTransition from '@/components/layout/StairTransition'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
@@ -132,6 +133,7 @@ export default async function LocaleLayout({
               <PageTransition>{children}</PageTransition>
             </main>
             <Footer />
+            <BackToTop />
             <Analytics />
             <SpeedInsights />
             <Toaster
