@@ -6,11 +6,13 @@ import type { Locale } from '@/lib/i18n'
 interface Props {
   posts: PostMetadata[]
   locale?: Locale
+  readNextLabel?: string
 }
 
 export function Recommendations({
   posts,
   locale = 'en',
+  readNextLabel = 'Read next',
 }: Props) {
   if (posts.length === 0) return null
 
@@ -19,7 +21,7 @@ export function Recommendations({
       <div className='flex items-center gap-2 mb-4 text-muted-foreground'>
         <FiArrowRight size={16} />
         <span className='text-xs font-semibold uppercase tracking-wider'>
-          Read next
+          {readNextLabel}
         </span>
       </div>
       <ul className='space-y-4'>

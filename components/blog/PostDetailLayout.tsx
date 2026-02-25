@@ -13,6 +13,7 @@ import { AuthorAvatar } from './AuthorAvatar'
 import { TableOfContents } from './TableOfContents'
 import { Recommendations } from './Recommendations'
 import { ShareButtons } from './ShareButtons'
+import { Breadcrumb } from './Breadcrumb'
 import type { PostMetadata } from '@/lib/getPosts'
 import { useLocale } from '@/lib/locale-context'
 
@@ -55,6 +56,19 @@ export function PostDetailLayout({
   return (
     <div className='min-h-screen'>
       <div className='max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12'>
+        {/* Breadcrumb navigation */}
+        <Breadcrumb
+          items={[
+            {
+              label:
+                dict.nav.blog.charAt(0).toUpperCase() +
+                dict.nav.blog.slice(1),
+              href: `/${locale}/blog`,
+            },
+            { label: metadata.title },
+          ]}
+        />
+
         {/* Back button — full width */}
         <Link href={`/${locale}/blog`}>
           <Button
@@ -75,75 +89,75 @@ export function PostDetailLayout({
             </div>
           </aside>
 
-          {/* Center — Main content */}
-          <article className='min-w-0 max-w-3xl mx-auto w-full'>
-            {/* Header */}
-            <div className='mb-8'>
-              <div className='flex flex-wrap items-center gap-3 mb-4'>
-                <span className='inline-flex items-center rounded-full bg-accent-default/20 px-3 py-1 text-xs font-medium text-accent-default'>
-                  {metadata.category}
-                </span>
-                <span className='text-sm text-muted-foreground'>
-                  •
-                </span>
-                <span className='text-sm text-muted-foreground flex items-center gap-1'>
-                  <FiCalendar size={14} />
-                  {formatted}
-                </span>
-                <span className='text-sm text-muted-foreground flex items-center gap-1'>
-                  <FiClock size={14} />
-                  {metadata.readTime}
-                </span>
-              </div>
+          {/* Center column — article + post footer in one cell so sidebars span full height */}
+          <div className='min-w-0 max-w-3xl mx-auto w-full'>
+            <article>
+              {/* Header */}
+              <div className='mb-8'>
+                <div className='flex flex-wrap items-center gap-3 mb-4'>
+                  <span className='inline-flex items-center rounded-full bg-accent-default/20 px-3 py-1 text-xs font-medium text-accent-default'>
+                    {metadata.category}
+                  </span>
+                  <span className='text-sm text-muted-foreground'>
+                    •
+                  </span>
+                  <span className='text-sm text-muted-foreground flex items-center gap-1'>
+                    <FiCalendar size={14} />
+                    {formatted}
+                  </span>
+                  <span className='text-sm text-muted-foreground flex items-center gap-1'>
+                    <FiClock size={14} />
+                    {metadata.readTime}
+                  </span>
+                </div>
 
-              <h1 className='text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance'>
-                {metadata.title}
-              </h1>
+                <h1 className='text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance'>
+                  {metadata.title}
+                </h1>
 
-              <div className='flex items-center gap-3 pt-4 border-t border-border'>
-                <AuthorAvatar
-                  name={metadata.author}
-                  image={metadata.authorImage}
-                />
-                <div>
-                  <p className='font-medium text-foreground'>
-                    {metadata.author}
-                  </p>
-                  <p className='text-sm text-muted-foreground'>
-                    {dict.blog.published} {formatted}
-                  </p>
+                <div className='flex items-center gap-3 pt-4 border-t border-border'>
+                  <AuthorAvatar
+                    name={metadata.author}
+                    image={metadata.authorImage}
+                  />
+                  <div>
+                    <p className='font-medium text-foreground'>
+                      {metadata.author}
+                    </p>
+                    <p className='text-sm text-muted-foreground'>
+                      {dict.blog.published} {formatted}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Hero image */}
-            {metadata.image && (
-              <div className='mb-8 rounded-lg overflow-hidden bg-foreground/5 h-96'>
-                <Image
-                  src={metadata.image}
-                  alt={metadata.title}
-                  width={1200}
-                  height={600}
-                  className='w-full h-full object-cover'
-                />
+              {/* Hero image */}
+              {metadata.image && (
+                <div className='mb-8 rounded-lg overflow-hidden bg-foreground/5 h-96'>
+                  <Image
+                    src={metadata.image}
+                    alt={metadata.title}
+                    width={1200}
+                    height={600}
+                    className='w-full h-full object-cover'
+                  />
+                </div>
+              )}
+
+              {/* Excerpt */}
+              <div className='mb-8 rounded-lg border border-accent-default/20 bg-accent-default/5 p-6'>
+                <p className='text-base text-foreground/80 italic'>
+                  {metadata.excerpt}
+                </p>
               </div>
-            )}
 
-            {/* Excerpt */}
-            <div className='mb-8 rounded-lg border border-accent-default/20 bg-accent-default/5 p-6'>
-              <p className='text-base text-foreground/80 italic'>
-                {metadata.excerpt}
-              </p>
-            </div>
+              {/* MDX content */}
+              <div className='prose dark:prose-invert max-w-none mb-12 prose-headings:text-foreground prose-headings:font-bold prose-headings:mt-12 prose-headings:mb-6 prose-p:text-foreground/80 prose-a:text-accent-default prose-strong:text-foreground prose-code:text-accent-default'>
+                {children}
+              </div>
+            </article>
 
-            {/* MDX content */}
-            <div className='prose dark:prose-invert max-w-none mb-12 prose-headings:text-foreground prose-headings:font-bold prose-headings:mt-12 prose-headings:mb-6 prose-p:text-foreground/80 prose-a:text-accent-default prose-strong:text-foreground prose-code:text-accent-default'>
-              {children}
-            </div>
-          </article>
-
-          {/* Post footer — outside article so TOC doesn't pick up these headings */}
-          <div className='min-w-0 max-w-3xl mx-auto w-full col-start-2'>
+            {/* Post footer — inside center column so TOC doesn't pick up these headings */}
             <footer className='border-t border-border pt-8 mt-12 space-y-8'>
               {/* Share */}
               <ShareButtons
@@ -211,12 +225,13 @@ export function PostDetailLayout({
             </footer>
           </div>
 
-          {/* Right sidebar — Recommendations */}
+          {/* Right sidebar — Recommendations (sticky, spans full center column height) */}
           <aside className='hidden xl:block'>
             <div className='sticky top-24'>
               <Recommendations
                 posts={recommendations}
                 locale={locale}
+                readNextLabel={dict.blog.readNext}
               />
             </div>
           </aside>
