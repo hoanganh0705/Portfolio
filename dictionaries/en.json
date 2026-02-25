@@ -84,7 +84,8 @@
     "searchPlaceholder": "Search articles...",
     "allCategories": "All",
     "resultsFound": "articles found",
-    "noResults": "No articles match your search. Try a different keyword or category."
+    "noResults": "No articles match your search. Try a different keyword or category.",
+    "readNext": "Read next"
   },
   "contact": {
     "title": "Let's work together",

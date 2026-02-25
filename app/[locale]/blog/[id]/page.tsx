@@ -185,6 +185,31 @@ export default async function PostPage({
     wordCount: undefined,
   }
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: siteConfig.url,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: `${siteConfig.url}/${locale}/blog`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: metadata.title,
+        item: postUrl,
+      },
+    ],
+  }
+
   return (
     <>
       <Script
@@ -192,6 +217,14 @@ export default async function PostPage({
         type='application/ld+json'
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(articleJsonLd),
+        }}
+        strategy='afterInteractive'
+      />
+      <Script
+        id={`breadcrumb-jsonld-${id}`}
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd),
         }}
         strategy='afterInteractive'
       />
