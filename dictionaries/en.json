@@ -125,6 +125,14 @@
     "title": "Page not found",
     "description": "The page you're looking for doesn't exist or has been moved. Let's get you back on track."
   },
+  "footer": {
+    "tagline": "Full-stack web developer & educator crafting elegant digital experiences from Ho Chi Minh City, Vietnam.",
+    "quickLinks": "Quick Links",
+    "connect": "Connect",
+    "email": "anh487303@gmail.com",
+    "rights": "All rights reserved.",
+    "builtWith": "Built with Next.js, Tailwind CSS & ❤️"
+  },
   "mySelf": [
     "Nguyễn Hoàng Anh",
     "Anh Nguyen Dev",

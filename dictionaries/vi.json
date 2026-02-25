@@ -125,6 +125,14 @@
     "title": "Không tìm thấy trang",
     "description": "Trang bạn đang tìm kiếm không tồn tại hoặc đã được di chuyển. Hãy quay lại trang chủ."
   },
+  "footer": {
+    "tagline": "Lập trình viên full-stack & giảng viên, xây dựng trải nghiệm số tinh tế tại TP. Hồ Chí Minh, Việt Nam.",
+    "quickLinks": "Liên kết nhanh",
+    "connect": "Kết nối",
+    "email": "anh487303@gmail.com",
+    "rights": "Bảo lưu mọi quyền.",
+    "builtWith": "Xây dựng với Next.js, Tailwind CSS & ❤️"
+  },
   "mySelf": [
     "Nguyễn Hoàng Anh",
     "Anh Nguyen Dev",

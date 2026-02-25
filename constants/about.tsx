@@ -13,7 +13,8 @@ import { FaGolang } from 'react-icons/fa6'
 
 export const about = {
   title: 'About Me',
-  description: 'lorem ipsum',
+  description:
+    'I am a full-stack web developer and educator based in Ho Chi Minh City, Vietnam. I specialize in building modern, performant web applications with Next.js, React, and Tailwind CSS. Alongside development, I teach English and offer private tutoring, combining technical expertise with a passion for education.',
   info: [
     {
       fieldName: 'Name',
@@ -52,73 +53,55 @@ export const about = {
 
 export const experience = {
   title: 'My experience',
-  description: 'lorem ipsum',
+  description:
+    'A summary of my professional journey in web development, teaching, and freelance work.',
   items: [
     {
-      company: 'lorem ipsum',
-      position: 'lorem ipsum',
-      duration: 'lorem ipsum',
+      company: 'Freelance',
+      position: 'Full-Stack Web Developer',
+      duration: '2024 - Present',
     },
     {
-      company: 'lorem ipsum',
-      position: 'lorem ipsum',
-      duration: 'lorem ipsum',
+      company: 'Self-Employed',
+      position: 'English Teacher & Tutor',
+      duration: '2023 - Present',
     },
     {
-      company: 'lorem ipsum',
-      position: 'lorem ipsum',
-      duration: 'lorem ipsum',
+      company: 'Personal Projects',
+      position: 'Open Source Contributor',
+      duration: '2023 - Present',
     },
     {
-      company: 'lorem ipsum',
-      position: 'lorem ipsum',
-      duration: 'lorem ipsum',
-    },
-    {
-      company: 'lorem ipsum',
-      position: 'lorem ipsum',
-      duration: 'lorem ipsum',
-    },
-    {
-      company: 'lorem ipsum',
-      position: 'lorem ipsum',
-      duration: 'lorem ipsum',
+      company: 'Freelance',
+      position: 'SEO Specialist',
+      duration: '2024 - Present',
     },
   ],
 }
 
 export const education = {
   title: 'My education',
-  description: 'lorem ipsum',
+  description:
+    'My academic background and self-directed learning in software development and computer science.',
   items: [
     {
-      institution: 'lorem ipsum',
-      degree: 'lorem ipsum',
-      duration: '2023',
+      institution: 'Self-Taught',
+      degree: 'Full-Stack Web Development',
+      duration: '2023 - Present',
     },
     {
-      institution: 'lorem ipsum',
-      degree: 'lorem ipsum',
-      duration: '2023',
+      institution: 'Online Courses',
+      degree: 'Next.js & React Mastery',
+      duration: '2024',
     },
     {
-      institution: 'lorem ipsum',
-      degree: 'lorem ipsum',
-      duration: '2023',
+      institution: 'Udemy & Coursera',
+      degree: 'TypeScript & Node.js',
+      duration: '2024',
     },
     {
-      institution: 'lorem ipsum',
-      degree: 'lorem ipsum',
-      duration: '2023',
-    },
-    {
-      institution: 'lorem ipsum',
-      degree: 'lorem ipsum',
-      duration: '2023',
-    },
-    {
-      institution: 'lorem ipsum',
-      degree: 'lorem ipsum',
+      institution: 'FreeCodeCamp',
+      degree: 'Responsive Web Design',
       duration: '2023',
     },
   ],
@@ -126,7 +109,8 @@ export const education = {
 
 export const skills = {
   title: 'My skills',
-  description: 'lorem ipsum',
+  description:
+    'Technologies and tools I use daily to build modern, performant web applications.',
   skillList: [
     {
       name: 'HTML',
