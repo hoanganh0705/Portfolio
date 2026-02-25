@@ -80,7 +80,11 @@
     "moreArticles": "More articles",
     "recommended": "Recommended",
     "authorBio": "Full-Stack Web Developer & Educator based in Vietnam. Passionate about Next.js, React, and building great web experiences.",
-    "published": "Published"
+    "published": "Published",
+    "searchPlaceholder": "Search articles...",
+    "allCategories": "All",
+    "resultsFound": "articles found",
+    "noResults": "No articles match your search. Try a different keyword or category."
   },
   "contact": {
     "title": "Let's work together",
@@ -111,9 +115,13 @@
     "skills": "Skills",
     "aboutMe": "About Me",
     "myExperience": "My experience",
+    "experienceDesc": "A summary of my professional journey in web development, teaching, and freelance work.",
     "myEducation": "My education",
+    "educationDesc": "My academic background and self-directed learning in software development and computer science.",
     "mySkills": "My skills",
-    "aboutTitle": "About Me"
+    "skillsDesc": "Technologies and tools I use daily to build modern, performant web applications.",
+    "aboutTitle": "About Me",
+    "aboutDesc": "I am a full-stack web developer and educator based in Ho Chi Minh City, Vietnam. I specialize in building modern, performant web applications with Next.js, React, and Tailwind CSS. Alongside development, I teach English and offer private tutoring, combining technical expertise with a passion for education."
   },
   "work": {
     "pageTitle": "My Projects",
