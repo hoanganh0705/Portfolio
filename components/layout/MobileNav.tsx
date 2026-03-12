@@ -31,7 +31,7 @@ const MobileNav = ({ scrolled }: NavProps) => {
   return (
     <div className='container mx-auto px-2 xl:px-0'>
       <Sheet>
-        <SheetTitle className='sr-only'></SheetTitle>
+        <SheetTitle className='sr-only'>Navigation menu</SheetTitle>
         <SheetTrigger className='flex justify-center items-center'>
           <CiMenuFries
             aria-label='Open navigation menu'
@@ -58,9 +58,9 @@ const MobileNav = ({ scrolled }: NavProps) => {
 
           {/*nav*/}
           <nav className='flex flex-col justify-center items-center gap-8'>
-            {links.map((link, index) => {
+            {links.map((link) => {
               return (
-                <SheetClose asChild key={index}>
+                <SheetClose asChild key={link.path}>
                   <Link
                     href={link.path}
                     className={`${

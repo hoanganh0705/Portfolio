@@ -160,7 +160,7 @@ export default function WhyMe() {
             >
               {whyMe.map((item, i) => (
                 <m.div
-                  key={i}
+                  key={whyMeKeys[i]}
                   custom={i}
                   variants={cardVariants}
                   whileHover={{

@@ -12,11 +12,11 @@ const Social: React.FC<SocialProps> = ({
 }) => {
   return (
     <div className={containerStyles}>
-      {socials.map((social, index) => {
+      {socials.map((social) => {
         return (
           <a
             aria-label={`View my ${social.name}`}
-            key={index}
+            key={social.name}
             href={social.path}
             className={iconStyles}
             rel='noopener noreferrer'

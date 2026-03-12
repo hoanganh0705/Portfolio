@@ -33,12 +33,12 @@ const Header = () => {
       <div className='container mx-auto flex justify-between items-center'>
         {/* Logo */}
         <Link href={`/${locale}`}>
-          <h1
+          <span
             className={`font-semibold  ${hasScrolled ? 'text-3xl' : 'text-4xl'}`}
           >
             Hoàng Anh
             <span className='text-accent-default'>.</span>
-          </h1>
+          </span>
         </Link>
 
         {/* desktop nav & hire me button */}

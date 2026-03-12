@@ -10,6 +10,7 @@ import {
 import { SiNextdotjs, SiTailwindcss } from 'react-icons/si'
 
 import { FaGolang } from 'react-icons/fa6'
+import { siteConfig } from '@/lib/site-config'
 
 export const about = {
   title: 'About Me',
@@ -22,7 +23,7 @@ export const about = {
     },
     {
       fieldName: 'Phone',
-      fieldValue: '(+84) 985 335 735',
+      fieldValue: siteConfig.author.phone,
     },
     {
       fieldName: 'Experience',
@@ -38,7 +39,7 @@ export const about = {
     },
     {
       fieldName: 'Email',
-      fieldValue: 'anh487303@gmail.com',
+      fieldValue: siteConfig.author.email,
     },
     {
       fieldName: 'Freelance',
@@ -49,7 +50,7 @@ export const about = {
       fieldValue: 'English, Vietnamese',
     },
   ],
-}
+} as const
 
 export const experience = {
   title: 'My experience',

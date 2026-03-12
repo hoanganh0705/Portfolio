@@ -20,19 +20,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   )
 
   // Generate blog post entries for each locale
-  const blogEntries: MetadataRoute.Sitemap = (
-    await Promise.all(
-      locales.map(async (locale) => {
-        const posts = await getAllPosts(locale)
-        return posts.map((post) => ({
-          url: `${url}/${locale}/blog/${post.slug}`,
-          lastModified: new Date(post.date),
-          changeFrequency: 'monthly' as const,
-          priority: post.featured ? 0.8 : 0.7,
-        }))
-      }),
-    )
-  ).flat()
+  let blogEntries: MetadataRoute.Sitemap = []
+  try {
+    blogEntries = (
+      await Promise.all(
+        locales.map(async (locale) => {
+          const posts = await getAllPosts(locale)
+          return posts.map((post) => ({
+            url: `${url}/${locale}/blog/${post.slug}`,
+            lastModified: new Date(post.date),
+            changeFrequency: 'monthly' as const,
+            priority: post.featured ? 0.8 : 0.7,
+          }))
+        }),
+      )
+    ).flat()
+  } catch (error) {
+    console.error('Failed to generate blog sitemap entries:', error)
+  }
 
   return [...staticEntries, ...blogEntries]
 }

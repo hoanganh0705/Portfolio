@@ -38,9 +38,13 @@ export default function CodeBlockClient({
   const lines = code.split('\n')
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(code)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    try {
+      await navigator.clipboard.writeText(code)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      // Clipboard API may not be available
+    }
   }
 
   return (
@@ -102,7 +106,15 @@ export default function CodeBlockClient({
                   onClick={() =>
                     navigator.clipboard.writeText(lines[i])
                   }
-                  title='Click to copy line'
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      navigator.clipboard.writeText(lines[i])
+                    }
+                  }}
+                  role='button'
+                  tabIndex={0}
+                  title={typeof window !== 'undefined' ? 'Click to copy line' : ''}
                 >
                   {i + 1}
                 </div>

@@ -3,21 +3,28 @@ import {
   FaMapMarkedAlt,
   FaPhoneAlt,
 } from 'react-icons/fa'
+import { siteConfig } from '@/lib/site-config'
 
-export const info = [
+export interface InfoItem {
+  icon: React.ReactNode
+  title: string
+  description: string
+}
+
+export const info: InfoItem[] = [
   {
     icon: <FaPhoneAlt />,
     title: 'Phone',
-    description: '(+84) 985 335 735',
+    description: siteConfig.author.phone,
   },
   {
     icon: <FaEnvelope />,
     title: 'Email',
-    description: 'anh487303@gmail.com',
+    description: siteConfig.author.email,
   },
   {
     icon: <FaMapMarkedAlt />,
     title: 'Address',
-    description: 'Code Corner, Tech Town',
+    description: siteConfig.author.location,
   },
-]
+] as const

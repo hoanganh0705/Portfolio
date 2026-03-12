@@ -1,6 +1,8 @@
 import type { MDXComponents } from 'mdx/types'
 
-export function useMDXComponents(): MDXComponents {
+export function useMDXComponents(
+  _components?: MDXComponents,
+): MDXComponents {
   return {
     h1: ({ children }) => (
       <h1 className='text-3xl font-bold mt-16 mb-8 text-foreground leading-tight'>
@@ -40,7 +42,7 @@ export function useMDXComponents(): MDXComponents {
       return <code className={className}>{children}</code>
     },
     ul: ({ children }) => (
-      <ul className='list-none space-y-2 pl-5 my-4'>
+      <ul role='list' className='list-none space-y-2 pl-5 my-4'>
         {children}
       </ul>
     ),
@@ -54,22 +56,20 @@ export function useMDXComponents(): MDXComponents {
         {children}
       </li>
     ),
-    a: ({ children, href }) => (
-      <a
-        href={href}
-        className='text-accent-default hover:text-accent-hover underline underline-offset-4 transition-colors'
-        target={
-          href?.startsWith('http') ? '_blank' : undefined
-        }
-        rel={
-          href?.startsWith('http')
-            ? 'noopener noreferrer'
-            : undefined
-        }
-      >
-        {children}
-      </a>
-    ),
+    a: ({ children, href }) => {
+      const isExternal = href?.startsWith('http')
+      return (
+        <a
+          href={href}
+          className='text-accent-default hover:text-accent-hover underline underline-offset-4 transition-colors'
+          target={isExternal ? '_blank' : undefined}
+          rel={isExternal ? 'noopener noreferrer' : undefined}
+        >
+          {children}
+          {isExternal && <span className='sr-only'> (opens in new tab)</span>}
+        </a>
+      )
+    },
     blockquote: ({ children }) => (
       <blockquote className='border-l-4 border-accent-default pl-6 my-6 italic text-muted-foreground'>
         {children}

@@ -7,6 +7,7 @@ import {
   FiAlertTriangle,
   FiRefreshCw,
 } from 'react-icons/fi'
+import { useLocale } from '@/lib/locale-context'
 
 export default function LocaleError({
   error,
@@ -15,12 +16,17 @@ export default function LocaleError({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  const { locale, dict } = useLocale()
+
   useEffect(() => {
     console.error('Application error:', error)
   }, [error])
 
   return (
-    <section className='min-h-[80vh] flex items-center justify-center'>
+    <section
+      role='alert'
+      className='min-h-[80vh] flex items-center justify-center'
+    >
       <div className='container mx-auto px-4'>
         <div className='flex flex-col items-center text-center gap-8 max-w-lg mx-auto'>
           <div className='w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center'>
@@ -32,11 +38,10 @@ export default function LocaleError({
 
           <div className='space-y-3'>
             <h2 className='text-3xl font-bold text-foreground'>
-              Something went wrong
+              {dict.errors.somethingWentWrong}
             </h2>
             <p className='text-muted-foreground text-base leading-relaxed'>
-              An unexpected error occurred. Please try again
-              or go back to the homepage.
+              {dict.errors.unexpectedError}
             </p>
             {error.digest && (
               <p className='text-xs text-muted-foreground/60 font-mono'>
@@ -51,14 +56,14 @@ export default function LocaleError({
               className='cursor-pointer gap-2'
             >
               <FiRefreshCw size={16} />
-              Try again
+              {dict.errors.tryAgain}
             </Button>
-            <Link href='/en'>
+            <Link href={`/${locale}`}>
               <Button
                 variant='outline'
                 className='cursor-pointer border-accent-default/30 text-accent-default hover:bg-accent-default/10'
               >
-                Back to Home
+                {dict.errors.backToHome}
               </Button>
             </Link>
           </div>

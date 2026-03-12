@@ -28,16 +28,27 @@ export function ShareButtons({
   const encodedTitle = encodeURIComponent(title)
 
   const handleCopyLink = async () => {
-    await navigator.clipboard.writeText(url)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    try {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      // Fallback: do nothing, clipboard API may not be available
+    }
   }
 
   const handleNativeShare = async () => {
-    if (navigator.share) {
-      await navigator.share({ title, url })
-    } else {
-      handleCopyLink()
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, url })
+      } else {
+        handleCopyLink()
+      }
+    } catch (err) {
+      // User cancelled or share API unavailable
+      if (err instanceof Error && err.name !== 'AbortError') {
+        handleCopyLink()
+      }
     }
   }
 
@@ -58,7 +69,7 @@ export function ShareButtons({
           className={linkClass}
           aria-label='Share on Twitter'
         >
-          <FiTwitter size={16} /> Twitter
+          <FiTwitter size={16} /> {dict.blog.twitter}
         </a>
         <a
           href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
@@ -67,7 +78,7 @@ export function ShareButtons({
           className={linkClass}
           aria-label='Share on LinkedIn'
         >
-          <FiLinkedin size={16} /> LinkedIn
+          <FiLinkedin size={16} /> {dict.blog.linkedin}
         </a>
         <a
           href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
@@ -76,7 +87,7 @@ export function ShareButtons({
           className={linkClass}
           aria-label='Share on Facebook'
         >
-          <FaFacebook size={16} /> Facebook
+          <FaFacebook size={16} /> {dict.blog.facebook}
         </a>
         <button
           onClick={handleNativeShare}
@@ -89,11 +100,11 @@ export function ShareButtons({
                 size={16}
                 className='text-green-500'
               />{' '}
-              Copied!
+              {dict.blog.copied}
             </>
           ) : (
             <>
-              <FiLink size={16} /> Copy link
+              <FiLink size={16} /> {dict.blog.copyLink}
             </>
           )}
         </button>

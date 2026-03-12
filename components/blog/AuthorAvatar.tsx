@@ -5,6 +5,7 @@ interface Props {
   name: string
   image?: string
   size?: 'sm' | 'md' | 'lg'
+  priority?: boolean
 }
 
 const sizeMap = {
@@ -17,6 +18,7 @@ export function AuthorAvatar({
   name,
   image,
   size = 'md',
+  priority = false,
 }: Props) {
   const { container, icon, imgSize } = sizeMap[size]
 
@@ -31,7 +33,7 @@ export function AuthorAvatar({
           fill
           sizes={imgSize}
           className='object-cover'
-          priority
+          priority={priority}
         />
       ) : (
         <div className='flex h-full w-full items-center justify-center'>

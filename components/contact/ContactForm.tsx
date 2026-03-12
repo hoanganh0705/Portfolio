@@ -27,7 +27,7 @@ import { useLocale } from '@/lib/locale-context'
 const initialState: FeedbackState = {
   status: 'idle',
   message: '',
-  timeStamp: Date.now(),
+  timestamp: Date.now(),
 }
 
 export default function ContactForm() {
@@ -61,8 +61,8 @@ export default function ContactForm() {
       formRef.current?.reset()
       setService('')
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- timeStamp is the trigger; response ref is stable per submission
-  }, [response?.timeStamp])
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- timestamp is the trigger; response ref is stable per submission
+  }, [response?.timestamp])
 
   return (
     <div className='xl:w-[70%] order-2 xl:order-0'>

@@ -2,6 +2,7 @@
 export const siteConfig = {
   url: 'https://anhnguyendev.me',
   name: 'Anh Nguyen Dev',
+  shortName: 'Anh Nguyen Dev',
   title: 'Anh Nguyen Dev — Full-Stack Web Developer & Educator',
   description:
     'Nguyen Hoang Anh (anhnguyendev) is a full-stack web developer and educator based in Vietnam. Specializing in Next.js, React, Tailwind CSS, private tutoring, English teaching, and SEO optimization.',
@@ -9,7 +10,8 @@ export const siteConfig = {
   author: {
     name: 'Nguyen Hoang Anh',
     alternateName: ['Anh Nguyen Dev', 'anhnguyendev', 'anh nguyen dev', 'Nguyễn Hoàng Anh'],
-    email: 'anh487303@gmail.com',
+    email: process.env.CONTACT_TO_EMAIL || 'anh487303@gmail.com',
+    phone: process.env.CONTACT_PHONE || '(+84) 985 335 735',
     jobTitle: 'Full-Stack Web Developer & Educator',
     location: 'Ho Chi Minh City, Vietnam',
   },

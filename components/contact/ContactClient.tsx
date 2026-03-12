@@ -36,7 +36,7 @@ export default function ContactClient() {
             {/* info */}
             <div className='flex-1 flex items-center xl:justify-end order-1 xl:order-0 mb-8 xl:mb-0 xl:w-[40%]'>
               <ul className='flex flex-col gap-10 xl:bg-secondary xl:rounded-xl xl:h-full xl:w-full xl:justify-center'>
-                {info.map((item, index) => {
+                {info.map((item) => {
                   const translatedTitle =
                     dict.contact.infoLabels[
                       item.title.toLowerCase() as keyof typeof dict.contact.infoLabels
@@ -44,7 +44,7 @@ export default function ContactClient() {
 
                   return (
                     <li
-                      key={index}
+                      key={item.title}
                       className='flex items-center gap-6 xl:ml-2'
                     >
                       <div className='w-[52px] h-[52px] xl:w-[72px] xl:h-[72px] rounded-md text-accent-default flex justify-center items-center'>

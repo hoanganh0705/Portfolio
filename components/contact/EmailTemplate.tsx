@@ -15,6 +15,7 @@ interface Props {
   service: string
   email: string
   phone: string
+  message: string
 }
 
 export const ContactNotificationEmail = ({
@@ -23,6 +24,7 @@ export const ContactNotificationEmail = ({
   service,
   email,
   phone,
+  message,
 }: Props) => (
   <Html>
     <Head />
@@ -50,6 +52,15 @@ export const ContactNotificationEmail = ({
             <br />
             <strong>Interested in:</strong> {service}
           </Text>
+          {message && (
+            <>
+              <Hr style={hr} />
+              <Text style={paragraph}>
+                <strong>Message:</strong>
+              </Text>
+              <Text style={paragraph}>{message}</Text>
+            </>
+          )}
           <Hr style={hr} />
           <Text style={paragraph}>
             Go follow up with them soon 🚀

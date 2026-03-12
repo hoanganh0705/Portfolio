@@ -3,7 +3,13 @@ import { RxRocket } from 'react-icons/rx'
 import { MdLockOutline } from 'react-icons/md'
 import { IoEyeOutline } from 'react-icons/io5'
 
-export const whyMe = [
+export interface WhyMeItem {
+  icon: React.ReactNode
+  whyMe: string
+  briefDesc: string
+}
+
+export const whyMe: WhyMeItem[] = [
   {
     icon: <TiLightbulb />,
     whyMe: 'Problem-solving mindset',

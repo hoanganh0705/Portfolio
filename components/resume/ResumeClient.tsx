@@ -98,9 +98,9 @@ export default function ResumeClient() {
                   description={dict.resume.experienceDesc}
                 >
                   <ul className='grid grid-cols-1 lg:grid-cols-2 gap-[30px]'>
-                    {experience.items.map((item, index) => (
+                    {experience.items.map((item) => (
                       <li
-                        key={index}
+                        key={`${item.duration}-${item.company}`}
                         className='bg-secondary h-[148px] py-6 px-10 rounded-xl flex flex-col justify-center items-center xl:items-start gap-1'
                       >
                         <span className='text-accent-default'>
@@ -128,9 +128,9 @@ export default function ResumeClient() {
                   description={dict.resume.educationDesc}
                 >
                   <ul className='grid grid-cols-1 lg:grid-cols-2 gap-[30px]'>
-                    {education.items.map((item, index) => (
+                    {education.items.map((item) => (
                       <li
-                        key={index}
+                        key={`${item.duration}-${item.institution}`}
                         className='bg-secondary h-[148px] py-6 px-10 rounded-xl flex flex-col justify-center items-center xl:items-start gap-1'
                       >
                         <span className='text-accent-default'>
@@ -168,8 +168,8 @@ export default function ResumeClient() {
                   <TooltipProvider delayDuration={100}>
                     <ul className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:gap-[30px] gap-4 sm:ml-2 sm:mr-2'>
                       {skills.skillList.map(
-                        (skill, index) => (
-                          <li key={index}>
+                        (skill) => (
+                          <li key={skill.name}>
                             <Tooltip>
                               <TooltipTrigger className='w-full h-[150px] bg-secondary rounded-xl flex justify-center items-center group'>
                                 <div className='text-5xl group-hover:text-accent-default transition-all duration-500'>
@@ -203,9 +203,9 @@ export default function ResumeClient() {
                     {dict.resume.aboutDesc}
                   </p>
                   <ul className='grid grid-cols-1 xl:grid-cols-2 gap-y-6 max-w-[620px] mx-auto xl:mx-0'>
-                    {about.info.map((item, index) => (
+                    {about.info.map((item) => (
                       <li
-                        key={index}
+                        key={item.fieldName}
                         className='flex items-center justify-center xl:justify-start gap-4'
                       >
                         <span className='text-muted-foreground'>
