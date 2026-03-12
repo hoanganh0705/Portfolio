@@ -139,6 +139,26 @@ export default function ContactForm() {
           </SelectContent>
         </Select>
 
+        {/* Honeypot field — hidden from humans, filled by bots */}
+        <input
+          name='website'
+          type='text'
+          defaultValue=''
+          autoComplete='off'
+          tabIndex={-1}
+          aria-hidden='true'
+          style={{
+            position: 'absolute',
+            opacity: 0,
+            top: 0,
+            left: 0,
+            height: 0,
+            width: 0,
+            zIndex: -1,
+            pointerEvents: 'none',
+          }}
+        />
+
         {/* Hidden inputs for service and locale */}
         <input
           type='hidden'
