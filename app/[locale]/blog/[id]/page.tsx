@@ -29,10 +29,7 @@ export async function generateMetadata({
   const { locale, id } = await params
 
   try {
-    const mod = await import(
-      `@/content/${locale}/${id}.mdx`
-    )
-    const metadata = mod.metadata
+    const { metadata } = await loadMdx(locale, id)
 
     if (!metadata) {
       return {
@@ -121,6 +118,12 @@ export async function generateMetadata({
   }
 }
 
+// Cache the MDX import so generateMetadata and the page component share one load (2.5)
+const loadMdx = async (locale: string, id: string) => {
+  const mod = await import(`@/content/${locale}/${id}.mdx`)
+  return { default: mod.default, metadata: mod.metadata }
+}
+
 export default async function PostPage({
   params,
 }: {
@@ -132,9 +135,7 @@ export default async function PostPage({
   let metadata
 
   try {
-    const mod = await import(
-      `@/content/${locale}/${id}.mdx`
-    )
+    const mod = await loadMdx(locale, id)
     PostComponent = mod.default
     metadata = mod.metadata
   } catch {

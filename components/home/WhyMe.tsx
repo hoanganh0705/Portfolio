@@ -71,6 +71,16 @@ const iconVariants: Variants = {
   },
 }
 
+// Hoist static motion props outside component to prevent re-creation per render (9.4)
+const cardHover = {
+  scale: 1.06,
+  rotateX: 0,
+  rotateY: 0,
+  boxShadow: '0px 14px 28px rgba(0,0,0,0.18)',
+} as const
+const cardTap = { scale: 0.97 } as const
+const cardPerspective = { perspective: 800 } as const
+
 export default function WhyMe() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const prefersReducedMotion = useReducedMotion()
@@ -102,18 +112,19 @@ export default function WhyMe() {
   )
 
   useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout>
     const updateViewportAmount = () => {
-      const width =
-        typeof window !== 'undefined'
-          ? window.innerWidth
-          : 0
-      if (width >= 1280) {
-        setViewportAmount(0.8)
-      } else if (width >= 1024 && width < 1280) {
-        setViewportAmount(0.6)
-      } else {
-        setViewportAmount(0.5)
-      }
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => {
+        const width = window.innerWidth
+        if (width >= 1280) {
+          setViewportAmount(0.8)
+        } else if (width >= 1024) {
+          setViewportAmount(0.6)
+        } else {
+          setViewportAmount(0.5)
+        }
+      }, 150)
     }
 
     updateViewportAmount()
@@ -123,11 +134,13 @@ export default function WhyMe() {
       updateViewportAmount,
       { passive: true },
     )
-    return () =>
+    return () => {
+      clearTimeout(timeoutId)
       window.removeEventListener(
         'resize',
         updateViewportAmount,
       )
+    }
   }, [])
 
   return (
@@ -140,7 +153,7 @@ export default function WhyMe() {
         viewport={{ once: true, amount: viewportAmount }}
         style={
           !prefersReducedMotion
-            ? { y: parallaxY, willChange: 'transform' }
+            ? { y: parallaxY }
             : {}
         }
         className='mt-5 xl:mb-20'
@@ -163,16 +176,10 @@ export default function WhyMe() {
                   key={whyMeKeys[i]}
                   custom={i}
                   variants={cardVariants}
-                  whileHover={{
-                    scale: 1.06,
-                    rotateX: 0,
-                    rotateY: 0,
-                    boxShadow:
-                      '0px 14px 28px rgba(0,0,0,0.18)',
-                  }}
-                  whileTap={{ scale: 0.97 }}
+                  whileHover={cardHover}
+                  whileTap={cardTap}
                   className=' flex flex-col items-center text-center p-6 rounded-lg transition-colors duration-300 hover:bg-accent-hover/50 select-none cursor-pointer'
-                  style={{ perspective: 800 }}
+                  style={cardPerspective}
                 >
                   <m.span
                     variants={iconVariants}

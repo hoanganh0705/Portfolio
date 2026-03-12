@@ -35,11 +35,14 @@ interface Props {
   recommendations?: PostMetadata[]
 }
 
+// Module-level constant to avoid new array reference each render (2.14)
+const EMPTY_POSTS: PostMetadata[] = []
+
 export function PostDetailLayout({
   metadata,
   slug,
   children,
-  recommendations = [],
+  recommendations = EMPTY_POSTS,
 }: Props) {
   const { locale, dict } = useLocale()
   const formatted = new Date(

@@ -37,10 +37,13 @@ export default function ContactClient() {
             <div className='flex-1 flex items-center xl:justify-end order-1 xl:order-0 mb-8 xl:mb-0 xl:w-[40%]'>
               <ul className='flex flex-col gap-10 xl:bg-secondary xl:rounded-xl xl:h-full xl:w-full xl:justify-center'>
                 {info.map((item) => {
+                  const key = item.title.toLowerCase()
                   const translatedTitle =
-                    dict.contact.infoLabels[
-                      item.title.toLowerCase() as keyof typeof dict.contact.infoLabels
-                    ] || item.title
+                    key in dict.contact.infoLabels
+                      ? dict.contact.infoLabels[
+                          key as keyof typeof dict.contact.infoLabels
+                        ]
+                      : item.title
 
                   return (
                     <li

@@ -21,6 +21,25 @@ export interface PostMetadata {
   featured?: boolean
 }
 
+/** Validates and coerces raw frontmatter data from gray-matter (3.6) */
+function parseFrontmatter(
+  data: Record<string, unknown>,
+  slug: string,
+): Omit<PostMetadata, 'slug'> {
+  const dateStr = typeof data.date === 'string' ? data.date : '1970-01-01'
+  const parsedDate = new Date(dateStr)
+  const safeDate = isNaN(parsedDate.getTime()) ? '1970-01-01' : dateStr
+
+  return {
+    title: typeof data.title === 'string' ? data.title : slug,
+    excerpt: typeof data.excerpt === 'string' ? data.excerpt : 'No excerpt',
+    category: typeof data.category === 'string' ? data.category : 'General',
+    date: safeDate,
+    readTime: typeof data.readTime === 'string' ? data.readTime : '5 min read',
+    featured: data.featured === true,
+  }
+}
+
 // Wrapped in React.cache to deduplicate within a single render (2.4)
 export const getAllPosts = cache(async (locale: Locale = 'en'): Promise<PostMetadata[]> => {
   // Validate locale to prevent filesystem probing (1.6)
@@ -44,20 +63,11 @@ export const getAllPosts = cache(async (locale: Locale = 'en'): Promise<PostMeta
         const filePath = path.join(postsDirectory, file)
         const fileContents = await fs.readFile(filePath, 'utf8')
         const { data } = matter(fileContents)
-
-        // Validate date to prevent NaN in sort (8.9)
-        const dateStr = data.date || '1970-01-01'
-        const parsedDate = new Date(dateStr)
-        const safeDate = isNaN(parsedDate.getTime()) ? '1970-01-01' : dateStr
+        const parsed = parseFrontmatter(data, slug)
 
         return {
           slug,
-          title: data.title || 'Untitled',
-          excerpt: data.excerpt || 'No excerpt',
-          category: data.category || 'General',
-          date: safeDate,
-          readTime: data.readTime || '5 min read',
-          featured: data.featured === true,
+          ...parsed,
         }
       })
   )
