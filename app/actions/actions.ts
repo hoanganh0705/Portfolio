@@ -61,6 +61,12 @@ function isRateLimited(ip: string): boolean {
 }
 
 export async function sendEmail(prevState: FeedbackState, formData: FormData): Promise<FeedbackState> {
+  // Honeypot check — bots fill this field, humans never see it
+  if (formData.get('website')) {
+    // Silently return success so bots don't know they were rejected
+    return { status: 'success', message: 'Email sent successfully', timestamp: Date.now() }
+  }
+
   // server-auth-actions: rate limit public server action
   const headersList = await headers()
   const ip = headersList.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
