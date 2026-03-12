@@ -33,7 +33,12 @@ export async function generateMetadata({
 
 // Fallback skeleton for blog post grid
 const PostGridFallback = (
-  <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
+  <div
+    role='status'
+    aria-busy='true'
+    aria-label='Loading articles'
+    className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'
+  >
     {Array.from({ length: 6 }).map((_, i) => (
       <div
         key={i}
@@ -44,7 +49,12 @@ const PostGridFallback = (
 )
 
 const FeaturedFallback = (
-  <div className='mb-16'>
+  <div
+    role='status'
+    aria-busy='true'
+    aria-label='Loading featured posts'
+    className='mb-16'
+  >
     <div className='h-8 w-48 bg-foreground/10 rounded mb-8 animate-pulse' />
     <div className='grid md:grid-cols-3 gap-6'>
       {Array.from({ length: 3 }).map((_, i) => (
@@ -71,7 +81,7 @@ export default async function BlogPage({
         {/* Hero */}
         <div className='py-12 xl:py-16'>
           <h1 className='text-3xl xl:text-4xl font-bold mb-6'>
-            {dict.blog.pageTitle.split(' ')[0]}{' '}
+            {dict.blog.pageTitle}
           </h1>
           <p className='text-lg text-muted-foreground max-w-2xl leading-relaxed'>
             {dict.blog.pageDescription}

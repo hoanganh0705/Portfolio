@@ -31,10 +31,14 @@ const MobileNav = ({ scrolled }: NavProps) => {
   return (
     <div className='container mx-auto px-2 xl:px-0'>
       <Sheet>
-        <SheetTitle className='sr-only'>Navigation menu</SheetTitle>
-        <SheetTrigger className='flex justify-center items-center'>
+        <SheetTitle className='sr-only'>
+          Navigation menu
+        </SheetTitle>
+        <SheetTrigger
+          className='flex justify-center items-center'
+          aria-label='Open navigation menu'
+        >
           <CiMenuFries
-            aria-label='Open navigation menu'
             className={`text-[32px] hover:cursor-pointer transition-all ${
               scrolled
                 ? 'text-primary/80 hover:text-accent-default '
@@ -47,12 +51,12 @@ const MobileNav = ({ scrolled }: NavProps) => {
           {/*Logo*/}
           <div className='mt-30 mb-40 text-center text-2xl'>
             <Link href={`/${locale}`}>
-              <h1 className='font-semibold text-4xl xl:px-0 px-2'>
+              <span className='font-semibold text-4xl xl:px-0 px-2'>
                 Anh
                 <span className='text-accent-default'>
                   .
                 </span>
-              </h1>
+              </span>
             </Link>
           </div>
 

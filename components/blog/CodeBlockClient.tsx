@@ -7,6 +7,7 @@ import {
   FiChevronDown,
   FiChevronUp,
 } from 'react-icons/fi'
+import { useLocale } from '@/lib/locale-context'
 
 interface CodeBlockClientProps {
   language: string
@@ -33,6 +34,7 @@ export default function CodeBlockClient({
   const [collapsed, setCollapsed] = useState(
     defaultCollapsed,
   )
+  const { dict } = useLocale()
 
   const highlightSet = new Set(highlightLines)
   const lines = code.split('\n')
@@ -107,14 +109,19 @@ export default function CodeBlockClient({
                     navigator.clipboard.writeText(lines[i])
                   }
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
+                    if (
+                      e.key === 'Enter' ||
+                      e.key === ' '
+                    ) {
                       e.preventDefault()
-                      navigator.clipboard.writeText(lines[i])
+                      navigator.clipboard.writeText(
+                        lines[i],
+                      )
                     }
                   }}
                   role='button'
                   tabIndex={0}
-                  title={typeof window !== 'undefined' ? 'Click to copy line' : ''}
+                  title={dict.blog.clickToCopyLine}
                 >
                   {i + 1}
                 </div>

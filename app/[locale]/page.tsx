@@ -29,7 +29,12 @@ export { metadata } from './metadata'
 
 // rendering-hoist-jsx: static fallback extracted outside component
 const StatsFallback = (
-  <section className='pt-4 pb-12 xl:pt-0 xl:pb-0'>
+  <section
+    role='status'
+    aria-busy='true'
+    aria-label='Loading stats'
+    className='pt-4 pb-12 xl:pt-0 xl:pb-0'
+  >
     <div className='container mx-auto relative top-3'>
       <div className='flex flex-wrap items-center justify-center gap-6 max-w-[80vw] mx-auto xl:max-w-none animate-pulse'>
         {Array.from({ length: 4 }).map((_, i) => (
@@ -53,7 +58,8 @@ async function StatsSection({
   locale: Locale
 }) {
   const dict = await getDictionary(locale)
-  const { stats, getCommitCount } = await import('@/constants/stats')
+  const { stats, getCommitCount } =
+    await import('@/constants/stats')
   const commitCount = await getCommitCount()
   const labels = [
     dict.stats.yearsOfExperience,
