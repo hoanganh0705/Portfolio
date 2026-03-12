@@ -6,14 +6,29 @@ interface TypeWriterProps {
   mySelf: string[]
 }
 
+// Hoist animation constants outside component to avoid recreating every render (2.7)
+const LETTER_DELAY = 0.1
+const BOX_FADE_DURATION = 0.125
+const FADE_DELAY = 5
+const MAIN_FADE_DURATION = 0.4
+const SWAP_DELAY_IN_MS = 7000
+
+// Static animation config shared across all character spans
+const fadeOutInitial = { opacity: 1 } as const
+const fadeOutAnimate = { opacity: 0 } as const
+const fadeOutTransition = {
+  delay: FADE_DELAY,
+  duration: MAIN_FADE_DURATION,
+  ease: 'easeInOut' as const,
+} as const
+
+const fadeInInitial = { opacity: 0 } as const
+const fadeInAnimate = { opacity: 1 } as const
+
+const boxInitial = { opacity: 0 } as const
+const boxAnimate = { opacity: [0, 1, 0] }
+
 const TypeWriter = ({ mySelf }: TypeWriterProps) => {
-  const LETTER_DELAY = 0.1
-  const BOX_FADE_DURATION = 0.125
-
-  const FADE_DELAY = 5
-  const MAIN_FADE_DURATION = 0.4
-
-  const SWAP_DELAY_IN_MS = 7000
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
@@ -33,26 +48,14 @@ const TypeWriter = ({ mySelf }: TypeWriterProps) => {
               <m.span
                 key={`${index}-${i}`}
                 className='relative'
-                initial={{
-                  opacity: 1,
-                }}
-                animate={{
-                  opacity: 0,
-                }}
-                transition={{
-                  delay: FADE_DELAY,
-                  duration: MAIN_FADE_DURATION,
-                  ease: 'easeInOut',
-                }}
+                initial={fadeOutInitial}
+                animate={fadeOutAnimate}
+                transition={fadeOutTransition}
               >
                 <m.span
                   className='relative'
-                  initial={{
-                    opacity: 0,
-                  }}
-                  animate={{
-                    opacity: 1,
-                  }}
+                  initial={fadeInInitial}
+                  animate={fadeInAnimate}
                   transition={{
                     delay: i * LETTER_DELAY,
                     duration: 0,
@@ -62,8 +65,8 @@ const TypeWriter = ({ mySelf }: TypeWriterProps) => {
                 </m.span>
                 <m.span
                   className='absolute bottom-[3px] left-px right-0 top-[3px] bg-accent-default'
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: [0, 1, 0] }}
+                  initial={boxInitial}
+                  animate={boxAnimate}
                   transition={{
                     delay: i * LETTER_DELAY,
                     times: [0, 0.1, 1],

@@ -11,32 +11,35 @@ function escapeXml(str: string): string {
     .replace(/'/g, '&apos;')
 }
 
+interface FeedItem {
+  title: string
+  url: string
+  excerpt: string
+  date: string
+  category: string
+}
+
 export async function GET() {
   try {
-    const allItems: string[] = []
+    const allItems: FeedItem[] = []
 
     for (const locale of locales) {
       const posts = await getAllPosts(locale as Locale)
       for (const post of posts) {
-        const url = `${siteConfig.url}/${locale}/blog/${post.slug}`
-        allItems.push(`
-    <item>
-      <title>${escapeXml(post.title)}</title>
-      <link>${url}</link>
-      <guid isPermaLink="true">${url}</guid>
-      <description>${escapeXml(post.excerpt)}</description>
-      <pubDate>${new Date(post.date).toUTCString()}</pubDate>
-      <category>${escapeXml(post.category)}</category>
-    </item>`)
+        allItems.push({
+          title: post.title,
+          url: `${siteConfig.url}/${locale}/blog/${post.slug}`,
+          excerpt: post.excerpt,
+          date: post.date,
+          category: post.category,
+        })
       }
     }
 
-    // Sort by date (newest first)
-    allItems.sort((a, b) => {
-      const dateA = a.match(/<pubDate>(.*?)<\/pubDate>/)?.[1] ?? ''
-      const dateB = b.match(/<pubDate>(.*?)<\/pubDate>/)?.[1] ?? ''
-      return new Date(dateB).getTime() - new Date(dateA).getTime()
-    })
+    // Sort data objects by date before XML generation (2.6)
+    allItems.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    )
 
     const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -51,7 +54,15 @@ export async function GET() {
       <url>${siteConfig.url}/icon</url>
       <title>${escapeXml(siteConfig.name)}</title>
       <link>${siteConfig.url}</link>
-    </image>${allItems.join('')}
+    </image>${allItems.map((item) => `
+    <item>
+      <title>${escapeXml(item.title)}</title>
+      <link>${item.url}</link>
+      <guid isPermaLink="true">${item.url}</guid>
+      <description>${escapeXml(item.excerpt)}</description>
+      <pubDate>${new Date(item.date).toUTCString()}</pubDate>
+      <category>${escapeXml(item.category)}</category>
+    </item>`).join('')}
   </channel>
 </rss>`
 

@@ -16,6 +16,8 @@ import { useLocale } from '@/lib/locale-context'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 
+import type SwiperCore from 'swiper'
+
 import Image from 'next/image'
 
 import WorkSliderBtns from './WorkSliderBtns'
@@ -34,9 +36,7 @@ export default function WorkClient() {
   const { dict } = useLocale()
   const [project, setProject] = useState(projects[0])
 
-  const handleSlideChange = (swiper: {
-    activeIndex: number
-  }) => {
+  const handleSlideChange = (swiper: SwiperCore) => {
     const currentIndex = swiper.activeIndex
     if (currentIndex >= 0 && currentIndex < projects.length) {
       setProject(projects[currentIndex])

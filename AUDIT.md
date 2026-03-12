@@ -32,24 +32,6 @@
 11. [Dead Code / Unnecessary Code](#11-dead-code--unnecessary-code)
 12. [Priority Fix Roadmap](#12-priority-fix-roadmap)
 
----
-
-## 1. Security Issues
-
-| # | Severity | File | Description |
-|---|----------|------|-------------|
-| 1.1 | **Critical** | `constants/about.tsx` | Phone number `(+84) 985 335 735` and email `anh487303@gmail.com` hardcoded in source code. Duplicated in `constants/info.tsx`. PII is committed to the public repo. Should be sourced from environment variables or `siteConfig`. |
-| 1.2 | **High** | `app/actions/actions.ts` | `RESEND_API_KEY` env var is used without startup validation. If missing, emails fail with opaque Resend errors instead of clear startup-time validation. |
-| 1.3 | **High** | `app/actions/actions.ts` | Recipient email `anh487303@gmail.com` is hardcoded. Should be a `CONTACT_TO_EMAIL` env var. |
-| 1.4 | **High** | `app/actions/actions.ts` | In-memory rate limiter (`rateLimitMap`) **does not work** in serverless environments (Vercel, Lambda) — each invocation gets a fresh process. Rate limiting is effectively disabled in production. The map is also never pruned (slow memory leak in long-lived processes). |
-| 1.5 | **High** | `app/actions/actions.ts` | The `message` field from the contact form is extracted from `FormData` but **never validated** by the Zod schema. It's raw unsanitized user input — an XSS/injection vector if ever passed to the email template. |
-| 1.6 | **High** | `lib/getPosts.ts` | `'use server'` directive makes ALL exports (`getAllPosts`, `getFeaturedPosts`, `getRelatedPosts`) callable as server actions from the client. These use `fs` to read files — an attacker could call these with custom locale strings to probe the filesystem. |
-| 1.7 | **Medium** | `components/blog/CodeBlockClient.tsx` | `dangerouslySetInnerHTML` renders Shiki-generated HTML with no post-sanitization (e.g. DOMPurify). Although HTML is server-generated, any bypass or future refactor could introduce XSS. |
-| 1.8 | **Medium** | `components/layout/LanguageSwitcher.tsx` | Cookie set via `document.cookie` without `SameSite` attribute. Should include `SameSite=Lax` to mitigate CSRF-style leakage. |
-| 1.9 | **Medium** | `lib/fetchGithubCommits.tsx` | `username` is directly interpolated into API URLs without `encodeURIComponent()`. Env misconfiguration could produce malformed requests. |
-| 1.10 | **Medium** | `env.example` | `RESEND_API_KEY` is not listed. Env var naming uses camelCase (`githubToken`) instead of `SCREAMING_SNAKE_CASE` convention. |
-
----
 
 ## 2. Performance Issues
 
