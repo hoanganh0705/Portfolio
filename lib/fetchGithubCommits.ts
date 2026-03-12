@@ -1,12 +1,33 @@
-interface Repo {
-  name: string
-  fork: boolean
+interface GraphQLYearsResponse {
+  data?: {
+    user?: {
+      contributionsCollection: {
+        contributionYears: number[]
+      }
+    }
+  }
+  errors?: { message: string }[]
+}
+
+interface YearContributions {
+  totalCommitContributions: number
+  restrictedContributionsCount: number
+}
+
+interface GraphQLCommitsResponse {
+  data?: {
+    user?: Record<string, YearContributions>
+  }
+  errors?: { message: string }[]
 }
 
 /**
- * Fetch total commit count using the Contributors Stats API.
- * This avoids the N+1 problem of fetching commits per-repo individually.
- * Falls back to contributor stats which returns aggregate counts.
+ * Fetch total commit count using the GitHub GraphQL API.
+ * Uses `contributionsCollection` to get accurate commit counts across all years
+ * in just 2 API calls (get years → batch-fetch all year contributions).
+ *
+ * This replaces the previous REST approach which used `/stats/contributors`
+ * and was unreliable due to 202 responses when stats haven't been computed.
  */
 export const fetchGitHubCommits = async (
   username: string,
@@ -17,75 +38,93 @@ export const fetchGitHubCommits = async (
     return 300
   }
 
-  const encodedUsername = encodeURIComponent(username)
   const headers = {
     Authorization: `Bearer ${token}`,
-    'User-Agent': 'Node.js',
-    Accept: 'application/vnd.github.v3+json',
+    'Content-Type': 'application/json',
   }
 
   try {
-    // Fetch all repositories (paginated)
-    const repos: Repo[] = []
-    let page = 1
+    // Step 1: Get all contribution years for the user
+    const yearsResponse = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        query: `query($username: String!) {
+          user(login: $username) {
+            contributionsCollection {
+              contributionYears
+            }
+          }
+        }`,
+        variables: { username },
+      }),
+      next: { revalidate: 86400 },
+    })
 
-    while (true) {
-      const repoResponse = await fetch(
-        `https://api.github.com/users/${encodedUsername}/repos?per_page=100&page=${page}`,
-        {
-          headers,
-          next: { revalidate: 86400 }, // Revalidate daily instead of force-cache forever
-        },
-      )
-
-      if (!repoResponse.ok) {
-        throw new Error(`Failed to fetch repos: ${repoResponse.status}`)
-      }
-      const repoData: Repo[] = await repoResponse.json()
-      if (repoData.length === 0) break
-      repos.push(...repoData) // push instead of spread copy (2.11)
-      page++
+    if (!yearsResponse.ok) {
+      throw new Error(`GitHub GraphQL API error: ${yearsResponse.status}`)
     }
 
-    let totalCommits = 0
+    const yearsData: GraphQLYearsResponse = await yearsResponse.json()
 
-    // Use /stats/contributors endpoint — returns aggregate commit counts per contributor
-    // This significantly reduces API calls (1 per repo instead of N pages of commits)
-    const nonForkRepos = repos.filter((r) => !r.fork)
+    if (yearsData.errors?.length) {
+      throw new Error(`GraphQL error: ${yearsData.errors[0].message}`)
+    }
 
-    const commitCounts = await Promise.all(
-      nonForkRepos.map(async (repo) => {
-        try {
-          const statsResponse = await fetch(
-            `https://api.github.com/repos/${encodedUsername}/${encodeURIComponent(repo.name)}/stats/contributors`,
-            {
-              headers,
-              next: { revalidate: 86400 },
-            },
-          )
+    const years = yearsData.data?.user?.contributionsCollection?.contributionYears ?? []
 
-          if (!statsResponse.ok) {
-            console.warn(`Skipping ${repo.name}, got status: ${statsResponse.status}`)
-            return 0
+    if (years.length === 0) return 0
+
+    // Step 2: Batch-fetch commit contributions for every year in a single query
+    // Each year gets an aliased `contributionsCollection` fragment
+    const yearFragments = years
+      .map((year) => {
+        const from = `${year}-01-01T00:00:00Z`
+        const to = `${year}-12-31T23:59:59Z`
+        return `y${year}: contributionsCollection(from: "${from}", to: "${to}") {
+        totalCommitContributions
+        restrictedContributionsCount
+      }`
+      })
+      .join('\n      ')
+
+    const commitsResponse = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        query: `query($username: String!) {
+          user(login: $username) {
+            ${yearFragments}
           }
-
-          const stats = await statsResponse.json()
-          if (!Array.isArray(stats)) return 0
-
-          // Find the contributor matching our username
-          const userStats = stats.find(
-            (s: { author?: { login?: string } }) =>
-              s.author?.login?.toLowerCase() === username.toLowerCase(),
-          )
-
-          return userStats?.total ?? 0
-        } catch {
-          return 0
-        }
+        }`,
+        variables: { username },
       }),
-    )
+      next: { revalidate: 86400 },
+    })
 
-    totalCommits = commitCounts.reduce((sum, count) => sum + count, 0)
+    if (!commitsResponse.ok) {
+      throw new Error(`GitHub GraphQL API error: ${commitsResponse.status}`)
+    }
+
+    const commitsData: GraphQLCommitsResponse = await commitsResponse.json()
+
+    if (commitsData.errors?.length) {
+      throw new Error(`GraphQL error: ${commitsData.errors[0].message}`)
+    }
+
+    const userData = commitsData.data?.user
+    if (!userData) return 0
+
+    let totalCommits = 0
+    for (const year of years) {
+      const yearData = userData[`y${year}`]
+      if (yearData) {
+        totalCommits +=
+          (yearData.totalCommitContributions ?? 0) +
+          (yearData.restrictedContributionsCount ?? 0)
+      }
+    }
+
     return totalCommits
   } catch (err) {
     console.error('Error fetching commits:', err)
