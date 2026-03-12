@@ -2,6 +2,7 @@
 'use server'
 
 import ContactResponseEmail from '@/components/contact/EmailTemplate'
+import { AutoReplyEmail, getAutoReplySubject } from '@/components/contact/AutoReplyEmail'
 import { FeedbackState } from '@/types/contact'
 import { Resend } from 'resend'
 import { after } from 'next/server'
@@ -16,7 +17,7 @@ if (!RESEND_API_KEY) {
 }
 
 const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || siteConfig.author.email
-const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev'
+const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || 'contact@anhnguyendev.me'
 
 // Module-level singleton (2.10)
 const resend = new Resend(RESEND_API_KEY)
@@ -30,6 +31,7 @@ const ContactFormSchema = z.object({
     message: 'Phone number must be 10 to 15 digits',
   }),
   message: z.string().min(1).max(5000),
+  locale: z.enum(['en', 'vi']).default('en'),
 })
 
 // Rate limiter with cleanup (1.4 — still in-memory, but with pruning + note)
@@ -78,6 +80,7 @@ export async function sendEmail(prevState: FeedbackState, formData: FormData): P
     service: formData.get('service'),
     phone: formData.get('phone'),
     message: formData.get('message'),
+    locale: formData.get('locale'),
   }
 
   const result = ContactFormSchema.safeParse(raw)
@@ -91,22 +94,32 @@ export async function sendEmail(prevState: FeedbackState, formData: FormData): P
     }
   }
 
-  const { email, firstName, lastName, service, phone, message } = result.data
+  const { email, firstName, lastName, service, phone, message, locale } = result.data
 
   try {
-    await resend.emails.send({
-      from: CONTACT_FROM_EMAIL,
-      to: CONTACT_TO_EMAIL,
-      subject: `New Contact Request from ${firstName} ${lastName}`,
-      react: ContactResponseEmail({
-        firstName,
-        lastName,
-        email,
-        service,
-        phone,
-        message,
+    // Send notification to site owner + auto-reply to user in parallel
+    await Promise.all([
+      resend.emails.send({
+        from: CONTACT_FROM_EMAIL,
+        to: CONTACT_TO_EMAIL,
+        subject: `New contact from portfolio — ${firstName} ${lastName}`,
+        react: ContactResponseEmail({
+          firstName,
+          lastName,
+          email,
+          service,
+          phone,
+          message,
+          locale,
+        }),
       }),
-    })
+      resend.emails.send({
+        from: CONTACT_FROM_EMAIL,
+        to: email,
+        subject: getAutoReplySubject(locale),
+        react: AutoReplyEmail({ firstName, locale }),
+      }),
+    ])
 
     // server-after-nonblocking: log after response is sent
     after(() => {

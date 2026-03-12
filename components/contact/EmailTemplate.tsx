@@ -16,6 +16,7 @@ interface Props {
   email: string
   phone: string
   message: string
+  locale: string
 }
 
 export const ContactNotificationEmail = ({
@@ -25,6 +26,7 @@ export const ContactNotificationEmail = ({
   email,
   phone,
   message,
+  locale,
 }: Props) => (
   <Html>
     <Head />
@@ -51,6 +53,8 @@ export const ContactNotificationEmail = ({
             <strong>Phone:</strong> {phone}
             <br />
             <strong>Interested in:</strong> {service}
+            <br />
+            <strong>Locale:</strong> {locale}
           </Text>
           {message && (
             <>
