@@ -85,7 +85,15 @@
     "allCategories": "Tất cả",
     "resultsFound": "bài viết được tìm thấy",
     "noResults": "Không có bài viết phù hợp. Hãy thử từ khóa hoặc danh mục khác.",
-    "readNext": "Đọc tiếp"
+    "readNext": "Đọc tiếp",
+    "featuredArticles": "Bài viết nổi bật",
+    "noArticles": "Không tìm thấy bài viết.",
+    "twitter": "Twitter",
+    "linkedin": "LinkedIn",
+    "facebook": "Facebook",
+    "copyLink": "Sao chép liên kết",
+    "copied": "Đã sao chép!",
+    "clickToCopyLine": "Nhấn để sao chép dòng"
   },
   "contact": {
     "title": "Hãy hợp tác cùng nhau",
@@ -125,9 +133,11 @@
     "aboutDesc": "Tôi là một lập trình viên full-stack và giảng viên tại TP. Hồ Chí Minh, Việt Nam. Tôi chuyên về xây dựng ứng dụng web hiện đại, hiệu suất cao với Next.js, React và Tailwind CSS. Song song với phát triển phần mềm, tôi dạy tiếng Anh và gia sư riêng, kết hợp chuyên môn kỹ thuật với niềm đam mê giáo dục."
   },
   "work": {
-    "pageTitle": "Dự án của tôi",
+    "pageTitle": "Công việc & Dự án",
+    "pageDesc": "Khám phá danh mục dự án của Anh Nguyen Dev — trưng bày các dự án phát triển web sáng tạo, giải pháp sáng tạo và ứng dụng full-stack.",
     "liveProject": "Xem dự án",
-    "githubRepo": "Mã nguồn Github"
+    "githubRepo": "Mã nguồn Github",
+    "project": "dự án"
   },
   "notFound": {
     "code": "404",
@@ -141,6 +151,16 @@
     "email": "anh487303@gmail.com",
     "rights": "Bảo lưu mọi quyền.",
     "builtWith": "Xây dựng với Next.js, Tailwind CSS & ❤️"
+  },
+  "errors": {
+    "somethingWentWrong": "Đã xảy ra lỗi",
+    "unexpectedError": "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại hoặc quay về trang chủ.",
+    "tryAgain": "Thử lại",
+    "backToHome": "Về Trang Chủ",
+    "failedToLoadArticle": "Không thể tải bài viết",
+    "articleCouldNotBeLoaded": "Bài viết này không thể tải được. Có thể đã bị di chuyển hoặc có lỗi máy chủ.",
+    "retry": "Thử lại",
+    "allArticles": "Tất cả bài viết"
   },
   "mySelf": [
     "Nguyễn Hoàng Anh",

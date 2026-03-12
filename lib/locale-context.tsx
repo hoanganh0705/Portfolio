@@ -6,17 +6,14 @@ import {
   type ReactNode,
 } from 'react'
 import type { Locale } from './i18n'
+import type { Dictionary } from '@/types/dictionary'
 
 interface LocaleContextValue {
   locale: Locale
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: Record<string, any>
+  dict: Dictionary
 }
 
-const LocaleContext = createContext<LocaleContextValue>({
-  locale: 'en',
-  dict: {},
-})
+const LocaleContext = createContext<LocaleContextValue | null>(null)
 
 export function LocaleProvider({
   locale,
@@ -30,6 +27,10 @@ export function LocaleProvider({
   )
 }
 
-export function useLocale() {
-  return useContext(LocaleContext)
+export function useLocale(): LocaleContextValue {
+  const context = useContext(LocaleContext)
+  if (!context) {
+    throw new Error('useLocale must be used within a <LocaleProvider>. Wrap your component tree with <LocaleProvider>.')
+  }
+  return context
 }

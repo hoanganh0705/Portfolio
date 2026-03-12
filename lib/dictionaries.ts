@@ -1,11 +1,11 @@
 import type { Locale } from './i18n'
+import type { Dictionary } from '@/types/dictionary'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const dictionaries: Record<Locale, () => Promise<any>> = {
-  en: () => import('@/dictionaries/en.json').then((m) => m.default),
-  vi: () => import('@/dictionaries/vi.json').then((m) => m.default),
+const dictionaries: Record<Locale, () => Promise<Dictionary>> = {
+  en: () => import('@/dictionaries/en.json').then((m) => m.default as Dictionary),
+  vi: () => import('@/dictionaries/vi.json').then((m) => m.default as Dictionary),
 }
 
-export async function getDictionary(locale: Locale) {
+export async function getDictionary(locale: Locale): Promise<Dictionary> {
   return dictionaries[locale]()
 }

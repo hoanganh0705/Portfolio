@@ -85,7 +85,15 @@
     "allCategories": "All",
     "resultsFound": "articles found",
     "noResults": "No articles match your search. Try a different keyword or category.",
-    "readNext": "Read next"
+    "readNext": "Read next",
+    "featuredArticles": "Featured Articles",
+    "noArticles": "No articles found.",
+    "twitter": "Twitter",
+    "linkedin": "LinkedIn",
+    "facebook": "Facebook",
+    "copyLink": "Copy link",
+    "copied": "Copied!",
+    "clickToCopyLine": "Click to copy line"
   },
   "contact": {
     "title": "Let's work together",
@@ -125,9 +133,11 @@
     "aboutDesc": "I am a full-stack web developer and educator based in Ho Chi Minh City, Vietnam. I specialize in building modern, performant web applications with Next.js, React, and Tailwind CSS. Alongside development, I teach English and offer private tutoring, combining technical expertise with a passion for education."
   },
   "work": {
-    "pageTitle": "My Projects",
+    "pageTitle": "Work & Projects",
+    "pageDesc": "Browse the portfolio of Anh Nguyen Dev — showcasing innovative web development projects, creative solutions, and full-stack applications.",
     "liveProject": "Live project",
-    "githubRepo": "Github repository"
+    "githubRepo": "Github repository",
+    "project": "project"
   },
   "notFound": {
     "code": "404",
@@ -141,6 +151,16 @@
     "email": "anh487303@gmail.com",
     "rights": "All rights reserved.",
     "builtWith": "Built with Next.js, Tailwind CSS & ❤️"
+  },
+  "errors": {
+    "somethingWentWrong": "Something went wrong",
+    "unexpectedError": "An unexpected error occurred. Please try again or go back to the homepage.",
+    "tryAgain": "Try again",
+    "backToHome": "Back to Home",
+    "failedToLoadArticle": "Failed to load article",
+    "articleCouldNotBeLoaded": "This article couldn't be loaded. It may have been moved or there was a server error.",
+    "retry": "Retry",
+    "allArticles": "All articles"
   },
   "mySelf": [
     "Nguyễn Hoàng Anh",

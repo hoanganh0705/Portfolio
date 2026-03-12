@@ -9,11 +9,12 @@ import {
   FiX,
 } from 'react-icons/fi'
 import type { PostMetadata } from '@/lib/getPosts'
+import type { Locale } from '@/lib/i18n'
 import { useLocale } from '@/lib/locale-context'
 
 interface Props {
   posts: PostMetadata[]
-  locale: string
+  locale: Locale
 }
 
 export function BlogPostGridClient({

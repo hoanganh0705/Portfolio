@@ -12,13 +12,14 @@ function escapeXml(str: string): string {
 }
 
 export async function GET() {
-  const allItems: string[] = []
+  try {
+    const allItems: string[] = []
 
-  for (const locale of locales) {
-    const posts = await getAllPosts(locale as Locale)
-    for (const post of posts) {
-      const url = `${siteConfig.url}/${locale}/blog/${post.slug}`
-      allItems.push(`
+    for (const locale of locales) {
+      const posts = await getAllPosts(locale as Locale)
+      for (const post of posts) {
+        const url = `${siteConfig.url}/${locale}/blog/${post.slug}`
+        allItems.push(`
     <item>
       <title>${escapeXml(post.title)}</title>
       <link>${url}</link>
@@ -27,23 +28,23 @@ export async function GET() {
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
       <category>${escapeXml(post.category)}</category>
     </item>`)
+      }
     }
-  }
 
-  // Sort by date (newest first)
-  allItems.sort((a, b) => {
-    const dateA = a.match(/<pubDate>(.*?)<\/pubDate>/)?.[1] ?? ''
-    const dateB = b.match(/<pubDate>(.*?)<\/pubDate>/)?.[1] ?? ''
-    return new Date(dateB).getTime() - new Date(dateA).getTime()
-  })
+    // Sort by date (newest first)
+    allItems.sort((a, b) => {
+      const dateA = a.match(/<pubDate>(.*?)<\/pubDate>/)?.[1] ?? ''
+      const dateB = b.match(/<pubDate>(.*?)<\/pubDate>/)?.[1] ?? ''
+      return new Date(dateB).getTime() - new Date(dateA).getTime()
+    })
 
-  const feed = `<?xml version="1.0" encoding="UTF-8"?>
+    const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>${escapeXml(siteConfig.name)} — Blog</title>
     <link>${siteConfig.url}/en/blog</link>
     <description>${escapeXml(siteConfig.description)}</description>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${siteConfig.url}/feed.xml" rel="self" type="application/rss+xml"/>
     <image>
@@ -54,10 +55,14 @@ export async function GET() {
   </channel>
 </rss>`
 
-  return new Response(feed, {
-    headers: {
-      'Content-Type': 'application/rss+xml; charset=utf-8',
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600',
-    },
-  })
+    return new Response(feed, {
+      headers: {
+        'Content-Type': 'application/rss+xml; charset=utf-8',
+        'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+      },
+    })
+  } catch (error) {
+    console.error('Failed to generate RSS feed:', error)
+    return new Response('Internal Server Error', { status: 500 })
+  }
 }

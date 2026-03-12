@@ -1,4 +1,15 @@
-export const projects = [
+export interface Project {
+  num: string
+  category: string
+  title: string
+  description: string
+  stack: { name: string }[]
+  image: string
+  live: string
+  github: string
+}
+
+export const projects: Project[] = [
   {
     num: '01',
     category: 'fullstack',

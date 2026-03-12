@@ -7,6 +7,19 @@ import { Resend } from 'resend'
 import { after } from 'next/server'
 import { headers } from 'next/headers'
 import { z } from 'zod'
+import { siteConfig } from '@/lib/site-config'
+
+// Validate required env vars at module load (1.2)
+const RESEND_API_KEY = process.env.RESEND_API_KEY
+if (!RESEND_API_KEY) {
+  console.error('[Contact] RESEND_API_KEY environment variable is not set. Email sending will fail.')
+}
+
+const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || siteConfig.author.email
+const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev'
+
+// Module-level singleton (2.10)
+const resend = new Resend(RESEND_API_KEY)
 
 const ContactFormSchema = z.object({
   email: z.string().email(),
@@ -16,9 +29,11 @@ const ContactFormSchema = z.object({
   phone: z.string().regex(/^\d{10,15}$/, {
     message: 'Phone number must be 10 to 15 digits',
   }),
+  message: z.string().min(1).max(5000),
 })
 
-// Simple in-memory rate limiter (server-auth-actions: treat server actions like API routes)
+// Rate limiter with cleanup (1.4 — still in-memory, but with pruning + note)
+// NOTE: For production on serverless (Vercel), replace with Upstash Redis rate limiting.
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
 const RATE_LIMIT = 5
 const RATE_WINDOW_MS = 60_000
@@ -26,6 +41,13 @@ const RATE_WINDOW_MS = 60_000
 function isRateLimited(ip: string): boolean {
   const now = Date.now()
   const entry = rateLimitMap.get(ip)
+
+  // Prune expired entries periodically to prevent memory leak
+  if (rateLimitMap.size > 1000) {
+    for (const [key, val] of rateLimitMap) {
+      if (now > val.resetTime) rateLimitMap.delete(key)
+    }
+  }
 
   if (!entry || now > entry.resetTime) {
     rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_WINDOW_MS })
@@ -45,7 +67,7 @@ export async function sendEmail(prevState: FeedbackState, formData: FormData): P
     return {
       status: 'error',
       message: 'Too many requests. Please try again later.',
-      timeStamp: Date.now(),
+      timestamp: Date.now(),
     }
   }
 
@@ -65,18 +87,16 @@ export async function sendEmail(prevState: FeedbackState, formData: FormData): P
     return {
       status: 'error',
       message: 'Validation failed: Please check your inputs.',
-      timeStamp: Date.now(),
+      timestamp: Date.now(),
     }
   }
 
-  const { email, firstName, lastName, service, phone } = result.data
+  const { email, firstName, lastName, service, phone, message } = result.data
 
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY)
-
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: 'anh487303@gmail.com',
+      from: CONTACT_FROM_EMAIL,
+      to: CONTACT_TO_EMAIL,
       subject: `New Contact Request from ${firstName} ${lastName}`,
       react: ContactResponseEmail({
         firstName,
@@ -84,6 +104,7 @@ export async function sendEmail(prevState: FeedbackState, formData: FormData): P
         email,
         service,
         phone,
+        message,
       }),
     })
 
@@ -95,7 +116,7 @@ export async function sendEmail(prevState: FeedbackState, formData: FormData): P
     return {
       status: 'success',
       message: 'Email sent successfully',
-      timeStamp: Date.now(),
+      timestamp: Date.now(),
     }
   } catch (error) {
     // server-after-nonblocking: log error after response
@@ -106,7 +127,7 @@ export async function sendEmail(prevState: FeedbackState, formData: FormData): P
     return {
       status: 'error',
       message: 'Failed to send email. Please try again.',
-      timeStamp: Date.now(),
+      timestamp: Date.now(),
     }
   }
 }

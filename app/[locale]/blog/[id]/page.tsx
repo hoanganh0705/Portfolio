@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation'
 import { PostDetailLayout } from '@/components/blog/PostDetailLayout'
 import type { Metadata } from 'next'
-import Script from 'next/script'
 import { siteConfig } from '@/lib/site-config'
 import {
   getRelatedPosts,
@@ -80,7 +79,6 @@ export async function generateMetadata({
         publishedTime: new Date(
           metadata.date,
         ).toISOString(),
-        modifiedTime: new Date(metadata.date).toISOString(),
         authors: [metadata.author],
         tags: [metadata.category],
       },
@@ -164,7 +162,6 @@ export default async function PostPage({
         : `${siteConfig.url}${metadata.image}`
       : siteConfig.defaultOgImage,
     datePublished: new Date(metadata.date).toISOString(),
-    dateModified: new Date(metadata.date).toISOString(),
     author: {
       '@type': 'Person',
       name: metadata.author,
@@ -182,7 +179,6 @@ export default async function PostPage({
     url: postUrl,
     inLanguage: locale === 'vi' ? 'vi-VN' : 'en-US',
     articleSection: metadata.category,
-    wordCount: undefined,
   }
 
   const breadcrumbJsonLd = {
@@ -212,21 +208,19 @@ export default async function PostPage({
 
   return (
     <>
-      <Script
+      <script
         id={`article-jsonld-${id}`}
         type='application/ld+json'
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(articleJsonLd),
         }}
-        strategy='afterInteractive'
       />
-      <Script
+      <script
         id={`breadcrumb-jsonld-${id}`}
         type='application/ld+json'
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(breadcrumbJsonLd),
         }}
-        strategy='afterInteractive'
       />
       <PostDetailLayout
         metadata={metadata}

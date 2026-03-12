@@ -3,21 +3,28 @@ import {
   FaFacebook,
   FaLinkedin,
 } from 'react-icons/fa'
+import { siteConfig } from '@/lib/site-config'
 
-export const socials = [
+export interface SocialItem {
+  name: string
+  icon: React.ReactNode
+  path: string
+}
+
+export const socials: SocialItem[] = [
   {
     name: 'Github',
     icon: <FaGithub />,
-    path: 'https://github.com/hoanganh0705',
+    path: siteConfig.social.github,
   },
   {
     name: 'Facebook',
     icon: <FaFacebook />,
-    path: 'https://www.facebook.com/hoang.aanh.225907',
+    path: siteConfig.social.facebook,
   },
   {
     name: 'Linkedin',
     icon: <FaLinkedin />,
-    path: 'https://www.linkedin.com/in/nguyen-anh-3974a4305/',
+    path: siteConfig.social.linkedin,
   },
 ]

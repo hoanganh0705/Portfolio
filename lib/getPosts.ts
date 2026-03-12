@@ -1,11 +1,15 @@
-'use server'
+import 'server-only'
 
-import fs from 'fs'
+import { promises as fs } from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-import type { Locale } from './i18n'
+import { cache } from 'react'
+import type { Locale, locales as localeValues } from './i18n'
 
 const contentRoot = path.join(process.cwd(), 'content')
+
+// Allowed locales for filesystem access (1.6 — prevent directory traversal)
+const ALLOWED_LOCALES: readonly string[] = ['en', 'vi']
 
 export interface PostMetadata {
   slug: string
@@ -17,36 +21,51 @@ export interface PostMetadata {
   featured?: boolean
 }
 
-export async function getAllPosts(locale: Locale = 'en'): Promise<PostMetadata[]> {
-  const postsDirectory = path.join(contentRoot, locale)
-  if (!fs.existsSync(postsDirectory)) {
+// Wrapped in React.cache to deduplicate within a single render (2.4)
+export const getAllPosts = cache(async (locale: Locale = 'en'): Promise<PostMetadata[]> => {
+  // Validate locale to prevent filesystem probing (1.6)
+  if (!ALLOWED_LOCALES.includes(locale)) {
     return []
   }
 
-  const files = fs.readdirSync(postsDirectory)
-  const posts = files
-    .filter((file) => file.endsWith('.mdx'))
-    .map((file) => {
-      const slug = file.replace(/\.mdx$/, '')
-      const filePath = path.join(postsDirectory, file)
-      const fileContents = fs.readFileSync(filePath, 'utf8')
-      const { data } = matter(fileContents)
+  const postsDirectory = path.join(contentRoot, locale)
+  try {
+    await fs.access(postsDirectory)
+  } catch {
+    return []
+  }
 
-      return {
-        slug,
-        title: data.title || 'Untitled',
-        excerpt: data.excerpt || 'No excerpt',
-        category: data.category || 'General',
-        date: data.date || '1970-01-01',
-        readTime: data.readTime || '5 min read',
-        featured: data.featured === true,
-      }
-    })
+  const files = await fs.readdir(postsDirectory)
+  const posts = await Promise.all(
+    files
+      .filter((file) => file.endsWith('.mdx'))
+      .map(async (file) => {
+        const slug = file.replace(/\.mdx$/, '')
+        const filePath = path.join(postsDirectory, file)
+        const fileContents = await fs.readFile(filePath, 'utf8')
+        const { data } = matter(fileContents)
+
+        // Validate date to prevent NaN in sort (8.9)
+        const dateStr = data.date || '1970-01-01'
+        const parsedDate = new Date(dateStr)
+        const safeDate = isNaN(parsedDate.getTime()) ? '1970-01-01' : dateStr
+
+        return {
+          slug,
+          title: data.title || 'Untitled',
+          excerpt: data.excerpt || 'No excerpt',
+          category: data.category || 'General',
+          date: safeDate,
+          readTime: data.readTime || '5 min read',
+          featured: data.featured === true,
+        }
+      })
+  )
 
   return posts.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
-}
+})
 
 export async function getFeaturedPosts(
   locale: Locale = 'en',

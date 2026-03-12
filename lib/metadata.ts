@@ -7,6 +7,7 @@ interface MetadataParams {
   keywords?: string[]
   ogImage?: string
   path?: string
+  locale?: string
 }
 
 /** Base keywords that should appear on every page for brand recognition */
@@ -23,11 +24,14 @@ export const createMetadata = ({
   keywords,
   ogImage,
   path = '',
+  locale,
 }: MetadataParams): Metadata => {
   const fullTitle = `${title} | ${siteConfig.name}`
   const desc = description || siteConfig.description
   const image = ogImage || siteConfig.defaultOgImage
-  const canonicalUrl = `${siteConfig.url}${path}`
+  // Include locale prefix in canonical URL (5.2)
+  const localePath = locale ? `/${locale}${path}` : path
+  const canonicalUrl = `${siteConfig.url}${localePath}`
 
   return {
     title: fullTitle,
@@ -38,6 +42,11 @@ export const createMetadata = ({
     publisher: siteConfig.author.name,
     alternates: {
       canonical: canonicalUrl,
+      // Generate hreflang links (5.1)
+      languages: {
+        en: `${siteConfig.url}/en${path}`,
+        vi: `${siteConfig.url}/vi${path}`,
+      },
     },
     openGraph: {
       title: fullTitle,
@@ -45,7 +54,7 @@ export const createMetadata = ({
       url: canonicalUrl,
       siteName: siteConfig.name,
       type: 'website',
-      locale: siteConfig.locale,
+      locale: locale === 'vi' ? 'vi_VN' : siteConfig.locale,
       images: [
         {
           url: image,

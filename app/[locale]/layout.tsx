@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
-import Script from 'next/script'
 import { notFound } from 'next/navigation'
 
 import Header from '@/components/layout/Header'
@@ -12,7 +11,7 @@ import StairTransition from '@/components/layout/StairTransition'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
 import { LocaleProvider } from '@/lib/locale-context'
 import { getDictionary } from '@/lib/dictionaries'
-import { json_ld } from '@/lib/json-ld'
+import { getJsonLd } from '@/lib/json-ld'
 import { siteConfig } from '@/lib/site-config'
 import { locales, isValidLocale } from '@/lib/i18n'
 import { Analytics } from '@vercel/analytics/react'
@@ -128,6 +127,7 @@ export default async function LocaleLayout({
   if (!isValidLocale(locale)) notFound()
 
   const dict = await getDictionary(locale)
+  const jsonLd = getJsonLd(locale)
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -156,13 +156,12 @@ export default async function LocaleLayout({
                 },
               }}
             />
-            <Script
+            <script
               id='organization-ld-json'
               type='application/ld+json'
               dangerouslySetInnerHTML={{
-                __html: JSON.stringify(json_ld),
+                __html: JSON.stringify(jsonLd),
               }}
-              strategy='afterInteractive'
             />
           </LocaleProvider>
         </ThemeProvider>

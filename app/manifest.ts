@@ -1,11 +1,11 @@
 import type { MetadataRoute } from 'next'
+import { siteConfig } from '@/lib/site-config'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Anh Nguyen Dev — Full-Stack Web Developer & Educator',
-    short_name: 'Anh Nguyen Dev',
-    description:
-      'Portfolio of Nguyen Hoang Anh (anhnguyendev), a full-stack web developer and educator offering web development, tutoring, and SEO services.',
+    name: siteConfig.name,
+    short_name: siteConfig.shortName,
+    description: siteConfig.description,
     start_url: '/',
     display: 'standalone',
     background_color: '#1A202C',

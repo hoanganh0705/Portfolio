@@ -45,7 +45,7 @@ export function Recommendations({
                 <span>•</span>
                 <span>
                   {new Date(post.date).toLocaleDateString(
-                    'en-US',
+                    locale === 'vi' ? 'vi-VN' : 'en-US',
                     {
                       month: 'short',
                       day: 'numeric',

@@ -13,13 +13,13 @@ interface StatsProps {
 
 const Stats = ({ statsData }: StatsProps) => {
   return (
-    <section className='pt-4 pb-12 xl:pt-0 xl:pb-0'>
+    <section aria-live='polite' className='pt-4 pb-12 xl:pt-0 xl:pb-0'>
       <div className='container mx-auto relative top-3'>
         <div className='flex flex-wrap items-center justify-center gap-6 max-w-[80vw] mx-auto xl:max-w-none'>
-          {statsData.map((stat, index) => {
+          {statsData.map((stat) => {
             return (
               <div
-                key={index}
+                key={stat.text}
                 className='flex-1 flex gap-4 items-center justify-center xl:justify-start'
               >
                 <CountUp

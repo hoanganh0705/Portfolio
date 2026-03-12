@@ -4,23 +4,24 @@ import {
   PostMetadata,
 } from '@/lib/getPosts'
 import type { Locale } from '@/lib/i18n'
+import { getDictionary } from '@/lib/dictionaries'
 
 interface Props {
   locale: Locale
 }
 
 export async function BlogFeaturedPosts({ locale }: Props) {
-  const posts: PostMetadata[] = await getFeaturedPosts(
-    locale,
-    3,
-  )
+  const [posts, dict] = await Promise.all([
+    getFeaturedPosts(locale, 3),
+    getDictionary(locale),
+  ])
 
   if (posts.length === 0) return null
 
   return (
     <section className='mb-16'>
       <h2 className='text-2xl font-bold text-foreground mb-8'>
-        Featured Articles
+        {dict.blog.featuredArticles}
       </h2>
       <div className='grid md:grid-cols-3 gap-6'>
         {posts.map((post) => (
@@ -39,7 +40,7 @@ export async function BlogFeaturedPosts({ locale }: Props) {
                 </span>
                 <span className='text-xs text-muted-foreground'>
                   {new Date(post.date).toLocaleDateString(
-                    'en-US',
+                    locale === 'vi' ? 'vi-VN' : 'en-US',
                     {
                       month: 'short',
                       day: 'numeric',

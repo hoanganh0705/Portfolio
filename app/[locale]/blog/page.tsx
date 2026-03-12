@@ -4,23 +4,32 @@ import { BlogPostGrid } from '@/components/blog/BlogPostGrid'
 import { createMetadata } from '@/lib/metadata'
 import type { Locale } from '@/lib/i18n'
 import { getDictionary } from '@/lib/dictionaries'
+import type { Metadata } from 'next'
 
-export const metadata = createMetadata({
-  title: 'Blog — Thoughts on Development & Technology',
-  description:
-    'Explore articles about web development, programming, and the latest technology trends. Tips, tutorials, and insights from a full-stack developer.',
-  keywords: [
-    'blog',
-    'web development',
-    'programming',
-    'tutorial',
-    'javascript',
-    'react',
-    'nextjs',
-    'typescript',
-  ],
-  path: '/blog',
-})
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const dict = await getDictionary(locale as Locale)
+  return createMetadata({
+    title: dict.blog.pageTitle,
+    description: dict.blog.pageDescription,
+    keywords: [
+      'blog',
+      'web development',
+      'programming',
+      'tutorial',
+      'javascript',
+      'react',
+      'nextjs',
+      'typescript',
+    ],
+    path: '/blog',
+    locale,
+  })
+}
 
 // Fallback skeleton for blog post grid
 const PostGridFallback = (

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { FiList } from 'react-icons/fi'
+import { useLocale } from '@/lib/locale-context'
 
 interface TocItem {
   id: string
@@ -10,6 +11,7 @@ interface TocItem {
 }
 
 export function TableOfContents() {
+  const { dict } = useLocale()
   const [headings, setHeadings] = useState<TocItem[]>([])
   const [activeId, setActiveId] = useState<string>('')
 
@@ -109,7 +111,7 @@ export function TableOfContents() {
       <div className='flex items-center gap-2 mb-4 text-muted-foreground'>
         <FiList size={16} />
         <span className='text-xs font-semibold uppercase tracking-wider'>
-          On this page
+          {dict.blog.onThisPage}
         </span>
       </div>
       <ul className='space-y-1'>

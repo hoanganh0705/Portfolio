@@ -14,7 +14,7 @@ interface Props {
 }
 
 export function Breadcrumb({ items }: Props) {
-  const { locale } = useLocale()
+  const { locale, dict } = useLocale()
 
   return (
     <nav
@@ -26,14 +26,14 @@ export function Breadcrumb({ items }: Props) {
         className='flex items-center gap-1 hover:text-accent-default transition-colors shrink-0'
       >
         <FiHome size={14} />
-        <span className='sr-only'>Home</span>
+        <span className='sr-only'>{dict.nav.home}</span>
       </Link>
 
       {items.map((item, index) => {
         const isLast = index === items.length - 1
         return (
           <span
-            key={index}
+            key={item.label}
             className='flex items-center gap-1.5 min-w-0'
           >
             <FiChevronRight

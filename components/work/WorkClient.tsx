@@ -11,6 +11,7 @@ import { m, LazyMotion, domAnimation } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
 import { BsArrowUpRight, BsGithub } from 'react-icons/bs'
+import { useLocale } from '@/lib/locale-context'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
@@ -30,15 +31,16 @@ const fadeInAnimation = {
 }
 
 export default function WorkClient() {
+  const { dict } = useLocale()
   const [project, setProject] = useState(projects[0])
 
   const handleSlideChange = (swiper: {
     activeIndex: number
   }) => {
-    // get current slide index
-    const currentIndex: number = swiper.activeIndex
-    //update project state based on current slide index
-    setProject(projects[currentIndex])
+    const currentIndex = swiper.activeIndex
+    if (currentIndex >= 0 && currentIndex < projects.length) {
+      setProject(projects[currentIndex])
+    }
   }
   return (
     <LazyMotion features={domAnimation}>
@@ -57,7 +59,7 @@ export default function WorkClient() {
                 </div>
                 {/* project category */}
                 <h2 className='text-[42px] font-bold leading-none text-foreground group-hover:text-accent-default transition-all duration-500 capitalize'>
-                  {project.category} project
+                  {project.category} {dict.work.project}
                 </h2>
                 {/* project description */}
                 <p className='text-muted-foreground'>
@@ -95,7 +97,7 @@ export default function WorkClient() {
                           <BsArrowUpRight className='text-foreground text-xl group-hover:text-accent-default group-hover:scale-130 transition-all duration-500' />
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>Live project</p>
+                          <p>{dict.work.liveProject}</p>
                         </TooltipContent>
                       </Tooltip>
                     </Link>
@@ -113,7 +115,7 @@ export default function WorkClient() {
                           <BsGithub className='text-foreground text-xl group-hover:text-accent-default group-hover:scale-130 transition-all duration-500' />
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>Github repository</p>
+                          <p>{dict.work.githubRepo}</p>
                         </TooltipContent>
                       </Tooltip>
                     </Link>

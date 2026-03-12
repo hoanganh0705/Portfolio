@@ -53,7 +53,8 @@ async function StatsSection({
   locale: Locale
 }) {
   const dict = await getDictionary(locale)
-  const { stats } = await import('@/constants/stats')
+  const { stats, getCommitCount } = await import('@/constants/stats')
+  const commitCount = await getCommitCount()
   const labels = [
     dict.stats.yearsOfExperience,
     dict.stats.projectsCompleted,
@@ -63,6 +64,7 @@ async function StatsSection({
   const localizedStats = stats.map(
     (s: { num: number; text: string }, i: number) => ({
       ...s,
+      num: i === 3 ? commitCount : s.num, // Replace commit count with live value
       text: labels[i] || s.text,
     }),
   )
