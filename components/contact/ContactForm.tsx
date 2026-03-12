@@ -31,7 +31,7 @@ const initialState: FeedbackState = {
 }
 
 export default function ContactForm() {
-  const { dict } = useLocale()
+  const { locale, dict } = useLocale()
   const [service, setService] = useState('')
   const [response, action, isPending] = useActionState(
     sendEmail,
@@ -139,12 +139,13 @@ export default function ContactForm() {
           </SelectContent>
         </Select>
 
-        {/* Hidden input to include service in form data */}
+        {/* Hidden inputs for service and locale */}
         <input
           type='hidden'
           name='service'
           value={service}
         />
+        <input type='hidden' name='locale' value={locale} />
 
         <Textarea
           name='message'
