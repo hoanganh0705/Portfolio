@@ -9,7 +9,7 @@ import {
 } from 'react-icons/fi'
 import { useLocale } from '@/lib/locale-context'
 
-export default function BlogPostError({
+export default function ResumeError({
   error,
   reset,
 }: {
@@ -19,7 +19,7 @@ export default function BlogPostError({
   const { locale, dict } = useLocale()
 
   useEffect(() => {
-    console.error('Blog post error:', error)
+    console.error('Resume page error:', error)
   }, [error])
 
   return (
@@ -35,30 +35,28 @@ export default function BlogPostError({
               size={32}
             />
           </div>
-
           <div className='space-y-2'>
             <h2 className='text-2xl font-bold text-foreground'>
-              {dict.errors.failedToLoadArticle}
+              {dict.errors.somethingWentWrong}
             </h2>
             <p className='text-muted-foreground text-sm leading-relaxed'>
-              {dict.errors.articleCouldNotBeLoaded}
+              {dict.errors.unexpectedError}
             </p>
           </div>
-
           <div className='flex gap-3'>
             <Button
               onClick={reset}
               className='cursor-pointer gap-2'
             >
               <FiRefreshCw size={14} />
-              {dict.errors.retry}
+              {dict.errors.tryAgain}
             </Button>
-            <Link href={`/${locale}/blog`}>
+            <Link href={`/${locale}`}>
               <Button
                 variant='outline'
                 className='cursor-pointer border-accent-default/30 text-accent-default hover:bg-accent-default/10'
               >
-                {dict.errors.allArticles}
+                {dict.errors.backToHome}
               </Button>
             </Link>
           </div>

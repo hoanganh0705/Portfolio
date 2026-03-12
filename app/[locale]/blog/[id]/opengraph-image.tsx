@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og'
 import { getAllPosts } from '@/lib/getPosts'
+import { siteConfig } from '@/lib/site-config'
 import type { Locale } from '@/lib/i18n'
 
 export const alt = 'Blog Post'
@@ -59,11 +60,14 @@ export default async function OgImage({
 
   const formattedDate = new Date(
     metadata.date,
-  ).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
+  ).toLocaleDateString(
+    locale === 'vi' ? 'vi-VN' : 'en-US',
+    {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    },
+  )
 
   return new ImageResponse(
     <div
@@ -209,7 +213,7 @@ export default async function OgImage({
             fontWeight: 500,
           }}
         >
-          anhnguyendev.me
+          {new URL(siteConfig.url).hostname}
         </span>
       </div>
     </div>,

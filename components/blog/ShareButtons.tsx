@@ -10,6 +10,7 @@ import {
 } from 'react-icons/fi'
 import { FaFacebook } from 'react-icons/fa'
 import { useLocale } from '@/lib/locale-context'
+import { siteConfig } from '@/lib/site-config'
 
 interface ShareButtonsProps {
   title: string
@@ -23,7 +24,7 @@ export function ShareButtons({
   const { locale, dict } = useLocale()
   const [copied, setCopied] = useState(false)
 
-  const url = `https://anhnguyendev.me/${locale}/blog/${slug}`
+  const url = `${siteConfig.url}/${locale}/blog/${slug}`
   const encodedUrl = encodeURIComponent(url)
   const encodedTitle = encodeURIComponent(title)
 
@@ -46,7 +47,10 @@ export function ShareButtons({
       }
     } catch (err) {
       // User cancelled or share API unavailable
-      if (err instanceof Error && err.name !== 'AbortError') {
+      if (
+        err instanceof Error &&
+        err.name !== 'AbortError'
+      ) {
         handleCopyLink()
       }
     }

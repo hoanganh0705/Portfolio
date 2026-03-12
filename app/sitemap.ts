@@ -5,6 +5,9 @@ import { locales } from '@/lib/i18n'
 
 const url = siteConfig.url
 
+// Fixed deploy date for static routes — avoids new Date() on every crawl (5.3)
+const DEPLOY_DATE = new Date(process.env.DEPLOY_DATE ?? '2026-03-12')
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = ['', '/resume', '/work', '/contact', '/blog']
 
@@ -13,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     (locale) =>
       staticRoutes.map((route) => ({
         url: `${url}/${locale}${route}`,
-        lastModified: new Date(),
+        lastModified: DEPLOY_DATE,
         changeFrequency: (route === '' ? 'weekly' : route === '/contact' ? 'yearly' : 'monthly') as MetadataRoute.Sitemap[number]['changeFrequency'],
         priority: route === '' ? 1.0 : route === '/resume' ? 0.9 : 0.8,
       })),

@@ -1,5 +1,12 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
+import { useRef } from 'react'
+import dynamic from 'next/dynamic'
+
+//components
+import Stairs from './Stairs'
+
 const MotionDiv = dynamic(() =>
   import('framer-motion').then((mod) => mod.motion.div),
 )
@@ -9,12 +16,6 @@ const AnimatePresence = dynamic(() =>
     (mod) => mod.AnimatePresence,
   ),
 )
-import { usePathname } from 'next/navigation'
-import { useRef } from 'react'
-
-//components
-import Stairs from './Stairs'
-import dynamic from 'next/dynamic'
 
 /** Blog detail routes like /en/blog/some-slug should not trigger the stair transition */
 const isBlogDetail = (path: string) =>

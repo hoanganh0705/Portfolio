@@ -42,12 +42,15 @@ export function useMDXComponents(
       return <code className={className}>{children}</code>
     },
     ul: ({ children }) => (
-      <ul role='list' className='list-none space-y-2 pl-5 my-4'>
+      <ul
+        role='list'
+        className='list-none space-y-2 pl-5 my-4'
+      >
         {children}
       </ul>
     ),
     ol: ({ children }) => (
-      <ol className='list-decimal space-y-2 pl-5 my-4 text-foreground/80'>
+      <ol className='list-decimal space-y-2 pl-5 my-4 text-foreground/80 [&>li]:before:content-none [&>li]:before:mr-0'>
         {children}
       </ol>
     ),
@@ -63,10 +66,17 @@ export function useMDXComponents(
           href={href}
           className='text-accent-default hover:text-accent-hover underline underline-offset-4 transition-colors'
           target={isExternal ? '_blank' : undefined}
-          rel={isExternal ? 'noopener noreferrer' : undefined}
+          rel={
+            isExternal ? 'noopener noreferrer' : undefined
+          }
         >
           {children}
-          {isExternal && <span className='sr-only'> (opens in new tab)</span>}
+          {isExternal && (
+            <span className='sr-only'>
+              {' '}
+              (opens in new tab)
+            </span>
+          )}
         </a>
       )
     },
