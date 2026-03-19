@@ -22,4 +22,5 @@ export const siteConfig = {
   },
   defaultOgImage:
     'https://gitlab.com/nguyennanhcd1/image-container/-/raw/main/portfolio-image/Screenshot%202025-06-21%20072326.png?ref_type=heads',
+  cvFilePath: '/cv/nguyen-hoang-anh-cv.pdf',
 } as const

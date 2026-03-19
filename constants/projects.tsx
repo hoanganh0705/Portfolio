@@ -1,4 +1,5 @@
 export interface Project {
+  slug: string
   num: string
   category: string
   title: string
@@ -7,10 +8,16 @@ export interface Project {
   image: string
   live: string
   github: string
+  caseStudy: {
+    challenge: string
+    approach: string
+    result: string
+  }
 }
 
 export const projects: Project[] = [
   {
+    slug: 'portfolio-website',
     num: '01',
     category: 'fullstack',
     title: 'Portfolio Website',
@@ -25,9 +32,18 @@ export const projects: Project[] = [
     image: '/assets/work/thumb1.png',
     live: 'https://anhnguyendev.me',
     github: 'https://github.com/hoanganh0705/Portfolio',
+    caseStudy: {
+      challenge:
+        'Create a portfolio that presents development work, content, and services in both English and Vietnamese while staying fast and SEO-friendly.',
+      approach:
+        'Built on Next.js App Router with locale routing, MDX content pipelines, reusable UI primitives, and server-rendered metadata utilities for each route.',
+      result:
+        'Delivered a bilingual portfolio/blog with consistent UX, strong discoverability signals (JSON-LD, sitemap, Open Graph), and maintainable content workflows.',
+    },
   },
 
   {
+    slug: 'blog-platform',
     num: '02',
     category: 'fullstack',
     title: 'Blog Platform',
@@ -42,8 +58,17 @@ export const projects: Project[] = [
     image: '/assets/work/thumb1.png',
     live: 'https://anhnguyendev.me/en/blog',
     github: 'https://github.com/hoanganh0705/Portfolio',
+    caseStudy: {
+      challenge:
+        'Design a developer blog that is easy to author in MDX while still readable and useful for technical audiences.',
+      approach:
+        'Implemented frontmatter-driven MDX posts with featured sections, search/filter UI, heading-based table of contents, and Shiki code highlighting.',
+      result:
+        'Created a scalable content platform with richer reading UX and improved retention through recommendations and internal navigation.',
+    },
   },
   {
+    slug: 'contact-email-system',
     num: '03',
     category: 'frontend',
     title: 'Contact & Email System',
@@ -58,5 +83,13 @@ export const projects: Project[] = [
     image: '/assets/work/thumb1.png',
     live: 'https://anhnguyendev.me/en/contact',
     github: 'https://github.com/hoanganh0705/Portfolio',
+    caseStudy: {
+      challenge:
+        'Build a contact workflow that feels instant for users while preventing low-quality or abusive form submissions.',
+      approach:
+        'Used a server action with Zod validation, honeypot checks, in-memory throttling, and parallel email delivery via Resend + React Email templates.',
+      result:
+        'Shipped a production contact pipeline with improved resilience and clear feedback via toast notifications for success and failure states.',
+    },
   },
 ]

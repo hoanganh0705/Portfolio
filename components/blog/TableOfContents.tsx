@@ -57,7 +57,7 @@ export function TableOfContents() {
     // Try immediately — content may already be rendered
     const initial = extractHeadings()
     if (initial.length > 0) {
-      setHeadings(initial)
+      requestAnimationFrame(() => setHeadings(initial))
       return
     }
 
@@ -68,8 +68,10 @@ export function TableOfContents() {
     const observer = new MutationObserver(() => {
       const items = extractHeadings()
       if (items.length > 0) {
-        setHeadings(items)
-        observer.disconnect()
+        requestAnimationFrame(() => {
+          setHeadings(items)
+          observer.disconnect()
+        })
       }
     })
 

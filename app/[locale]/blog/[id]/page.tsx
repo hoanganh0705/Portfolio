@@ -33,7 +33,7 @@ export async function generateMetadata({
 
     if (!metadata) {
       return {
-        title: 'Blog | ' + siteConfig.name,
+        title: `Blog | ${siteConfig.name}`,
         description: siteConfig.description,
       }
     }
@@ -112,7 +112,7 @@ export async function generateMetadata({
     }
   } catch {
     return {
-      title: 'Blog | ' + siteConfig.name,
+      title: `Blog | ${siteConfig.name}`,
       description: siteConfig.description,
     }
   }

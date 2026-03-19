@@ -112,6 +112,7 @@ export interface Dictionary {
     liveProject: string
     githubRepo: string
     project: string
+    caseStudy: string
   }
   notFound: {
     code: string

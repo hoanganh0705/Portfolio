@@ -11,6 +11,7 @@ import { m, LazyMotion, domAnimation } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
 import { BsArrowUpRight, BsGithub } from 'react-icons/bs'
+import { FiFileText } from 'react-icons/fi'
 import { useLocale } from '@/lib/locale-context'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -33,12 +34,15 @@ const fadeInAnimation = {
 }
 
 export default function WorkClient() {
-  const { dict } = useLocale()
+  const { dict, locale } = useLocale()
   const [project, setProject] = useState(projects[0])
 
   const handleSlideChange = (swiper: SwiperCore) => {
     const currentIndex = swiper.activeIndex
-    if (currentIndex >= 0 && currentIndex < projects.length) {
+    if (
+      currentIndex >= 0 &&
+      currentIndex < projects.length
+    ) {
       setProject(projects[currentIndex])
     }
   }
@@ -116,6 +120,23 @@ export default function WorkClient() {
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>{dict.work.githubRepo}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </Link>
+
+                    <Link
+                      href={`/${locale}/work/${project.slug}`}
+                      aria-label='Read case study'
+                    >
+                      <Tooltip>
+                        <TooltipTrigger
+                          aria-label='Read case study'
+                          className='w-[70px] h-[70px] rounded-full bg-foreground/5 flex justify-center items-center group cursor-pointer'
+                        >
+                          <FiFileText className='text-foreground text-xl group-hover:text-accent-default group-hover:scale-130 transition-all duration-500' />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{dict.work.caseStudy}</p>
                         </TooltipContent>
                       </Tooltip>
                     </Link>
