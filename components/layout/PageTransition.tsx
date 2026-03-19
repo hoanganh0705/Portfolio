@@ -2,7 +2,6 @@
 
 import dynamic from 'next/dynamic'
 import { usePathname } from 'next/navigation'
-import { useRef } from 'react'
 
 const MotionDiv = dynamic(() =>
   import('framer-motion').then((mod) => mod.motion.div),
@@ -26,10 +25,8 @@ const PageTransition = ({
   const pathname = usePathname()
   const skipTransition = isBlogDetail(pathname)
   // Keep a stable key for blog detail pages so AnimatePresence doesn't re-trigger
-  const stableKeyRef = useRef('blog-detail')
-  const animationKey = skipTransition
-    ? stableKeyRef.current
-    : pathname
+  const stableKey = 'blog-detail'
+  const animationKey = skipTransition ? stableKey : pathname
 
   return (
     <AnimatePresence>

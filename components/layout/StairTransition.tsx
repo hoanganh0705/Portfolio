@@ -1,7 +1,6 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { useRef } from 'react'
 import dynamic from 'next/dynamic'
 
 //components
@@ -24,10 +23,8 @@ const isBlogDetail = (path: string) =>
 const StairTransition = () => {
   const pathname = usePathname()
   const skipTransition = isBlogDetail(pathname)
-  const stableKeyRef = useRef('blog-detail')
-  const animationKey = skipTransition
-    ? stableKeyRef.current
-    : pathname
+  const stableKey = 'blog-detail'
+  const animationKey = skipTransition ? stableKey : pathname
 
   if (skipTransition) return null
 

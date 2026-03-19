@@ -108,7 +108,7 @@ export const ContactNotificationEmail = ({
 
           <Hr style={hr} />
           <Text style={ctaText}>
-            Go follow up with them soon 🚀
+            Go follow up with them soon
           </Text>
         </Section>
 
@@ -132,7 +132,7 @@ export const ContactNotificationEmail = ({
 export default ContactNotificationEmail
 
 // ── Brand colors ──
-const ACCENT = '#00b894'
+const ACCENT = '#c3d3b7'
 const DARK_BG = '#1e1e2e'
 const BODY_TEXT = '#2d3436'
 const MUTED_TEXT = '#636e72'

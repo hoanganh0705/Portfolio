@@ -1,4 +1,6 @@
 export default function BlogPostLoading() {
+  const tocLineWidths = [78, 92, 85, 96, 88]
+
   return (
     <div className='min-h-screen'>
       <div className='max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12'>
@@ -25,7 +27,7 @@ export default function BlogPostLoading() {
                   key={i}
                   className='h-3 bg-foreground/10 rounded animate-pulse'
                   style={{
-                    width: `${70 + Math.random() * 30}%`,
+                    width: `${tocLineWidths[i] ?? 80}%`,
                   }}
                 />
               ))}

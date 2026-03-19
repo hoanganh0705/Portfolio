@@ -79,31 +79,57 @@ export default function ContactForm() {
         </p>
 
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+          <label htmlFor='firstName' className='sr-only'>
+            {dict.contact.firstname}
+          </label>
           <Input
+            id='firstName'
             name='firstName'
             type='text'
+            autoComplete='given-name'
             placeholder={dict.contact.firstname}
             defaultValue=''
           />
+          <label htmlFor='lastName' className='sr-only'>
+            {dict.contact.lastname}
+          </label>
           <Input
+            id='lastName'
             name='lastName'
             type='text'
+            autoComplete='family-name'
             placeholder={dict.contact.lastname}
             defaultValue=''
           />
+          <label htmlFor='email' className='sr-only'>
+            {dict.contact.email}
+          </label>
           <Input
+            id='email'
             name='email'
             type='email'
+            autoComplete='email'
+            spellCheck={false}
             placeholder={dict.contact.email}
             defaultValue=''
           />
+          <label htmlFor='phone' className='sr-only'>
+            {dict.contact.phone}
+          </label>
           <Input
+            id='phone'
             name='phone'
-            type='text'
+            type='tel'
+            inputMode='tel'
+            autoComplete='tel'
             placeholder={dict.contact.phone}
             defaultValue=''
           />
         </div>
+
+        <label htmlFor='service' className='sr-only'>
+          {dict.contact.selectService}
+        </label>
 
         <Select
           aria-label={dict.contact.selectService}
@@ -111,6 +137,7 @@ export default function ContactForm() {
           onValueChange={setService}
         >
           <SelectTrigger
+            id='service'
             className='w-full'
             aria-label={dict.contact.selectService}
           >
@@ -167,9 +194,15 @@ export default function ContactForm() {
         />
         <input type='hidden' name='locale' value={locale} />
 
+        <label htmlFor='message' className='sr-only'>
+          {dict.contact.message}
+        </label>
+
         <Textarea
+          id='message'
           name='message'
           className='h-[200px]'
+          autoComplete='off'
           placeholder={dict.contact.message}
         />
 

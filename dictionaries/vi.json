@@ -137,7 +137,8 @@
     "pageDesc": "Khám phá danh mục dự án của Anh Nguyen Dev — trưng bày các dự án phát triển web sáng tạo, giải pháp sáng tạo và ứng dụng full-stack.",
     "liveProject": "Xem dự án",
     "githubRepo": "Mã nguồn Github",
-    "project": "dự án"
+    "project": "dự án",
+    "caseStudy": "Case study"
   },
   "notFound": {
     "code": "404",

@@ -137,7 +137,8 @@
     "pageDesc": "Browse the portfolio of Anh Nguyen Dev — showcasing innovative web development projects, creative solutions, and full-stack applications.",
     "liveProject": "Live project",
     "githubRepo": "Github repository",
-    "project": "project"
+    "project": "project",
+    "caseStudy": "Case study"
   },
   "notFound": {
     "code": "404",

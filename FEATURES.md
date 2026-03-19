@@ -115,14 +115,14 @@
 ---
 
 ### 📄 Resume
-- [ ] **Actual PDF CV download** — wire up the "Download CV" button to a real PDF file
+- [x] **Actual PDF CV download** — wire up the "Download CV" button to a real PDF file
 - [ ] **Certifications section** — list online certificates with links (Udemy, Coursera, etc.)
 
 ---
 
 ### 💼 Work / Projects
 - [ ] **More project entries** — add real project thumbnails and descriptions
-- [ ] **Project detail pages** — individual `/work/[id]` pages with full case studies
+- [x] **Project detail pages** — individual `/work/[id]` pages with full case studies
 - [ ] **Category filter** on the work page (filter by fullstack / frontend / etc.)
 - [ ] **Live preview modal** — open a project in a lightbox/modal
 
@@ -143,7 +143,7 @@
 ---
 
 ### 📬 Contact
-- [ ] **Rate limiting** on the contact form server action (prevent spam)
+- [x] **Rate limiting** on the contact form server action (prevent spam)
 - [ ] **CAPTCHA** integration (e.g., Cloudflare Turnstile or hCaptcha)
 - [ ] **Auto-reply email** sent to the person contacting
 
@@ -159,9 +159,9 @@
 ---
 
 ### ⚙️ Technical
-- [ ] **CI/CD pipeline** (GitHub Actions for lint + build checks on PR)
-- [ ] **Unit / integration tests** (Vitest or Jest + React Testing Library)
-- [ ] **E2E tests** (Playwright)
+- [x] **CI/CD pipeline** (GitHub Actions for lint + build checks on PR)
+- [x] **Unit / integration tests** (Vitest or Jest + React Testing Library)
+- [x] **E2E tests** (Playwright)
 - [ ] **Lighthouse CI** to enforce performance budgets
 - [ ] **Environment variable validation** with Zod at startup
 - [ ] **Caching strategy** for GitHub commit API (`unstable_cache` or `next/cache`)

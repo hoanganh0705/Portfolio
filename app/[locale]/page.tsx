@@ -21,6 +21,7 @@ const WhyMe = dynamic(
 // Utils
 import { getDictionary } from '@/lib/dictionaries'
 import type { Locale } from '@/lib/i18n'
+import { siteConfig } from '@/lib/site-config'
 
 // Export revalidate to enable ISR for 10 days
 export const revalidate = 864000 // 10*24*60*60
@@ -102,12 +103,19 @@ export default async function Home({
             {/* Button and socials */}
             <div className='flex flex-col items-center gap-8 m-10'>
               <Button
+                asChild
                 variant='outline'
                 size='lg'
                 className='uppercase flex items-center gap-2'
               >
-                <span>{dict.common.downloadCV}</span>
-                <FiDownload className='text-xl cursor-pointer' />
+                <a
+                  href={siteConfig.cvFilePath}
+                  download
+                  aria-label={dict.common.downloadCV}
+                >
+                  <span>{dict.common.downloadCV}</span>
+                  <FiDownload className='text-xl cursor-pointer' />
+                </a>
               </Button>
               <div>
                 <Social

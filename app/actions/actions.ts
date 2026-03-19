@@ -34,15 +34,28 @@ const ContactFormSchema = z.object({
   locale: z.enum(['en', 'vi']).default('en'),
 })
 
-// Rate limiter with cleanup (1.4 — still in-memory, but with pruning + note)
-// NOTE: For production on serverless (Vercel), replace with Upstash Redis rate limiting.
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
-const RATE_LIMIT = 5
-const RATE_WINDOW_MS = 60_000
+// In-memory limiter with cleanup.
+// NOTE: For multi-instance deployments, move this to Redis/KV for shared state.
+const rateLimitMap = new Map<string, { count: number; resetTime: number; lastRequestTime: number }>()
+const RATE_LIMIT = Number(process.env.CONTACT_RATE_LIMIT ?? '5')
+const RATE_WINDOW_MS = Number(process.env.CONTACT_RATE_WINDOW_MS ?? '60000')
+const MIN_REQUEST_INTERVAL_MS = Number(process.env.CONTACT_MIN_REQUEST_INTERVAL_MS ?? '10000')
 
-function isRateLimited(ip: string): boolean {
+function getClientKey(headersList: Headers, email: string): string {
+  const forwardedFor = headersList.get('x-forwarded-for')
+  const realIp = headersList.get('x-real-ip')
+  const userAgent = headersList.get('user-agent') || 'unknown-agent'
+  const ip =
+    forwardedFor?.split(',')[0]?.trim() ||
+    realIp ||
+    'unknown-ip'
+
+  return `${ip}:${email.toLowerCase()}:${userAgent}`
+}
+
+function isRateLimited(clientKey: string): boolean {
   const now = Date.now()
-  const entry = rateLimitMap.get(ip)
+  const entry = rateLimitMap.get(clientKey)
 
   // Prune expired entries periodically to prevent memory leak
   if (rateLimitMap.size > 1000) {
@@ -52,11 +65,20 @@ function isRateLimited(ip: string): boolean {
   }
 
   if (!entry || now > entry.resetTime) {
-    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_WINDOW_MS })
+    rateLimitMap.set(clientKey, {
+      count: 1,
+      resetTime: now + RATE_WINDOW_MS,
+      lastRequestTime: now,
+    })
     return false
   }
 
+  if (now - entry.lastRequestTime < MIN_REQUEST_INTERVAL_MS) {
+    return true
+  }
+
   entry.count++
+  entry.lastRequestTime = now
   return entry.count > RATE_LIMIT
 }
 
@@ -65,18 +87,6 @@ export async function sendEmail(prevState: FeedbackState, formData: FormData): P
   if (formData.get('website')) {
     // Silently return success so bots don't know they were rejected
     return { status: 'success', message: 'Email sent successfully', timestamp: Date.now() }
-  }
-
-  // server-auth-actions: rate limit public server action
-  const headersList = await headers()
-  const ip = headersList.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
-
-  if (isRateLimited(ip)) {
-    return {
-      status: 'error',
-      message: 'Too many requests. Please try again later.',
-      timestamp: Date.now(),
-    }
   }
 
   const raw = {
@@ -101,6 +111,17 @@ export async function sendEmail(prevState: FeedbackState, formData: FormData): P
   }
 
   const { email, firstName, lastName, service, phone, message, locale } = result.data
+
+  // server-auth-actions: rate limit public server action after validating payload
+  const headersList = await headers()
+  const clientKey = getClientKey(headersList, email)
+  if (isRateLimited(clientKey)) {
+    return {
+      status: 'error',
+      message: 'Too many requests. Please try again later.',
+      timestamp: Date.now(),
+    }
+  }
 
   try {
     // Send notification to site owner + auto-reply to user in parallel
