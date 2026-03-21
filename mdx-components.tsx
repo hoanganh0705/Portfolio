@@ -4,18 +4,27 @@ export function useMDXComponents(
   _components?: MDXComponents,
 ): MDXComponents {
   return {
-    h1: ({ children }) => (
-      <h1 className='text-3xl font-bold mt-16 mb-8 text-foreground leading-tight'>
+    h1: ({ children, ...props }) => (
+      <h1
+        {...props}
+        className='text-3xl font-bold mt-16 mb-8 text-foreground leading-tight'
+      >
         {children}
       </h1>
     ),
-    h2: ({ children }) => (
-      <h2 className='text-2xl font-semibold mt-12 mb-6 text-foreground scroll-mt-28'>
+    h2: ({ children, ...props }) => (
+      <h2
+        {...props}
+        className='text-2xl font-semibold mt-12 mb-6 text-foreground scroll-mt-28'
+      >
         {children}
       </h2>
     ),
-    h3: ({ children }) => (
-      <h3 className='text-xl font-semibold mt-8 mb-4 text-foreground scroll-mt-28'>
+    h3: ({ children, ...props }) => (
+      <h3
+        {...props}
+        className='text-xl font-semibold mt-8 mb-4 text-foreground scroll-mt-28'
+      >
         {children}
       </h3>
     ),
