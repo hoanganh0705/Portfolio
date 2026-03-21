@@ -31,14 +31,8 @@ export function TableOfContents() {
           el.textContent?.replace(/\*\*/g, '').trim() || ''
         if (!text) return
 
-        let id = el.id
-        if (!id) {
-          id = text
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/(^-|-$)/g, '')
-          el.id = id
-        }
+        const id = el.id
+        if (!id) return
 
         items.push({
           id,
@@ -58,7 +52,10 @@ export function TableOfContents() {
     const initial = extractHeadings()
     if (initial.length > 0) {
       requestAnimationFrame(() => setHeadings(initial))
-      return
+      const timeout = window.setTimeout(() => {
+        setHeadings(extractHeadings())
+      }, 600)
+      return () => window.clearTimeout(timeout)
     }
 
     // Content not yet in DOM (first navigation) — observe for changes

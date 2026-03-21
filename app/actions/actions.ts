@@ -34,8 +34,7 @@ const ContactFormSchema = z.object({
   locale: z.enum(['en', 'vi']).default('en'),
 })
 
-// In-memory limiter with cleanup.
-// NOTE: For multi-instance deployments, move this to Redis/KV for shared state.
+
 const rateLimitMap = new Map<string, { count: number; resetTime: number; lastRequestTime: number }>()
 const RATE_LIMIT = Number(process.env.CONTACT_RATE_LIMIT ?? '5')
 const RATE_WINDOW_MS = Number(process.env.CONTACT_RATE_WINDOW_MS ?? '60000')
