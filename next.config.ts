@@ -30,7 +30,7 @@ const withMDX = createMDX({
       'remark-frontmatter',
       ['remark-mdx-frontmatter', { name: 'metadata' }],
     ],
-    rehypePlugins: [],
+    rehypePlugins: ['rehype-slug'],
   },
 });
 

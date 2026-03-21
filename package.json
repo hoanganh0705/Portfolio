@@ -9,7 +9,12 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:endurance": "node scripts/endurance.mjs",
+    "test:endurance:quick": "ENDURANCE_WARMUP_SECONDS=10 ENDURANCE_SUSTAIN_SECONDS=120 ENDURANCE_SPIKE_SECONDS=45 ENDURANCE_CONNECTIONS=40 node scripts/endurance.mjs",
+    "test:endurance:analyze": "node scripts/endurance.analyze.mjs",
+    "test:endurance:local": "node scripts/endurance.local.mjs",
+    "test:endurance:local:quick": "ENDURANCE_WARMUP_SECONDS=10 ENDURANCE_SUSTAIN_SECONDS=120 ENDURANCE_SPIKE_SECONDS=45 ENDURANCE_CONNECTIONS=40 node scripts/endurance.local.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -37,6 +42,7 @@
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
+    "rehype-slug": "^6.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
     "remark-mdx-frontmatter": "^5.2.0",
@@ -58,6 +64,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitest/coverage-v8": "^4.1.0",
+    "autocannon": "^8.0.0",
     "baseline-browser-mapping": "^2.10.8",
     "eslint": "^9",
     "eslint-config-next": "16.0.10",

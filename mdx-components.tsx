@@ -10,12 +10,12 @@ export function useMDXComponents(
       </h1>
     ),
     h2: ({ children }) => (
-      <h2 className='text-2xl font-semibold mt-12 mb-6 text-foreground'>
+      <h2 className='text-2xl font-semibold mt-12 mb-6 text-foreground scroll-mt-28'>
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className='text-xl font-semibold mt-8 mb-4 text-foreground'>
+      <h3 className='text-xl font-semibold mt-8 mb-4 text-foreground scroll-mt-28'>
         {children}
       </h3>
     ),
