@@ -6,8 +6,10 @@
 \usepackage{enumitem}
 \usepackage[hidelinks]{hyperref}
 \usepackage{fancyhdr}
-\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese,english]{babel}
 \usepackage{tabularx}
+\usepackage{iftex}
 \ifPDFTeX
 \input{glyphtounicode}
 \pdfgentounicode=1
@@ -18,6 +20,7 @@
 \fancyfoot{}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
+\setlength{\footskip}{6pt}
 
 % Adjust margins
 \addtolength{\oddsidemargin}{-0.5in}
@@ -56,6 +59,13 @@
     \end{tabular*}\vspace{-5pt}
 }
 
+\newcommand{\resumeProjectHeading}[3]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} \scriptsize \textcolor{blue}{#3} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-6pt}
+}
+
 \newcommand{\resumeSubheading}[4]{
   \vspace{-1pt}\item
     \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
@@ -72,7 +82,7 @@
 
 \newcommand{\resumeItemPlain}[1]{
   \item\small{
-    {#1 \vspace{-2pt}}
+    {#1 \vspace{-4pt}}
   }
 }
 
@@ -83,7 +93,7 @@
 \newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
 \newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
 \newcommand{\resumeItemListStart}{\begin{itemize}}
-\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-7pt}}
 
 %-------------------------------------------
 %%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -93,8 +103,8 @@
 
 %----------HEADING-----------------
 \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
-  \textbf{\href{https://sourabhbajaj.com/}{\Large Nguyễn Hoàng Anh}} & Email: \href{mailto:sourabh@sourabhbajaj.com}{sourabh@sourabhbajaj.com}\\
-  \href{https://sourabhbajaj.com/}{sourabhbajaj.com} & Mobile: \href{tel:+11234567890}{+1-123-456-7890} \\
+  \textbf{\href{https://anhnguyendev.me/}{\Large Nguy\~{\^e}n Ho\`ang Anh}} & Email: \href{mailto:anh487303@gmail.com}{anh487303@gmail.com}\\
+  \href{https://anhnguyendev.me/}{anhnguyendev.me} & Mobile: \href{tel:+84985335735}{+84-985-335-735} \\
 \end{tabular*}
 
 
@@ -102,13 +112,49 @@
 \section{Education}
   \resumeSubHeadingListStart
     \resumeSubheading
-      {Georgia Institute of Technology}{Atlanta, GA}
-      {Master of Science in Computer Science; GPA: 4.00}{Aug 2012 -- Dec 2013}
-    \resumeSubheading
-      {Birla Institute of Technology and Science}{Pilani, India}
-      {Bachelor of Engineering in Electrical and Electronics; GPA: 3.66 (9.15/10.0)}{Aug 2008 -- July 2012}
+      {Ho Chi Minh City Open University}{Ho Chi Minh City, Vietnam}
+      {Bachelor of Science in Computer Science}{Aug 2023 -- Present}
   \resumeSubHeadingListEnd
 
+%-----------PROJECTS-----------------
+\section{Projects}
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+  {Personal Portfolio \& Blog Platform}
+  {Aug 2025 -- Feb 2026}
+  {\href{https://anhnguyendev.me}{Live} \;|\; \href{https://github.com/your-repo}{GitHub}}
+  \resumeItemListStart
+    \resumeItemPlain{Built a portfolio and blog platform using Next.js (App Router) and TypeScript with server-side rendering}
+    \resumeItemPlain{Implemented i18n and MDX-based blog system with SEO, RSS, and dynamic routing}
+    \resumeItemPlain{Designed modular architecture and integrated contact system with email automation and rate limiting}
+  \resumeItemListEnd
+
+\resumeProjectHeading
+  {Amazing Project 2}{Feb 2016 -- May 2017}{}
+  \resumeItemListStart
+    \resumeItemPlain{Began a group to create the first 36 hour student-run hackathon}
+    \resumeItemPlain{Led 50 staff to raise \$175,000 and managed relationships with sponsors}
+  \resumeItemListEnd
+
+\resumeProjectHeading
+  {Amazing Project 3}{Jan 2015 -- May 2015}{}
+  \resumeItemListStart
+    \resumeItemPlain{Assist in recruiting potential students to the CS program}
+    \resumeItemPlain{Attend info sessions and student Q\&A events}
+  \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%--------SKILLS------------
+\section{Skills}
+\resumeItemListStart
+  \resumeItemPlain{\textbf{Languages:} JavaScript, Golang}
+  \resumeItemPlain{\textbf{Frontend:} React, Nextjs}
+  \resumeItemPlain{\textbf{Backend:} Node.js (Express, NestJS), Gin}
+  \resumeItemPlain{\textbf{Databases:} PostgreSQL, MySQL, Redis}
+  \resumeItemPlain{\textbf{Tools:} Git, Docker, Linux, Kubernetes, Github Actions}
+\resumeItemListEnd
 
 %-----------EXPERIENCE-----------------
 \section{Experience}
@@ -123,16 +169,6 @@
         \resumeItem{Apache Beam}
           {Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines, as well as a set of language-specific SDKs for constructing pipelines and runners.}
       \resumeItemListEnd
-      
-% --------Multiple Positions Heading------------
-  %  \resumeSubSubheading
-  %   {Software Engineer I}{Oct 2014 -- Sep 2016}
-  %   \resumeItemListStart
-  %      \resumeItem{Apache Beam}
-  %        {Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines}
-  %   \resumeItemListEnd
-
-%-------------------------------------------
 
     \resumeSubheading
       {Coursera}{Mountain View, CA}
@@ -177,31 +213,6 @@
         \resumeItem{Teaching Assistant -- Computational Investing}
           {The online course on Coursera, had more than 100,000 students enrolled. It was featured on the 11 Alive News and the Atlanta Journal Constitution. Involved in creating assignments, exams and conducting recitation sessions. Also taught the on-campus version of the course.}
       \resumeItemListEnd
-
   \resumeSubHeadingListEnd
-
-
-%-----------PROJECTS-----------------
-\section{Projects}
-  \resumeSubHeadingListStart
-    \resumeSubItem{QuantSoftware Toolkit}
-      {Open source Python library for financial data analysis and machine learning for finance.}
-    \resumeSubItem{GitHub Visualization}
-      {Data visualization of Git log data using D3 to analyze project trends over time.}
-    \resumeSubItem{Recommendation System}
-      {Music and movie recommender systems using collaborative filtering on public datasets.}
-    \resumeSubItem{Mac Setup}
-      {Book that gives step-by-step instructions on setting up developer environment on macOS.}
-  \resumeSubHeadingListEnd
-
-%--------SKILLS------------
-\section{Skills}
- \resumeSubHeadingListStart
-   \item{
-     \textbf{Languages}{: Scala, Python, JavaScript, C++, SQL, Java}
-     \hfill
-     \textbf{Technologies}{: AWS, Play, React, Kafka, GCE}
-   }
- \resumeSubHeadingListEnd
 
 \end{document}
