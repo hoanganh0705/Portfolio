@@ -151,3 +151,29 @@ export const skills = {
     },
   ],
 }
+
+export const certifications = {
+  title: 'My certifications',
+  description:
+    'Selected certificates from online learning platforms that support my full-stack development workflow.',
+  items: [
+    {
+      name: 'JavaScript Algorithms and Data Structures',
+      issuer: 'freeCodeCamp',
+      year: '2024',
+      link: 'https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures-v8/',
+    },
+    {
+      name: 'TypeScript and Node.js Essentials',
+      issuer: 'Udemy',
+      year: '2024',
+      link: 'https://www.udemy.com/topic/typescript/',
+    },
+    {
+      name: 'Meta Front-End Developer Program',
+      issuer: 'Coursera',
+      year: '2024',
+      link: 'https://www.coursera.org/professional-certificates/meta-front-end-developer',
+    },
+  ],
+}

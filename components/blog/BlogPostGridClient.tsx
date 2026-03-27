@@ -3,6 +3,11 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from 'next/navigation'
+import {
   FiCalendar,
   FiClock,
   FiSearch,
@@ -11,6 +16,7 @@ import {
 import type { PostMetadata } from '@/lib/getPosts'
 import type { Locale } from '@/lib/i18n'
 import { useLocale } from '@/lib/locale-context'
+import { useEffect } from 'react'
 
 interface Props {
   posts: PostMetadata[]
@@ -22,10 +28,36 @@ export function BlogPostGridClient({
   locale,
 }: Props) {
   const { dict } = useLocale()
-  const [search, setSearch] = useState('')
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
+  const [search, setSearch] = useState(
+    () => searchParams.get('q') ?? '',
+  )
   const [activeCategory, setActiveCategory] = useState<
     string | null
   >(null)
+
+  useEffect(() => {
+    const currentQ = searchParams.get('q') ?? ''
+    const nextQ = search.trim()
+    if (currentQ === nextQ) return
+
+    const params = new URLSearchParams(
+      searchParams.toString(),
+    )
+    if (nextQ) {
+      params.set('q', nextQ)
+    } else {
+      params.delete('q')
+    }
+
+    const queryString = params.toString()
+    router.replace(
+      queryString ? `${pathname}?${queryString}` : pathname,
+      { scroll: false },
+    )
+  }, [search, pathname, router, searchParams])
 
   const categories = useMemo(() => {
     const cats = [...new Set(posts.map((p) => p.category))]

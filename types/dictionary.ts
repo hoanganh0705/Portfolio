@@ -96,6 +96,7 @@ export interface Dictionary {
     experience: string
     education: string
     skills: string
+    certifications: string
     aboutMe: string
     myExperience: string
     experienceDesc: string
@@ -103,6 +104,9 @@ export interface Dictionary {
     educationDesc: string
     mySkills: string
     skillsDesc: string
+    myCertifications: string
+    certificationsDesc: string
+    viewCredential: string
     aboutTitle: string
     aboutDesc: string
   }

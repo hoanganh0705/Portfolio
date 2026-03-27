@@ -122,6 +122,7 @@
     "experience": "Experience",
     "education": "Education",
     "skills": "Skills",
+    "certifications": "Certifications",
     "aboutMe": "About Me",
     "myExperience": "My experience",
     "experienceDesc": "A summary of my professional journey in web development, teaching, and freelance work.",
@@ -129,6 +130,9 @@
     "educationDesc": "My academic background and self-directed learning in software development and computer science.",
     "mySkills": "My skills",
     "skillsDesc": "Technologies and tools I use daily to build modern, performant web applications.",
+    "myCertifications": "My certifications",
+    "certificationsDesc": "Selected certificates from online learning platforms that support my full-stack development workflow.",
+    "viewCredential": "View credential",
     "aboutTitle": "About Me",
     "aboutDesc": "I am a full-stack web developer and educator based in Ho Chi Minh City, Vietnam. I specialize in building modern, performant web applications with Next.js, React, and Tailwind CSS. Alongside development, I teach English and offer private tutoring, combining technical expertise with a passion for education."
   },

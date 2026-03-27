@@ -122,6 +122,7 @@
     "experience": "Kinh nghiệm",
     "education": "Học vấn",
     "skills": "Kỹ năng",
+    "certifications": "Chứng chỉ",
     "aboutMe": "Về tôi",
     "myExperience": "Kinh nghiệm của tôi",
     "experienceDesc": "Tóm tắt hành trình chuyên môn của tôi trong phát triển web, giảng dạy và làm việc tự do.",
@@ -129,6 +130,9 @@
     "educationDesc": "Nền tảng học thuật và tự học của tôi trong phát triển phần mềm và khoa học máy tính.",
     "mySkills": "Kỹ năng của tôi",
     "skillsDesc": "Công nghệ và công cụ tôi sử dụng hàng ngày để xây dựng ứng dụng web hiện đại, hiệu suất cao.",
+    "myCertifications": "Chứng chỉ của tôi",
+    "certificationsDesc": "Một số chứng chỉ từ các nền tảng học trực tuyến hỗ trợ công việc phát triển full-stack của tôi.",
+    "viewCredential": "Xem chứng chỉ",
     "aboutTitle": "Về Tôi",
     "aboutDesc": "Tôi là một lập trình viên full-stack và giảng viên tại TP. Hồ Chí Minh, Việt Nam. Tôi chuyên về xây dựng ứng dụng web hiện đại, hiệu suất cao với Next.js, React và Tailwind CSS. Song song với phát triển phần mềm, tôi dạy tiếng Anh và gia sư riêng, kết hợp chuyên môn kỹ thuật với niềm đam mê giáo dục."
   },
