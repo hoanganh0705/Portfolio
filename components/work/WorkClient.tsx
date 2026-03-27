@@ -46,6 +46,7 @@ export default function WorkClient() {
       setProject(projects[currentIndex])
     }
   }
+
   return (
     <LazyMotion features={domAnimation}>
       <m.section
