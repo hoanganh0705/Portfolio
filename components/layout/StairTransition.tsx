@@ -2,8 +2,8 @@
 
 import { usePathname } from 'next/navigation'
 import dynamic from 'next/dynamic'
+import { isBlogDetail } from '@/lib/utils'
 
-//components
 import Stairs from './Stairs'
 
 const MotionDiv = dynamic(() =>
@@ -15,10 +15,6 @@ const AnimatePresence = dynamic(() =>
     (mod) => mod.AnimatePresence,
   ),
 )
-
-/** Blog detail routes like /en/blog/some-slug should not trigger the stair transition */
-const isBlogDetail = (path: string) =>
-  /^\/(en|vi)\/blog\/.+/.test(path)
 
 const StairTransition = () => {
   const pathname = usePathname()

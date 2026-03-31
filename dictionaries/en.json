@@ -142,7 +142,10 @@
     "liveProject": "Live project",
     "githubRepo": "Github repository",
     "project": "project",
-    "caseStudy": "Case study"
+    "caseStudy": "Case study",
+    "challenge": "Challenge",
+    "approach": "Approach",
+    "result": "Result"
   },
   "notFound": {
     "code": "404",

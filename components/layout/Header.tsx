@@ -47,9 +47,7 @@ const Header = () => {
           <LanguageSwitcher scrolled={hasScrolled} />
           <ThemeToggle scrolled={hasScrolled} />
           <Link href={`/${locale}/contact`}>
-            <Button className=''>
-              {dict.common.hireMe}
-            </Button>
+            <Button>{dict.common.hireMe}</Button>
           </Link>
         </div>
 

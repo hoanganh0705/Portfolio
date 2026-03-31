@@ -117,6 +117,9 @@ export interface Dictionary {
     githubRepo: string
     project: string
     caseStudy: string
+    challenge: string
+    approach: string
+    result: string
   }
   notFound: {
     code: string

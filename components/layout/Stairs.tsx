@@ -7,15 +7,16 @@ const stairAnimation = {
   exit: { y: ['100%', '0%'] },
 }
 
+const TOTAL_STEPS = 6
+
 const reversedIndex = (index: number) => {
-  const totalSteps = 6
-  return totalSteps - index - 1
+  return TOTAL_STEPS - index - 1
 }
 
 const Stairs = () => {
   return (
     <LazyMotion features={domAnimation}>
-      {[...Array(6)].map((_, index) => (
+      {[...Array(TOTAL_STEPS)].map((_, index) => (
         <m.div
           key={index}
           variants={stairAnimation}

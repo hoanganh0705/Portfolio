@@ -1,12 +1,11 @@
 import { socials } from '@/constants/socials'
-import React from 'react'
 
 interface SocialProps {
   containerStyles?: string
   iconStyles?: string
 }
 
-const Social: React.FC<SocialProps> = ({
+const Social = ({
   containerStyles = '',
   iconStyles = '',
 }) => {

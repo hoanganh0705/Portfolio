@@ -138,7 +138,7 @@ export default function BriefInfo() {
                     {skill.title}
                   </h3>
                 </div>
-                <p className='-mt-6 pl-2 text-gray-500 text-left'>
+                <p className='-mt-6 pl-2 text-muted-foreground text-left'>
                   {skill.body}
                 </p>
               </m.div>

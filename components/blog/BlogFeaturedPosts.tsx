@@ -1,8 +1,5 @@
 import Link from 'next/link'
-import {
-  getFeaturedPosts,
-  PostMetadata,
-} from '@/lib/getPosts'
+import { getFeaturedPosts } from '@/lib/getPosts'
 import type { Locale } from '@/lib/i18n'
 import { getDictionary } from '@/lib/dictionaries'
 
