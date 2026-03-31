@@ -118,8 +118,14 @@ export async function generateMetadata({
   }
 }
 
+// Reject path traversal characters to prevent arbitrary file imports
+const SAFE_SLUG = /^[a-zA-Z0-9_-]+$/
+
 // Cache the MDX import so generateMetadata and the page component share one load (2.5)
 const loadMdx = async (locale: string, id: string) => {
+  if (!SAFE_SLUG.test(locale) || !SAFE_SLUG.test(id)) {
+    throw new Error('Invalid locale or post id')
+  }
   const mod = await import(`@/content/${locale}/${id}.mdx`)
   return { default: mod.default, metadata: mod.metadata }
 }

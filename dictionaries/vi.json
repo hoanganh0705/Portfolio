@@ -142,7 +142,10 @@
     "liveProject": "Xem dự án",
     "githubRepo": "Mã nguồn Github",
     "project": "dự án",
-    "caseStudy": "Case study"
+    "caseStudy": "Nghiên cứu dự án",
+    "challenge": "Thách thức",
+    "approach": "Cách tiếp cận",
+    "result": "Kết quả"
   },
   "notFound": {
     "code": "404",

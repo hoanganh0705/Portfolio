@@ -1,0 +1,46 @@
+import { NextRequest, NextResponse } from 'next/server'
+import {
+  locales,
+  defaultLocale,
+  isValidLocale,
+} from '@/lib/i18n'
+
+function getPreferredLocale(request: NextRequest): string {
+  const cookie = request.cookies.get('NEXT_LOCALE')?.value
+  if (cookie && isValidLocale(cookie)) return cookie
+
+  const accept = request.headers.get('Accept-Language')
+  if (accept) {
+    const preferred = accept
+      .split(',')
+      .map((l) => l.split(';')[0].trim().substring(0, 2))
+    for (const lang of preferred) {
+      if (isValidLocale(lang)) return lang
+    }
+  }
+
+  return defaultLocale
+}
+
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  const hasLocale = locales.some(
+    (locale) =>
+      pathname.startsWith(`/${locale}/`) ||
+      pathname === `/${locale}`,
+  )
+
+  if (hasLocale) return
+
+  const locale = getPreferredLocale(request)
+  const url = request.nextUrl.clone()
+  url.pathname = `/${locale}${pathname}`
+  return NextResponse.redirect(url)
+}
+
+export const config = {
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|images|assets|robots\\.txt|sitemap\\.xml|manifest\\.webmanifest).*)',
+  ],
+}

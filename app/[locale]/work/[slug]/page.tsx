@@ -72,7 +72,7 @@ export default async function WorkCaseStudyPage({
         <div className='grid gap-6'>
           <article className='rounded-xl border border-border p-6 bg-secondary/50'>
             <h2 className='text-xl font-semibold mb-3'>
-              Challenge
+              {dict.work.challenge}
             </h2>
             <p className='text-muted-foreground'>
               {project.caseStudy.challenge}
@@ -81,7 +81,7 @@ export default async function WorkCaseStudyPage({
 
           <article className='rounded-xl border border-border p-6 bg-secondary/50'>
             <h2 className='text-xl font-semibold mb-3'>
-              Approach
+              {dict.work.approach}
             </h2>
             <p className='text-muted-foreground'>
               {project.caseStudy.approach}
@@ -90,7 +90,7 @@ export default async function WorkCaseStudyPage({
 
           <article className='rounded-xl border border-border p-6 bg-secondary/50'>
             <h2 className='text-xl font-semibold mb-3'>
-              Result
+              {dict.work.result}
             </h2>
             <p className='text-muted-foreground'>
               {project.caseStudy.result}
@@ -100,12 +100,20 @@ export default async function WorkCaseStudyPage({
 
         <div className='mt-10 flex flex-wrap gap-4'>
           <Button asChild>
-            <Link href={project.live}>
+            <Link
+              href={project.live}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
               {dict.work.liveProject}
             </Link>
           </Button>
           <Button asChild variant='outline'>
-            <Link href={project.github}>
+            <Link
+              href={project.github}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
               {dict.work.githubRepo}
             </Link>
           </Button>

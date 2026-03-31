@@ -92,6 +92,8 @@ export default function WorkClient() {
                     {/* live project button */}
                     <Link
                       href={project.live}
+                      target='_blank'
+                      rel='noopener noreferrer'
                       aria-label='Open live project'
                     >
                       <Tooltip>
@@ -110,6 +112,8 @@ export default function WorkClient() {
                     {/* github project button */}
                     <Link
                       href={project.github}
+                      target='_blank'
+                      rel='noopener noreferrer'
                       aria-label='Project repository'
                     >
                       <Tooltip>

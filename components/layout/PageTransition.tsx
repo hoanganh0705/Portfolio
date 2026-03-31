@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { usePathname } from 'next/navigation'
+import { isBlogDetail } from '@/lib/utils'
 
 const MotionDiv = dynamic(() =>
   import('framer-motion').then((mod) => mod.motion.div),
@@ -12,10 +13,6 @@ const AnimatePresence = dynamic(() =>
     (mod) => mod.AnimatePresence,
   ),
 )
-
-/** Blog detail routes like /en/blog/some-slug should not trigger the full-page transition */
-const isBlogDetail = (path: string) =>
-  /^\/(en|vi)\/blog\/.+/.test(path)
 
 const PageTransition = ({
   children,
