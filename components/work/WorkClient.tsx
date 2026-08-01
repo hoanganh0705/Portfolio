@@ -6,7 +6,7 @@ import {
   TooltipProvider,
   TooltipContent,
 } from '@/components/ui/tooltip'
-import { projects } from '@/constants/projects'
+import { projects as projectMeta } from '@/constants/projects'
 import { m, LazyMotion, domAnimation } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -35,6 +35,15 @@ const fadeInAnimation = {
 
 export default function WorkClient() {
   const { dict, locale } = useLocale()
+  // Merge language-independent meta (image, live, github) with dict content
+  const projects = projectMeta.map((meta) => {
+    const content = dict.work.projects.find((p) => p.slug === meta.slug)
+    if (!content) {
+      throw new Error(`Missing dictionary entry for project: ${meta.slug}`)
+    }
+    return { ...meta, ...content }
+  })
+
   const [project, setProject] = useState(projects[0])
 
   const handleSlideChange = (swiper: SwiperCore) => {

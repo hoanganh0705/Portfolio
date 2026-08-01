@@ -109,6 +109,16 @@ export interface Dictionary {
     viewCredential: string
     aboutTitle: string
     aboutDesc: string
+    aboutInfo: { fieldName: string; fieldValue: string }[]
+    experienceItems: { company: string; position: string; duration: string }[]
+    educationItems: { institution: string; degree: string; duration: string }[]
+    skillsList: { id: string; name: string }[]
+    certificationItems: {
+      name: string
+      issuer: string
+      year: string
+      link: string
+    }[]
   }
   work: {
     pageTitle: string
@@ -120,6 +130,14 @@ export interface Dictionary {
     challenge: string
     approach: string
     result: string
+    projects: {
+      slug: string
+      category: string
+      title: string
+      description: string
+      stack: { name: string }[]
+      caseStudy: { challenge: string; approach: string; result: string }
+    }[]
   }
   notFound: {
     code: string

@@ -27,8 +27,7 @@ export async function generateMetadata({
     ],
     path: '/work',
     locale,
-    ogImage:
-      'https://github.com/hoanganh0705/image_container/blob/main/portfolio-image/service.png?raw=true',
+    ogImage: '/og/service.png',
   })
 }
 

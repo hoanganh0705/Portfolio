@@ -134,7 +134,92 @@
     "certificationsDesc": "Một số chứng chỉ từ các nền tảng học trực tuyến hỗ trợ công việc phát triển full-stack của tôi.",
     "viewCredential": "Xem chứng chỉ",
     "aboutTitle": "Về Tôi",
-    "aboutDesc": "Tôi là một lập trình viên full-stack và giảng viên tại TP. Hồ Chí Minh, Việt Nam. Tôi chuyên về xây dựng ứng dụng web hiện đại, hiệu suất cao với Next.js, React và Tailwind CSS. Song song với phát triển phần mềm, tôi dạy tiếng Anh và gia sư riêng, kết hợp chuyên môn kỹ thuật với niềm đam mê giáo dục."
+    "aboutDesc": "Tôi là một lập trình viên full-stack và giảng viên tại TP. Hồ Chí Minh, Việt Nam. Tôi chuyên về xây dựng ứng dụng web hiện đại, hiệu suất cao với Next.js, React và Tailwind CSS. Song song với phát triển phần mềm, tôi dạy tiếng Anh và gia sư riêng, kết hợp chuyên môn kỹ thuật với niềm đam mê giáo dục.",
+    "aboutInfo": [
+      { "fieldName": "Họ tên", "fieldValue": "Hoàng Anh" },
+      { "fieldName": "Điện thoại", "fieldValue": "(+84) 985 335 735" },
+      { "fieldName": "Kinh nghiệm", "fieldValue": "2+ năm" },
+      { "fieldName": "Facebook", "fieldValue": "Hoàng Aanh" },
+      { "fieldName": "Quốc tịch", "fieldValue": "Việt Nam" },
+      { "fieldName": "Email", "fieldValue": "anh487303@gmail.com" },
+      { "fieldName": "Nhận freelance", "fieldValue": "Sẵn sàng" },
+      { "fieldName": "Ngôn ngữ", "fieldValue": "Tiếng Anh, Tiếng Việt" }
+    ],
+    "experienceItems": [
+      {
+        "company": "Freelance",
+        "position": "Lập trình viên Web Full-Stack",
+        "duration": "2024 - Hiện tại"
+      },
+      {
+        "company": "Tự làm việc",
+        "position": "Giáo viên & Gia sư tiếng Anh",
+        "duration": "2023 - Hiện tại"
+      },
+      {
+        "company": "Dự án cá nhân",
+        "position": "Người đóng góp mã nguồn mở",
+        "duration": "2023 - Hiện tại"
+      },
+      {
+        "company": "Freelance",
+        "position": "Chuyên gia SEO",
+        "duration": "2024 - Hiện tại"
+      }
+    ],
+    "educationItems": [
+      {
+        "institution": "Tự học",
+        "degree": "Phát triển Web Full-Stack",
+        "duration": "2023 - Hiện tại"
+      },
+      {
+        "institution": "Khóa học trực tuyến",
+        "degree": "Làm chủ Next.js & React",
+        "duration": "2024"
+      },
+      {
+        "institution": "Udemy & Coursera",
+        "degree": "TypeScript & Node.js",
+        "duration": "2024"
+      },
+      {
+        "institution": "FreeCodeCamp",
+        "degree": "Thiết kế Web Responsive",
+        "duration": "2023"
+      }
+    ],
+    "skillsList": [
+      { "id": "html", "name": "HTML" },
+      { "id": "css", "name": "CSS" },
+      { "id": "javascript", "name": "JavaScript" },
+      { "id": "react", "name": "React" },
+      { "id": "nextjs", "name": "Next.js" },
+      { "id": "tailwind", "name": "Tailwind CSS" },
+      { "id": "nodejs", "name": "Node.js" },
+      { "id": "python", "name": "Python" },
+      { "id": "go", "name": "Go" }
+    ],
+    "certificationItems": [
+      {
+        "name": "Thuật toán và Cấu trúc dữ liệu JavaScript",
+        "issuer": "freeCodeCamp",
+        "year": "2024",
+        "link": "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures-v8/"
+      },
+      {
+        "name": "Kiến thức cốt lõi TypeScript và Node.js",
+        "issuer": "Udemy",
+        "year": "2024",
+        "link": "https://www.udemy.com/topic/typescript/"
+      },
+      {
+        "name": "Chương trình Nhà phát triển Front-End Meta",
+        "issuer": "Coursera",
+        "year": "2024",
+        "link": "https://www.coursera.org/professional-certificates/meta-front-end-developer"
+      }
+    ]
   },
   "work": {
     "pageTitle": "Công việc & Dự án",
@@ -145,7 +230,60 @@
     "caseStudy": "Nghiên cứu dự án",
     "challenge": "Thách thức",
     "approach": "Cách tiếp cận",
-    "result": "Kết quả"
+    "result": "Kết quả",
+    "projects": [
+      {
+        "slug": "portfolio-website",
+        "category": "fullstack",
+        "title": "Trang Portfolio",
+        "description": "Portfolio và blog cá nhân được xây dựng với Next.js 16, hỗ trợ đa ngôn ngữ (Anh/Việt), blog MDX với tô sáng cú pháp, giao diện sáng/tối, hiệu ứng chuyển trang Framer Motion, và tối ưu SEO đầy đủ với dữ liệu có cấu trúc JSON-LD.",
+        "stack": [
+          { "name": "Next.js" },
+          { "name": "React" },
+          { "name": "Tailwind CSS" },
+          { "name": "MDX" }
+        ],
+        "caseStudy": {
+          "challenge": "Tạo một trang portfolio trình bày công việc phát triển, nội dung và dịch vụ bằng cả tiếng Anh và tiếng Việt đồng thời vẫn nhanh và thân thiện với SEO.",
+          "approach": "Xây dựng trên Next.js App Router với định tuyến theo ngôn ngữ, pipeline nội dung MDX, các thành phần UI tái sử dụng, và tiện ích metadata được render phía server cho từng route.",
+          "result": "Giao một portfolio/blog song ngữ với UX nhất quán, các tín hiệu khả năng khám phá mạnh (JSON-LD, sitemap, Open Graph), và quy trình nội dung dễ bảo trì."
+        }
+      },
+      {
+        "slug": "blog-platform",
+        "category": "fullstack",
+        "title": "Nền tảng Blog",
+        "description": "Nền tảng blog giàu nội dung với bài viết nổi bật, lọc theo danh mục, mục lục, tô sáng cú pháp mã bằng Shiki, và thiết kế responsive. Hỗ trợ nội dung song ngữ với tự động phát hiện ngôn ngữ.",
+        "stack": [
+          { "name": "Next.js" },
+          { "name": "TypeScript" },
+          { "name": "MDX" },
+          { "name": "Shiki" }
+        ],
+        "caseStudy": {
+          "challenge": "Thiết kế một blog dành cho lập trình viên dễ viết bằng MDX nhưng vẫn dễ đọc và hữu ích cho đối tượng kỹ thuật.",
+          "approach": "Triển khai bài viết MDX điều khiển bằng frontmatter với các phần nổi bật, UI tìm kiếm/lọc, mục lục dựa trên tiêu đề, và tô sáng mã bằng Shiki.",
+          "result": "Tạo ra một nền tảng nội dung có khả năng mở rộng với UX đọc phong phú hơn và cải thiện giữ chân người dùng thông qua đề xuất và điều hướng nội bộ."
+        }
+      },
+      {
+        "slug": "contact-email-system",
+        "category": "frontend",
+        "title": "Hệ thống Liên hệ & Email",
+        "description": "Hệ thống liên hệ sẵn sàng cho sản xuất với xác thực biểu mẫu (Zod), giới hạn tốc độ, và gửi email tự động qua Resend. Bao gồm các mẫu email tùy chỉnh và thông báo toast theo thời gian thực để phản hồi người dùng.",
+        "stack": [
+          { "name": "React" },
+          { "name": "Zod" },
+          { "name": "Resend" },
+          { "name": "Server Actions" }
+        ],
+        "caseStudy": {
+          "challenge": "Xây dựng quy trình liên hệ cảm thấy tức thì cho người dùng đồng thời ngăn chặn các gửi biểu mẫu kém chất lượng hoặc lạm dụng.",
+          "approach": "Sử dụng server action với xác thực Zod, kiểm tra honeypot, giới hạn tốc độ trong bộ nhớ, và gửi email song song qua Resend + mẫu React Email.",
+          "result": "Triển khai pipeline liên hệ sản xuất với khả năng phục hồi được cải thiện và phản hồi rõ ràng qua thông báo toast cho trạng thái thành công và thất bại."
+        }
+      }
+    ]
   },
   "notFound": {
     "code": "404",
