@@ -35,3 +35,16 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      - name: Install Puppeteer Chromium
+        # pnpm blocks puppeteer's post-install script by default. Install
+        # Chrome explicitly so lhci autorun can launch it.
+        run: pnpm exec puppeteer browsers install chrome
+
+      - name: Lighthouse CI
+        run: pnpm lighthouse
+        # Optional: install the LHCI GitHub App at https://github.com/apps/lighthouse-ci
+        # to enable PR comment summaries. Without it, runs upload to
+        # temporary-public-storage and exit non-zero on budget violations.
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

@@ -1,0 +1,34 @@
+[
+  {
+    "name": "minScore",
+    "expected": 0.95,
+    "actual": 0.91,
+    "values": [
+      0.91,
+      0.91,
+      0.91
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "best-practices",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://localhost:3000/en/work"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.95,
+    "actual": 0.91,
+    "values": [
+      0.91,
+      0.91,
+      0.91
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "best-practices",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://localhost:3000/en/work"
+  }
+]
