@@ -17,6 +17,5 @@ export const metadata = createMetadata({
     'seo specialist',
   ],
   path: '',
-  ogImage:
-    'https://gitlab.com/nguyennanhcd1/image-container/-/raw/main/portfolio-image/Screenshot%202025-06-21%20072326.png?ref_type=heads',
+  ogImage: '/og/portfolio-default.png',
 })

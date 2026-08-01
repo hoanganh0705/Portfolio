@@ -12,6 +12,40 @@ Live site: [https://anhnguyendev.me](https://anhnguyendev.me)
 - Contact flow using Server Actions + Resend + Zod validation
 - Responsive UI with dark/light theme and animated page transitions
 
+## Why this codebase is worth reading
+
+This is a small Next.js app, but it ships with patterns usually only seen in
+production systems:
+
+- **i18n at the route level** — every page is locale-prefixed, dictionaries
+  are typed, `alternates.languages` is generated per page, and the home page
+  is statically rendered for both `en` and `vi` via `generateStaticParams`.
+- **MDX content pipeline** — blog posts are MDX files in `content/`, parsed
+  with `remark-gfm` + `remark-frontmatter`, validated through a `safe_slug`
+  check, and deduped per request with `react/cache`.
+- **Server Actions with rate limiting, honeypot, and parallel email
+  delivery** — see `app/actions/actions.ts`. The contact form is one action
+  with no API route; Zod validates, then two Resend sends run in parallel,
+  and logging is moved off the response path with `after()`.
+- **Distributed rate limiting** *(planned)* — sliding-window limiter on
+  Upstash Redis so the contact form stays correct when Vercel scales the
+  function horizontally.
+- **Performance budgets enforced in CI** *(planned)* — Lighthouse CI runs on
+  every PR with thresholds of ≥95 perf, 100 accessibility / best-practices
+  / SEO.
+- **Content-visibility and dynamic imports** — heavy client components
+  (Swiper, ResumeClient, ContactForm, Stats) are code-split; long lists use
+  `content-visibility: auto`.
+- **Structured SEO** — JSON-LD (Person, WebSite, BlogPosting,
+  BreadcrumbList), per-route `sitemap.ts`, `robots.ts`, dynamic OG images
+  via `next/og`, and a generated RSS feed.
+- **Security headers in production** — CSP, HSTS, X-Content-Type-Options,
+  X-Frame-Options, Referrer-Policy, and Permissions-Policy via
+  `next.config.ts`.
+
+It's not a toy. It runs on the free Vercel tier with strict enforced
+budgets.
+
 ## Tech Stack
 
 - **Framework:** Next.js 16 (App Router), React 19, TypeScript

@@ -20,7 +20,6 @@ export const siteConfig = {
     facebook: 'https://www.facebook.com/hoang.aanh.225907',
     linkedin: 'https://www.linkedin.com/in/nguyen-anh-3974a4305/',
   },
-  defaultOgImage:
-    'https://gitlab.com/nguyennanhcd1/image-container/-/raw/main/portfolio-image/Screenshot%202025-06-21%20072326.png?ref_type=heads',
+  defaultOgImage: '/og/portfolio-default.png',
   cvFilePath: '/cv/nguyen-hoang-anh-cv.pdf',
 } as const

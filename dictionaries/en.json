@@ -134,7 +134,92 @@
     "certificationsDesc": "Selected certificates from online learning platforms that support my full-stack development workflow.",
     "viewCredential": "View credential",
     "aboutTitle": "About Me",
-    "aboutDesc": "I am a full-stack web developer and educator based in Ho Chi Minh City, Vietnam. I specialize in building modern, performant web applications with Next.js, React, and Tailwind CSS. Alongside development, I teach English and offer private tutoring, combining technical expertise with a passion for education."
+    "aboutDesc": "I am a full-stack web developer and educator based in Ho Chi Minh City, Vietnam. I specialize in building modern, performant web applications with Next.js, React, and Tailwind CSS. Alongside development, I teach English and offer private tutoring, combining technical expertise with a passion for education.",
+    "aboutInfo": [
+      { "fieldName": "Name", "fieldValue": "Hoàng Anh" },
+      { "fieldName": "Phone", "fieldValue": "(+84) 985 335 735" },
+      { "fieldName": "Experience", "fieldValue": "2+ years" },
+      { "fieldName": "Facebook", "fieldValue": "Hoàng Aanh" },
+      { "fieldName": "Nationality", "fieldValue": "Việt Nam" },
+      { "fieldName": "Email", "fieldValue": "anh487303@gmail.com" },
+      { "fieldName": "Freelance", "fieldValue": "Available" },
+      { "fieldName": "Languages", "fieldValue": "English, Vietnamese" }
+    ],
+    "experienceItems": [
+      {
+        "company": "Freelance",
+        "position": "Full-Stack Web Developer",
+        "duration": "2024 - Present"
+      },
+      {
+        "company": "Self-Employed",
+        "position": "English Teacher & Tutor",
+        "duration": "2023 - Present"
+      },
+      {
+        "company": "Personal Projects",
+        "position": "Open Source Contributor",
+        "duration": "2023 - Present"
+      },
+      {
+        "company": "Freelance",
+        "position": "SEO Specialist",
+        "duration": "2024 - Present"
+      }
+    ],
+    "educationItems": [
+      {
+        "institution": "Self-Taught",
+        "degree": "Full-Stack Web Development",
+        "duration": "2023 - Present"
+      },
+      {
+        "institution": "Online Courses",
+        "degree": "Next.js & React Mastery",
+        "duration": "2024"
+      },
+      {
+        "institution": "Udemy & Coursera",
+        "degree": "TypeScript & Node.js",
+        "duration": "2024"
+      },
+      {
+        "institution": "FreeCodeCamp",
+        "degree": "Responsive Web Design",
+        "duration": "2023"
+      }
+    ],
+    "skillsList": [
+      { "id": "html", "name": "HTML" },
+      { "id": "css", "name": "CSS" },
+      { "id": "javascript", "name": "JavaScript" },
+      { "id": "react", "name": "React" },
+      { "id": "nextjs", "name": "Next.js" },
+      { "id": "tailwind", "name": "Tailwind CSS" },
+      { "id": "nodejs", "name": "Node.js" },
+      { "id": "python", "name": "Python" },
+      { "id": "go", "name": "Go" }
+    ],
+    "certificationItems": [
+      {
+        "name": "JavaScript Algorithms and Data Structures",
+        "issuer": "freeCodeCamp",
+        "year": "2024",
+        "link": "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures-v8/"
+      },
+      {
+        "name": "TypeScript and Node.js Essentials",
+        "issuer": "Udemy",
+        "year": "2024",
+        "link": "https://www.udemy.com/topic/typescript/"
+      },
+      {
+        "name": "Meta Front-End Developer Program",
+        "issuer": "Coursera",
+        "year": "2024",
+        "link": "https://www.coursera.org/professional-certificates/meta-front-end-developer"
+      }
+    ]
   },
   "work": {
     "pageTitle": "Work & Projects",
@@ -145,7 +230,60 @@
     "caseStudy": "Case study",
     "challenge": "Challenge",
     "approach": "Approach",
-    "result": "Result"
+    "result": "Result",
+    "projects": [
+      {
+        "slug": "portfolio-website",
+        "category": "fullstack",
+        "title": "Portfolio Website",
+        "description": "My personal portfolio and blog built with Next.js 16, featuring i18n support (EN/VI), MDX blog with syntax highlighting, dark/light themes, Framer Motion page transitions, and full SEO optimization with JSON-LD structured data.",
+        "stack": [
+          { "name": "Next.js" },
+          { "name": "React" },
+          { "name": "Tailwind CSS" },
+          { "name": "MDX" }
+        ],
+        "caseStudy": {
+          "challenge": "Create a portfolio that presents development work, content, and services in both English and Vietnamese while staying fast and SEO-friendly.",
+          "approach": "Built on Next.js App Router with locale routing, MDX content pipelines, reusable UI primitives, and server-rendered metadata utilities for each route.",
+          "result": "Delivered a bilingual portfolio/blog with consistent UX, strong discoverability signals (JSON-LD, sitemap, Open Graph), and maintainable content workflows."
+        }
+      },
+      {
+        "slug": "blog-platform",
+        "category": "fullstack",
+        "title": "Blog Platform",
+        "description": "A content-rich blog platform with featured posts, category filtering, table of contents, code syntax highlighting via Shiki, and responsive design. Supports bilingual content with automatic locale detection.",
+        "stack": [
+          { "name": "Next.js" },
+          { "name": "TypeScript" },
+          { "name": "MDX" },
+          { "name": "Shiki" }
+        ],
+        "caseStudy": {
+          "challenge": "Design a developer blog that is easy to author in MDX while still readable and useful for technical audiences.",
+          "approach": "Implemented frontmatter-driven MDX posts with featured sections, search/filter UI, heading-based table of contents, and Shiki code highlighting.",
+          "result": "Created a scalable content platform with richer reading UX and improved retention through recommendations and internal navigation."
+        }
+      },
+      {
+        "slug": "contact-email-system",
+        "category": "frontend",
+        "title": "Contact & Email System",
+        "description": "A production-ready contact system with form validation (Zod), rate limiting, and automated email delivery via Resend. Includes custom email templates and real-time toast notifications for user feedback.",
+        "stack": [
+          { "name": "React" },
+          { "name": "Zod" },
+          { "name": "Resend" },
+          { "name": "Server Actions" }
+        ],
+        "caseStudy": {
+          "challenge": "Build a contact workflow that feels instant for users while preventing low-quality or abusive form submissions.",
+          "approach": "Used a server action with Zod validation, honeypot checks, in-memory throttling, and parallel email delivery via Resend + React Email templates.",
+          "result": "Shipped a production contact pipeline with improved resilience and clear feedback via toast notifications for success and failure states."
+        }
+      }
+    ]
   },
   "notFound": {
     "code": "404",

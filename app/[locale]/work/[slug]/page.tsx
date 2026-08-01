@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { projects } from '@/constants/projects'
+import { projects as projectMeta } from '@/constants/projects'
 import { createMetadata } from '@/lib/metadata'
 import { getDictionary } from '@/lib/dictionaries'
 import { locales, type Locale } from '@/lib/i18n'
@@ -11,7 +11,7 @@ export const dynamicParams = false
 
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
-    projects.map((project) => ({
+    projectMeta.map((project) => ({
       locale,
       slug: project.slug,
     })),
@@ -24,11 +24,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>
 }): Promise<Metadata> {
   const { locale, slug } = await params
-  const project = projects.find(
-    (item) => item.slug === slug,
-  )
+  const dict = await getDictionary(locale as Locale)
+  const content = dict.work.projects.find((p) => p.slug === slug)
+  const meta = projectMeta.find((item) => item.slug === slug)
 
-  if (!project) {
+  if (!content || !meta) {
     return createMetadata({
       title: 'Case study',
       path: `/work/${slug}`,
@@ -37,8 +37,8 @@ export async function generateMetadata({
   }
 
   return createMetadata({
-    title: `${project.title} Case Study`,
-    description: project.description,
+    title: `${content.title} Case Study`,
+    description: content.description,
     path: `/work/${slug}`,
     locale,
   })
@@ -50,13 +50,16 @@ export default async function WorkCaseStudyPage({
   params: Promise<{ locale: string; slug: string }>
 }) {
   const { locale, slug } = await params
-  const project = projects.find(
-    (item) => item.slug === slug,
-  )
+  const meta = projectMeta.find((item) => item.slug === slug)
 
-  if (!project) notFound()
+  if (!meta) notFound()
 
   const dict = await getDictionary(locale as Locale)
+  const content = dict.work.projects.find((p) => p.slug === slug)
+
+  if (!content) notFound()
+
+  const project = { ...meta, ...content }
 
   return (
     <section className='min-h-[80vh] py-12 xl:py-20'>
