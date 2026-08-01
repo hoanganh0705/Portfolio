@@ -182,6 +182,7 @@ export default function WorkClient() {
                           fill
                           className='object-cover'
                           sizes='(max-width: 1280px) 95vw, 50vw'
+                          unoptimized
                         />
                       </div>
                     </div>

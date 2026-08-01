@@ -9,6 +9,7 @@ import { after } from 'next/server'
 import { headers } from 'next/headers'
 import { z } from 'zod'
 import { siteConfig } from '@/lib/site-config'
+import { checkRateLimit, getRateLimitConfig } from '@/lib/redis'
 
 // Validate required env vars at module load (1.2)
 const RESEND_API_KEY = process.env.RESEND_API_KEY
@@ -34,12 +35,6 @@ const ContactFormSchema = z.object({
   locale: z.enum(['en', 'vi']).default('en'),
 })
 
-
-const rateLimitMap = new Map<string, { count: number; resetTime: number; lastRequestTime: number }>()
-const RATE_LIMIT = Number(process.env.CONTACT_RATE_LIMIT ?? '5')
-const RATE_WINDOW_MS = Number(process.env.CONTACT_RATE_WINDOW_MS ?? '60000')
-const MIN_REQUEST_INTERVAL_MS = Number(process.env.CONTACT_MIN_REQUEST_INTERVAL_MS ?? '10000')
-
 function getClientKey(headersList: Headers, email: string): string {
   const forwardedFor = headersList.get('x-forwarded-for')
   const realIp = headersList.get('x-real-ip')
@@ -50,35 +45,6 @@ function getClientKey(headersList: Headers, email: string): string {
     'unknown-ip'
 
   return `${ip}:${email.toLowerCase()}:${userAgent}`
-}
-
-function isRateLimited(clientKey: string): boolean {
-  const now = Date.now()
-  const entry = rateLimitMap.get(clientKey)
-
-  // Prune expired entries periodically to prevent memory leak
-  if (rateLimitMap.size > 1000) {
-    for (const [key, val] of rateLimitMap) {
-      if (now > val.resetTime) rateLimitMap.delete(key)
-    }
-  }
-
-  if (!entry || now > entry.resetTime) {
-    rateLimitMap.set(clientKey, {
-      count: 1,
-      resetTime: now + RATE_WINDOW_MS,
-      lastRequestTime: now,
-    })
-    return false
-  }
-
-  if (now - entry.lastRequestTime < MIN_REQUEST_INTERVAL_MS) {
-    return true
-  }
-
-  entry.count++
-  entry.lastRequestTime = now
-  return entry.count > RATE_LIMIT
 }
 
 export async function sendEmail(prevState: FeedbackState, formData: FormData): Promise<FeedbackState> {
@@ -114,7 +80,8 @@ export async function sendEmail(prevState: FeedbackState, formData: FormData): P
   // server-auth-actions: rate limit public server action after validating payload
   const headersList = await headers()
   const clientKey = getClientKey(headersList, email)
-  if (isRateLimited(clientKey)) {
+  const rateLimit = await checkRateLimit(clientKey, getRateLimitConfig())
+  if (!rateLimit.success) {
     return {
       status: 'error',
       message: 'Too many requests. Please try again later.',

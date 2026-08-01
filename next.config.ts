@@ -1,10 +1,19 @@
 import type { NextConfig } from 'next';
 import BundleAnalyzer from '@next/bundle-analyzer';
 import createMDX from '@next/mdx';
+import { securityHeaders } from '@/lib/security-headers';
 
 const nextConfig: NextConfig = {
   output: 'standalone',
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: securityHeaders,
+      },
+    ]
+  },
   async redirects() {
     return [
       // Redirect www → non-www (covers both http and https)
