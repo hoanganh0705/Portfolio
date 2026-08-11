@@ -16,7 +16,6 @@ import {
   getRateLimitConfig,
 } from '@/lib/redis'
 
-// these key will not be exposed to the client, as this is a server action
 const RESEND_API_KEY = process.env.RESEND_API_KEY
 if (!RESEND_API_KEY) {
   console.error(
@@ -48,11 +47,8 @@ function getClientKey(
   headersList: Headers,
   email: string,
 ): string {
-  // x-forwarded-for is a list of IPs, the first one is the original client IP
   const forwardedFor = headersList.get('x-forwarded-for')
-  // x-real-ip is set by some proxies (like Vercel) to the original client IP
   const realIp = headersList.get('x-real-ip')
-  // user-agent is used to differentiate between different browsers or devices from the same IP address
   const userAgent =
     headersList.get('user-agent') || 'unknown-agent'
   const ip =
@@ -176,4 +172,12 @@ export async function sendEmail(
       timestamp: Date.now(),
     }
   }
+}
+
+// useActionState-compatible wrapper: first param is prevState (unused), second is FormData
+export async function action(
+  _prevState: FeedbackState,
+  formData: FormData,
+): Promise<FeedbackState> {
+  return sendEmail(formData)
 }
