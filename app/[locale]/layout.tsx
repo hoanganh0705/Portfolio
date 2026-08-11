@@ -1,3 +1,4 @@
+import '@/app/globals.css'
 import type { Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'

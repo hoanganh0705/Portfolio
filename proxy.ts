@@ -11,6 +11,7 @@ function getPreferredLocale(request: NextRequest): string {
 
   const accept = request.headers.get('Accept-Language')
   if (accept) {
+    // as first accept is a comma-separated list of language tags, we can split it and take the first one
     const preferred = accept
       .split(',')
       .map((l) => l.split(';')[0].trim().substring(0, 2))
@@ -41,6 +42,6 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|images|assets|robots\\.txt|sitemap\\.xml|manifest\\.webmanifest).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|images|assets|CV|robots\\.txt|sitemap\\.xml|manifest\\.webmanifest).*)',
   ],
 }

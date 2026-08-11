@@ -122,7 +122,6 @@
     "experience": "Experience",
     "education": "Education",
     "skills": "Skills",
-    "certifications": "Certifications",
     "aboutMe": "About Me",
     "myExperience": "My experience",
     "experienceDesc": "A summary of my professional journey in web development, teaching, and freelance work.",
@@ -130,9 +129,6 @@
     "educationDesc": "My academic background and self-directed learning in software development and computer science.",
     "mySkills": "My skills",
     "skillsDesc": "Technologies and tools I use daily to build modern, performant web applications.",
-    "myCertifications": "My certifications",
-    "certificationsDesc": "Selected certificates from online learning platforms that support my full-stack development workflow.",
-    "viewCredential": "View credential",
     "aboutTitle": "About Me",
     "aboutDesc": "I am a full-stack web developer and educator based in Ho Chi Minh City, Vietnam. I specialize in building modern, performant web applications with Next.js, React, and Tailwind CSS. Alongside development, I teach English and offer private tutoring, combining technical expertise with a passion for education.",
     "aboutInfo": [
@@ -158,35 +154,35 @@
       },
       {
         "company": "Personal Projects",
-        "position": "Open Source Contributor",
-        "duration": "2023 - Present"
+        "position": "Full-Stack Web Developer",
+        "duration": "2024 - Present"
       },
       {
         "company": "Freelance",
-        "position": "SEO Specialist",
+        "position": "SEO Optimization",
         "duration": "2024 - Present"
       }
     ],
     "educationItems": [
       {
-        "institution": "Self-Taught",
-        "degree": "Full-Stack Web Development",
+        "institution": "Ho Chi Minh Open University",
+        "degree": "Computer Science",
         "duration": "2023 - Present"
       },
       {
-        "institution": "Online Courses",
+        "institution": "Udemy",
         "degree": "Next.js & React Mastery",
-        "duration": "2024"
+        "duration": "2024-2025"
       },
       {
-        "institution": "Udemy & Coursera",
-        "degree": "TypeScript & Node.js",
-        "duration": "2024"
+        "institution": "ETS",
+        "degree": "Toeic 945",
+        "duration": "2026-2028"
       },
       {
-        "institution": "FreeCodeCamp",
-        "degree": "Responsive Web Design",
-        "duration": "2023"
+        "institution": "Devops Edu",
+        "degree": "Devops For Fresher",
+        "duration": "2026"
       }
     ],
     "skillsList": [
@@ -199,26 +195,6 @@
       { "id": "nodejs", "name": "Node.js" },
       { "id": "python", "name": "Python" },
       { "id": "go", "name": "Go" }
-    ],
-    "certificationItems": [
-      {
-        "name": "JavaScript Algorithms and Data Structures",
-        "issuer": "freeCodeCamp",
-        "year": "2024",
-        "link": "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures-v8/"
-      },
-      {
-        "name": "TypeScript and Node.js Essentials",
-        "issuer": "Udemy",
-        "year": "2024",
-        "link": "https://www.udemy.com/topic/typescript/"
-      },
-      {
-        "name": "Meta Front-End Developer Program",
-        "issuer": "Coursera",
-        "year": "2024",
-        "link": "https://www.coursera.org/professional-certificates/meta-front-end-developer"
-      }
     ]
   },
   "work": {
@@ -234,14 +210,17 @@
     "projects": [
       {
         "slug": "portfolio-website",
-        "category": "fullstack",
-        "title": "Portfolio Website",
+        "category": "frontend",
+        "title": "Portfolio & Blog Website",
         "description": "My personal portfolio and blog built with Next.js 16, featuring i18n support (EN/VI), MDX blog with syntax highlighting, dark/light themes, Framer Motion page transitions, and full SEO optimization with JSON-LD structured data.",
         "stack": [
           { "name": "Next.js" },
-          { "name": "React" },
-          { "name": "Tailwind CSS" },
-          { "name": "MDX" }
+          { "name": "Tailwind" },
+          { "name": "MDX" },
+          { "name": "Shiki" },
+          { "name": "Framer Motion" },
+          { "name": "Server Actions" },
+          { "name": "Resend" }
         ],
         "caseStudy": {
           "challenge": "Create a portfolio that presents development work, content, and services in both English and Vietnamese while staying fast and SEO-friendly.",
@@ -250,37 +229,24 @@
         }
       },
       {
-        "slug": "blog-platform",
+        "slug": "quiz-system",
         "category": "fullstack",
-        "title": "Blog Platform",
-        "description": "A content-rich blog platform with featured posts, category filtering, table of contents, code syntax highlighting via Shiki, and responsive design. Supports bilingual content with automatic locale detection.",
+        "title": "Quiz System",
+        "description": "A full-stack quiz platform where users can create, manage, and take quizzes, track their progress, review quizzes, and compete through rankings.",
         "stack": [
           { "name": "Next.js" },
           { "name": "TypeScript" },
-          { "name": "MDX" },
-          { "name": "Shiki" }
+          { "name": "Tailwind" },
+          { "name": "NestJS" },
+          { "name": "PostgreSQL" },
+          { "name": "Drizzle ORM" },
+          { "name": "Redis" },
+          { "name": "Docker" }
         ],
         "caseStudy": {
-          "challenge": "Design a developer blog that is easy to author in MDX while still readable and useful for technical audiences.",
-          "approach": "Implemented frontmatter-driven MDX posts with featured sections, search/filter UI, heading-based table of contents, and Shiki code highlighting.",
-          "result": "Created a scalable content platform with richer reading UX and improved retention through recommendations and internal navigation."
-        }
-      },
-      {
-        "slug": "contact-email-system",
-        "category": "frontend",
-        "title": "Contact & Email System",
-        "description": "A production-ready contact system with form validation (Zod), rate limiting, and automated email delivery via Resend. Includes custom email templates and real-time toast notifications for user feedback.",
-        "stack": [
-          { "name": "React" },
-          { "name": "Zod" },
-          { "name": "Resend" },
-          { "name": "Server Actions" }
-        ],
-        "caseStudy": {
-          "challenge": "Build a contact workflow that feels instant for users while preventing low-quality or abusive form submissions.",
-          "approach": "Used a server action with Zod validation, honeypot checks, in-memory throttling, and parallel email delivery via Resend + React Email templates.",
-          "result": "Shipped a production contact pipeline with improved resilience and clear feedback via toast notifications for success and failure states."
+          "challenge": "Build a scalable quiz platform that supports quiz creation and management, quiz attempts, user progress, reviews, bookmarks, rankings, and real-time user notifications.",
+          "approach": "Built a modular full-stack architecture with NestJS and PostgreSQL on the backend, using Drizzle ORM for database access and Redis for caching and asynchronous workloads. The frontend was built with Next.js and React, with typed API integration generated from the backend OpenAPI specification.",
+          "result": "Delivered a full-stack quiz platform with quiz management, quiz attempts and scoring, reviews and bookmarks, rankings, notifications, and a structured backend architecture designed for maintainability and future feature expansion."
         }
       }
     ]

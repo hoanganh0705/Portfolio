@@ -16,7 +16,7 @@ interface YearContributions {
 
 interface GraphQLCommitsResponse {
   data?: {
-    user?: Record<string, YearContributions>
+    user?: Record<string, YearContributions> // similar to { y2020: YearContributions, y2021: YearContributions, ... }
   }
   errors?: { message: string }[]
 }
@@ -34,7 +34,9 @@ export const fetchGitHubCommits = async (
   token: string,
 ): Promise<number> => {
   if (!token) {
-    console.warn('GitHub token not provided, returning default value')
+    console.warn(
+      'GitHub token not provided, returning default value',
+    )
     return 300
   }
 
@@ -45,33 +47,43 @@ export const fetchGitHubCommits = async (
 
   try {
     // Step 1: Get all contribution years for the user
-    const yearsResponse = await fetch('https://api.github.com/graphql', {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        query: `query($username: String!) {
+    const yearsResponse = await fetch(
+      'https://api.github.com/graphql',
+      {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          query: `query($username: String!) {
           user(login: $username) {
             contributionsCollection {
               contributionYears
             }
           }
         }`,
-        variables: { username },
-      }),
-      next: { revalidate: 86400 },
-    })
+          variables: { username },
+        }),
+        next: { revalidate: 86400 },
+      },
+    )
 
     if (!yearsResponse.ok) {
-      throw new Error(`GitHub GraphQL API error: ${yearsResponse.status}`)
+      throw new Error(
+        `GitHub GraphQL API error: ${yearsResponse.status}`,
+      )
     }
 
-    const yearsData: GraphQLYearsResponse = await yearsResponse.json()
+    const yearsData: GraphQLYearsResponse =
+      await yearsResponse.json()
 
     if (yearsData.errors?.length) {
-      throw new Error(`GraphQL error: ${yearsData.errors[0].message}`)
+      throw new Error(
+        `GraphQL error: ${yearsData.errors[0].message}`,
+      )
     }
 
-    const years = yearsData.data?.user?.contributionsCollection?.contributionYears ?? []
+    const years =
+      yearsData.data?.user?.contributionsCollection
+        ?.contributionYears ?? []
 
     if (years.length === 0) return 0
 
@@ -88,28 +100,36 @@ export const fetchGitHubCommits = async (
       })
       .join('\n      ')
 
-    const commitsResponse = await fetch('https://api.github.com/graphql', {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        query: `query($username: String!) {
+    const commitsResponse = await fetch(
+      'https://api.github.com/graphql',
+      {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          query: `query($username: String!) {
           user(login: $username) {
             ${yearFragments}
           }
         }`,
-        variables: { username },
-      }),
-      next: { revalidate: 86400 },
-    })
+          variables: { username },
+        }),
+        next: { revalidate: 86400 },
+      },
+    )
 
     if (!commitsResponse.ok) {
-      throw new Error(`GitHub GraphQL API error: ${commitsResponse.status}`)
+      throw new Error(
+        `GitHub GraphQL API error: ${commitsResponse.status}`,
+      )
     }
 
-    const commitsData: GraphQLCommitsResponse = await commitsResponse.json()
+    const commitsData: GraphQLCommitsResponse =
+      await commitsResponse.json()
 
     if (commitsData.errors?.length) {
-      throw new Error(`GraphQL error: ${commitsData.errors[0].message}`)
+      throw new Error(
+        `GraphQL error: ${commitsData.errors[0].message}`,
+      )
     }
 
     const userData = commitsData.data?.user

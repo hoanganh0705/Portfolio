@@ -87,14 +87,20 @@ function getUpstashClient(): Redis | null {
 
 let cachedLimiter: Ratelimit | null = null
 
-function getRatelimit(limit: number, windowMs: number): Ratelimit | null {
+function getRatelimit(
+  limit: number,
+  windowMs: number,
+): Ratelimit | null {
   const redis = getUpstashClient()
   if (!redis) return null
   if (cachedLimiter) return cachedLimiter
 
   cachedLimiter = new Ratelimit({
     redis,
-    limiter: Ratelimit.slidingWindow(limit, `${windowMs} ms`),
+    limiter: Ratelimit.slidingWindow(
+      limit,
+      `${windowMs} ms`,
+    ),
     prefix: 'contact',
     analytics: false,
   })
@@ -129,22 +135,24 @@ export interface RateLimitResult {
 export function getRateLimitConfig(): RateLimitConfig {
   return {
     limit: Number(process.env.CONTACT_RATE_LIMIT ?? '5'),
-    windowMs: Number(process.env.CONTACT_RATE_WINDOW_MS ?? '60000'),
-    minIntervalMs: Number(process.env.CONTACT_MIN_REQUEST_INTERVAL_MS ?? '10000'),
+    windowMs: Number(
+      process.env.CONTACT_RATE_WINDOW_MS ?? '60000',
+    ),
+    minIntervalMs: Number(
+      process.env.CONTACT_MIN_REQUEST_INTERVAL_MS ??
+        '10000',
+    ),
   }
 }
 
-/**
- * Check whether a request from `key` should be allowed.
- *
- * Returns `{ success: true }` if the request should proceed. Either the
- * distributed (Upstash) or in-memory limiter is used, depending on env.
- */
 export async function checkRateLimit(
   key: string,
   config: RateLimitConfig,
 ): Promise<RateLimitResult> {
-  const limiter = getRatelimit(config.limit, config.windowMs)
+  const limiter = getRatelimit(
+    config.limit,
+    config.windowMs,
+  )
 
   // No Upstash configured → in-memory fallback with cooldown.
   if (!limiter) {
@@ -171,7 +179,10 @@ export async function checkRateLimit(
   } catch (error) {
     // Fail open on Redis errors. Log for observability but don't block
     // legitimate users.
-    console.error('[rate-limit] Upstash error, failing open:', error)
+    console.error(
+      '[rate-limit] Upstash error, failing open:',
+      error,
+    )
     return {
       success: true,
       remaining: config.limit,

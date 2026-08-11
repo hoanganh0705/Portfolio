@@ -1,26 +1,35 @@
- 
 'use server'
 
 import ContactResponseEmail from '@/components/contact/EmailTemplate'
-import { AutoReplyEmail, getAutoReplySubject } from '@/components/contact/AutoReplyEmail'
+import {
+  AutoReplyEmail,
+  getAutoReplySubject,
+} from '@/components/contact/AutoReplyEmail'
 import { FeedbackState } from '@/types/contact'
 import { Resend } from 'resend'
 import { after } from 'next/server'
 import { headers } from 'next/headers'
 import { z } from 'zod'
 import { siteConfig } from '@/lib/site-config'
-import { checkRateLimit, getRateLimitConfig } from '@/lib/redis'
+import {
+  checkRateLimit,
+  getRateLimitConfig,
+} from '@/lib/redis'
 
-// Validate required env vars at module load (1.2)
+// these key will not be exposed to the client, as this is a server action
 const RESEND_API_KEY = process.env.RESEND_API_KEY
 if (!RESEND_API_KEY) {
-  console.error('[Contact] RESEND_API_KEY environment variable is not set. Email sending will fail.')
+  console.error(
+    '[Contact] RESEND_API_KEY environment variable is not set. Email sending will fail.',
+  )
 }
 
-const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || siteConfig.author.email
-const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || 'contact@anhnguyendev.me'
+const CONTACT_TO_EMAIL =
+  process.env.CONTACT_TO_EMAIL || siteConfig.author.email
+const CONTACT_FROM_EMAIL =
+  process.env.CONTACT_FROM_EMAIL ||
+  'contact@anhnguyendev.me'
 
-// Module-level singleton (2.10)
 const resend = new Resend(RESEND_API_KEY)
 
 const ContactFormSchema = z.object({
@@ -35,10 +44,17 @@ const ContactFormSchema = z.object({
   locale: z.enum(['en', 'vi']).default('en'),
 })
 
-function getClientKey(headersList: Headers, email: string): string {
+function getClientKey(
+  headersList: Headers,
+  email: string,
+): string {
+  // x-forwarded-for is a list of IPs, the first one is the original client IP
   const forwardedFor = headersList.get('x-forwarded-for')
+  // x-real-ip is set by some proxies (like Vercel) to the original client IP
   const realIp = headersList.get('x-real-ip')
-  const userAgent = headersList.get('user-agent') || 'unknown-agent'
+  // user-agent is used to differentiate between different browsers or devices from the same IP address
+  const userAgent =
+    headersList.get('user-agent') || 'unknown-agent'
   const ip =
     forwardedFor?.split(',')[0]?.trim() ||
     realIp ||
@@ -47,11 +63,17 @@ function getClientKey(headersList: Headers, email: string): string {
   return `${ip}:${email.toLowerCase()}:${userAgent}`
 }
 
-export async function sendEmail(prevState: FeedbackState, formData: FormData): Promise<FeedbackState> {
+export async function sendEmail(
+  formData: FormData,
+): Promise<FeedbackState> {
   // Honeypot check — bots fill this field, humans never see it
   if (formData.get('website')) {
     // Silently return success so bots don't know they were rejected
-    return { status: 'success', message: 'Email sent successfully', timestamp: Date.now() }
+    return {
+      status: 'success',
+      message: 'Email sent successfully',
+      timestamp: Date.now(),
+    }
   }
 
   const raw = {
@@ -64,23 +86,36 @@ export async function sendEmail(prevState: FeedbackState, formData: FormData): P
     locale: formData.get('locale'),
   }
 
+  // server-validate: validate form data on the server
   const result = ContactFormSchema.safeParse(raw)
 
   // js-early-exit: return early on validation failure
   if (!result.success) {
     return {
       status: 'error',
-      message: 'Validation failed: Please check your inputs.',
+      message:
+        'Validation failed: Please check your inputs.',
       timestamp: Date.now(),
     }
   }
 
-  const { email, firstName, lastName, service, phone, message, locale } = result.data
+  const {
+    email,
+    firstName,
+    lastName,
+    service,
+    phone,
+    message,
+    locale,
+  } = result.data
 
   // server-auth-actions: rate limit public server action after validating payload
   const headersList = await headers()
   const clientKey = getClientKey(headersList, email)
-  const rateLimit = await checkRateLimit(clientKey, getRateLimitConfig())
+  const rateLimit = await checkRateLimit(
+    clientKey,
+    getRateLimitConfig(),
+  )
   if (!rateLimit.success) {
     return {
       status: 'error',
@@ -116,7 +151,9 @@ export async function sendEmail(prevState: FeedbackState, formData: FormData): P
 
     // server-after-nonblocking: log after response is sent
     after(() => {
-      console.info(`[Contact] Email sent from ${email} for ${service}`)
+      console.info(
+        `[Contact] Email sent from ${email} for ${service}`,
+      )
     })
 
     return {
@@ -127,7 +164,10 @@ export async function sendEmail(prevState: FeedbackState, formData: FormData): P
   } catch (error) {
     // server-after-nonblocking: log error after response
     after(() => {
-      console.error('[Contact] Failed to send email:', error)
+      console.error(
+        '[Contact] Failed to send email:',
+        error,
+      )
     })
 
     return {
@@ -137,4 +177,3 @@ export async function sendEmail(prevState: FeedbackState, formData: FormData): P
     }
   }
 }
-

@@ -122,7 +122,6 @@
     "experience": "Kinh nghiệm",
     "education": "Học vấn",
     "skills": "Kỹ năng",
-    "certifications": "Chứng chỉ",
     "aboutMe": "Về tôi",
     "myExperience": "Kinh nghiệm của tôi",
     "experienceDesc": "Tóm tắt hành trình chuyên môn của tôi trong phát triển web, giảng dạy và làm việc tự do.",
@@ -130,9 +129,6 @@
     "educationDesc": "Nền tảng học thuật và tự học của tôi trong phát triển phần mềm và khoa học máy tính.",
     "mySkills": "Kỹ năng của tôi",
     "skillsDesc": "Công nghệ và công cụ tôi sử dụng hàng ngày để xây dựng ứng dụng web hiện đại, hiệu suất cao.",
-    "myCertifications": "Chứng chỉ của tôi",
-    "certificationsDesc": "Một số chứng chỉ từ các nền tảng học trực tuyến hỗ trợ công việc phát triển full-stack của tôi.",
-    "viewCredential": "Xem chứng chỉ",
     "aboutTitle": "Về Tôi",
     "aboutDesc": "Tôi là một lập trình viên full-stack và giảng viên tại TP. Hồ Chí Minh, Việt Nam. Tôi chuyên về xây dựng ứng dụng web hiện đại, hiệu suất cao với Next.js, React và Tailwind CSS. Song song với phát triển phần mềm, tôi dạy tiếng Anh và gia sư riêng, kết hợp chuyên môn kỹ thuật với niềm đam mê giáo dục.",
     "aboutInfo": [
@@ -199,26 +195,6 @@
       { "id": "nodejs", "name": "Node.js" },
       { "id": "python", "name": "Python" },
       { "id": "go", "name": "Go" }
-    ],
-    "certificationItems": [
-      {
-        "name": "Thuật toán và Cấu trúc dữ liệu JavaScript",
-        "issuer": "freeCodeCamp",
-        "year": "2024",
-        "link": "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures-v8/"
-      },
-      {
-        "name": "Kiến thức cốt lõi TypeScript và Node.js",
-        "issuer": "Udemy",
-        "year": "2024",
-        "link": "https://www.udemy.com/topic/typescript/"
-      },
-      {
-        "name": "Chương trình Nhà phát triển Front-End Meta",
-        "issuer": "Coursera",
-        "year": "2024",
-        "link": "https://www.coursera.org/professional-certificates/meta-front-end-developer"
-      }
     ]
   },
   "work": {
@@ -234,14 +210,17 @@
     "projects": [
       {
         "slug": "portfolio-website",
-        "category": "fullstack",
-        "title": "Trang Portfolio",
+        "category": "frontend",
+        "title": "Trang Portfolio & Blog",
         "description": "Portfolio và blog cá nhân được xây dựng với Next.js 16, hỗ trợ đa ngôn ngữ (Anh/Việt), blog MDX với tô sáng cú pháp, giao diện sáng/tối, hiệu ứng chuyển trang Framer Motion, và tối ưu SEO đầy đủ với dữ liệu có cấu trúc JSON-LD.",
         "stack": [
           { "name": "Next.js" },
-          { "name": "React" },
-          { "name": "Tailwind CSS" },
-          { "name": "MDX" }
+          { "name": "Tailwind" },
+          { "name": "MDX" },
+          { "name": "Shiki" },
+          { "name": "Framer Motion" },
+          { "name": "Server Actions" },
+          { "name": "Resend" }
         ],
         "caseStudy": {
           "challenge": "Tạo một trang portfolio trình bày công việc phát triển, nội dung và dịch vụ bằng cả tiếng Anh và tiếng Việt đồng thời vẫn nhanh và thân thiện với SEO.",
@@ -250,37 +229,24 @@
         }
       },
       {
-        "slug": "blog-platform",
+        "slug": "quiz-system",
         "category": "fullstack",
-        "title": "Nền tảng Blog",
-        "description": "Nền tảng blog giàu nội dung với bài viết nổi bật, lọc theo danh mục, mục lục, tô sáng cú pháp mã bằng Shiki, và thiết kế responsive. Hỗ trợ nội dung song ngữ với tự động phát hiện ngôn ngữ.",
+        "title": "Hệ thống Quiz",
+        "description": "Nền tảng quiz full-stack nơi người dùng có thể tạo, quản lý và làm các bài quiz, theo dõi tiến độ, xem lại kết quả và thi đua qua bảng xếp hạng.",
         "stack": [
           { "name": "Next.js" },
           { "name": "TypeScript" },
-          { "name": "MDX" },
-          { "name": "Shiki" }
+          { "name": "Tailwind" },
+          { "name": "NestJS" },
+          { "name": "PostgreSQL" },
+          { "name": "Drizzle ORM" },
+          { "name": "Redis" },
+          { "name": "Docker" }
         ],
         "caseStudy": {
-          "challenge": "Thiết kế một blog dành cho lập trình viên dễ viết bằng MDX nhưng vẫn dễ đọc và hữu ích cho đối tượng kỹ thuật.",
-          "approach": "Triển khai bài viết MDX điều khiển bằng frontmatter với các phần nổi bật, UI tìm kiếm/lọc, mục lục dựa trên tiêu đề, và tô sáng mã bằng Shiki.",
-          "result": "Tạo ra một nền tảng nội dung có khả năng mở rộng với UX đọc phong phú hơn và cải thiện giữ chân người dùng thông qua đề xuất và điều hướng nội bộ."
-        }
-      },
-      {
-        "slug": "contact-email-system",
-        "category": "frontend",
-        "title": "Hệ thống Liên hệ & Email",
-        "description": "Hệ thống liên hệ sẵn sàng cho sản xuất với xác thực biểu mẫu (Zod), giới hạn tốc độ, và gửi email tự động qua Resend. Bao gồm các mẫu email tùy chỉnh và thông báo toast theo thời gian thực để phản hồi người dùng.",
-        "stack": [
-          { "name": "React" },
-          { "name": "Zod" },
-          { "name": "Resend" },
-          { "name": "Server Actions" }
-        ],
-        "caseStudy": {
-          "challenge": "Xây dựng quy trình liên hệ cảm thấy tức thì cho người dùng đồng thời ngăn chặn các gửi biểu mẫu kém chất lượng hoặc lạm dụng.",
-          "approach": "Sử dụng server action với xác thực Zod, kiểm tra honeypot, giới hạn tốc độ trong bộ nhớ, và gửi email song song qua Resend + mẫu React Email.",
-          "result": "Triển khai pipeline liên hệ sản xuất với khả năng phục hồi được cải thiện và phản hồi rõ ràng qua thông báo toast cho trạng thái thành công và thất bại."
+          "challenge": "Xây dựng một nền tảng quiz có khả năng mở rộng, hỗ trợ tạo và quản lý quiz, làm bài và chấm điểm, theo dõi tiến độ người dùng, xem lại và đánh dấu quiz, bảng xếp hạng, và thông báo người dùng theo thời gian thực.",
+          "approach": "Xây dựng kiến trúc full-stack mô-đun với NestJS và PostgreSQL ở backend, sử dụng Drizzle ORM để truy cập cơ sở dữ liệu và Redis để caching cùng các tác vụ bất đồng bộ. Frontend được xây dựng bằng Next.js và React, với tích hợp API được tạo kiểu từ đặc tả OpenAPI của backend.",
+          "result": "Hoàn thành nền tảng quiz full-stack với quản lý quiz, làm bài và chấm điểm, xem lại và đánh dấu, bảng xếp hạng, thông báo, và kiến trúc backend có cấu trúc được thiết kế cho khả năng bảo trì và mở rộng tính năng trong tương lai."
         }
       }
     ]

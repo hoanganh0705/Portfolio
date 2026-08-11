@@ -96,7 +96,6 @@ export interface Dictionary {
     experience: string
     education: string
     skills: string
-    certifications: string
     aboutMe: string
     myExperience: string
     experienceDesc: string
@@ -104,21 +103,12 @@ export interface Dictionary {
     educationDesc: string
     mySkills: string
     skillsDesc: string
-    myCertifications: string
-    certificationsDesc: string
-    viewCredential: string
     aboutTitle: string
     aboutDesc: string
     aboutInfo: { fieldName: string; fieldValue: string }[]
     experienceItems: { company: string; position: string; duration: string }[]
     educationItems: { institution: string; degree: string; duration: string }[]
     skillsList: { id: string; name: string }[]
-    certificationItems: {
-      name: string
-      issuer: string
-      year: string
-      link: string
-    }[]
   }
   work: {
     pageTitle: string
