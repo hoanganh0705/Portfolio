@@ -79,9 +79,6 @@ export default function ResumeClient() {
               <TabsTrigger value='skills'>
                 {dict.resume.skills}
               </TabsTrigger>
-              <TabsTrigger value='certifications'>
-                {dict.resume.certifications}
-              </TabsTrigger>
               <TabsTrigger value='about'>
                 {dict.resume.aboutMe}
               </TabsTrigger>
@@ -96,25 +93,27 @@ export default function ResumeClient() {
                   description={dict.resume.experienceDesc}
                 >
                   <ul className='grid grid-cols-1 lg:grid-cols-2 gap-[30px]'>
-                    {dict.resume.experienceItems.map((item) => (
-                      <li
-                        key={`${item.duration}-${item.company}`}
-                        className='bg-secondary h-[148px] py-6 px-10 rounded-xl flex flex-col justify-center items-center xl:items-start gap-1'
-                      >
-                        <span className='text-accent-default'>
-                          {item.duration}
-                        </span>
-                        <h3 className='text-xl max-w-[260px] min-h-[60px] text-center lg:text-left'>
-                          {item.position}
-                        </h3>
-                        <div>
-                          <span className='w-1.5 h-1.5 rounded-full bg-accent-default' />
-                          <p className='text-muted-foreground'>
-                            {item.company}
-                          </p>
-                        </div>
-                      </li>
-                    ))}
+                    {dict.resume.experienceItems.map(
+                      (item) => (
+                        <li
+                          key={`${item.duration}-${item.company}`}
+                          className='bg-secondary h-[148px] py-6 px-10 rounded-xl flex flex-col justify-center items-center xl:items-start gap-1'
+                        >
+                          <span className='text-accent-default'>
+                            {item.duration}
+                          </span>
+                          <h3 className='text-xl max-w-[260px] min-h-[60px] text-center lg:text-left'>
+                            {item.position}
+                          </h3>
+                          <div>
+                            <span className='w-1.5 h-1.5 rounded-full bg-accent-default' />
+                            <p className='text-muted-foreground'>
+                              {item.company}
+                            </p>
+                          </div>
+                        </li>
+                      ),
+                    )}
                   </ul>
                 </TimelineSection>
               </TabsContent>
@@ -126,25 +125,27 @@ export default function ResumeClient() {
                   description={dict.resume.educationDesc}
                 >
                   <ul className='grid grid-cols-1 lg:grid-cols-2 gap-[30px]'>
-                    {dict.resume.educationItems.map((item) => (
-                      <li
-                        key={`${item.duration}-${item.institution}`}
-                        className='bg-secondary h-[148px] py-6 px-10 rounded-xl flex flex-col justify-center items-center xl:items-start gap-1'
-                      >
-                        <span className='text-accent-default'>
-                          {item.duration}
-                        </span>
-                        <h3 className='text-xl max-w-[260px] min-h-[60px] text-center lg:text-left'>
-                          {item.degree}
-                        </h3>
-                        <div>
-                          <span className='w-1.5 h-1.5 rounded-full bg-accent-default' />
-                          <p className='text-muted-foreground'>
-                            {item.institution}
-                          </p>
-                        </div>
-                      </li>
-                    ))}
+                    {dict.resume.educationItems.map(
+                      (item) => (
+                        <li
+                          key={`${item.duration}-${item.institution}`}
+                          className='bg-secondary h-[148px] py-6 px-10 rounded-xl flex flex-col justify-center items-center xl:items-start gap-1'
+                        >
+                          <span className='text-accent-default'>
+                            {item.duration}
+                          </span>
+                          <h3 className='text-xl max-w-[260px] min-h-[60px] text-center lg:text-left'>
+                            {item.degree}
+                          </h3>
+                          <div>
+                            <span className='w-1.5 h-1.5 rounded-full bg-accent-default' />
+                            <p className='text-muted-foreground'>
+                              {item.institution}
+                            </p>
+                          </div>
+                        </li>
+                      ),
+                    )}
                   </ul>
                 </TimelineSection>
               </TabsContent>
@@ -165,22 +166,24 @@ export default function ResumeClient() {
                   </div>
                   <TooltipProvider delayDuration={100}>
                     <ul className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:gap-[30px] gap-4 sm:ml-2 sm:mr-2'>
-                      {dict.resume.skillsList.map((skill) => (
-                        <li key={skill.id}>
-                          <Tooltip>
-                            <TooltipTrigger className='w-full h-[150px] bg-secondary rounded-xl flex justify-center items-center group'>
-                              <div className='text-5xl group-hover:text-accent-default transition-all duration-500'>
-                                {skillsIcons[skill.id]}
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p className='capitalize'>
-                                {skill.name}
-                              </p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </li>
-                      ))}
+                      {dict.resume.skillsList.map(
+                        (skill) => (
+                          <li key={skill.id}>
+                            <Tooltip>
+                              <TooltipTrigger className='w-full h-[150px] bg-secondary rounded-xl flex justify-center items-center group'>
+                                <div className='text-5xl group-hover:text-accent-default transition-all duration-500'>
+                                  {skillsIcons[skill.id]}
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p className='capitalize'>
+                                  {skill.name}
+                                </p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </li>
+                        ),
+                      )}
                     </ul>
                   </TooltipProvider>
                 </div>
@@ -216,42 +219,6 @@ export default function ResumeClient() {
                 </div>
               </TabsContent>
 
-              {/* certifications */}
-              <TabsContent value='certifications'>
-                <TimelineSection
-                  title={dict.resume.myCertifications}
-                  description={
-                    dict.resume.certificationsDesc
-                  }
-                >
-                  <ul className='grid grid-cols-1 lg:grid-cols-2 gap-[30px]'>
-                    {dict.resume.certificationItems.map((item) => (
-                      <li
-                        key={`${item.name}-${item.issuer}`}
-                        className='bg-secondary min-h-[170px] py-6 px-8 rounded-xl flex flex-col justify-center items-center xl:items-start gap-2'
-                      >
-                        <span className='text-accent-default'>
-                          {item.year}
-                        </span>
-                        <h3 className='text-xl max-w-[320px] text-center lg:text-left'>
-                          {item.name}
-                        </h3>
-                        <p className='text-muted-foreground'>
-                          {item.issuer}
-                        </p>
-                        <a
-                          href={item.link}
-                          target='_blank'
-                          rel='noreferrer noopener'
-                          className='text-sm text-accent-default hover:text-accent-hover transition-colors'
-                        >
-                          {dict.resume.viewCredential}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </TimelineSection>
-              </TabsContent>
             </div>
           </Tabs>
         </div>

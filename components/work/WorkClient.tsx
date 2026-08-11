@@ -37,9 +37,13 @@ export default function WorkClient() {
   const { dict, locale } = useLocale()
   // Merge language-independent meta (image, live, github) with dict content
   const projects = projectMeta.map((meta) => {
-    const content = dict.work.projects.find((p) => p.slug === meta.slug)
+    const content = dict.work.projects.find(
+      (p) => p.slug === meta.slug,
+    )
     if (!content) {
-      throw new Error(`Missing dictionary entry for project: ${meta.slug}`)
+      throw new Error(
+        `Missing dictionary entry for project: ${meta.slug}`,
+      )
     }
     return { ...meta, ...content }
   })
@@ -73,7 +77,7 @@ export default function WorkClient() {
                 </div>
                 {/* project category */}
                 <h2 className='text-[42px] font-bold leading-none text-foreground group-hover:text-accent-default transition-all duration-500 capitalize'>
-                  {project.category} {dict.work.project}
+                  {project.title}
                 </h2>
                 {/* project description */}
                 <p className='text-muted-foreground'>

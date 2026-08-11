@@ -1,9 +1,12 @@
 import { fetchGitHubCommits } from '@/lib/fetchGithubCommits'
 
-const calculateYearsOfExperience = (startDate: string | Date): number => {
+const calculateYearsOfExperience = (
+  startDate: string | Date,
+): number => {
   const start = new Date(startDate)
   const now = new Date()
-  const diffInYears = now.getFullYear() - start.getFullYear()
+  const diffInYears =
+    now.getFullYear() - start.getFullYear()
 
   let years = diffInYears
   if (
@@ -23,7 +26,10 @@ export async function getCommitCount(): Promise<number> {
   if (_commitCount !== null) return _commitCount
 
   try {
-    if (process.env.GITHUB_TOKEN && process.env.GITHUB_USERNAME) {
+    if (
+      process.env.GITHUB_TOKEN &&
+      process.env.GITHUB_USERNAME
+    ) {
       _commitCount = await fetchGitHubCommits(
         process.env.GITHUB_USERNAME,
         process.env.GITHUB_TOKEN,
@@ -32,7 +38,10 @@ export async function getCommitCount(): Promise<number> {
       _commitCount = 100
     }
   } catch (error) {
-    console.warn('Failed to fetch GitHub commits, using fallback value:', error)
+    console.warn(
+      'Failed to fetch GitHub commits, using fallback value:',
+      error,
+    )
     _commitCount = 100
   }
 
@@ -50,7 +59,7 @@ export const stats: StatItem[] = [
     text: 'Years of experience',
   },
   {
-    num: 5,
+    num: 3,
     text: 'Projects Completed',
   },
   {
