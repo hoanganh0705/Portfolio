@@ -1,0 +1,191 @@
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese,english]{babel}
+\usepackage{tabularx}
+\usepackage{iftex}
+\ifPDFTeX
+\input{glyphtounicode}
+\pdfgentounicode=1
+\fi
+
+\pagestyle{fancy}
+\fancyhf{} % Clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\footskip}{6pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generated PDF is machine readable/ATS parsable
+% (Handled above for pdfTeX only)
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item\small{
+    \textbf{#1}{: #2 \vspace{-2pt}}
+  }
+}
+
+% Just in case someone needs a heading that does not need to be in a list
+\newcommand{\resumeHeading}[4]{
+    \begin{tabular*}{0.99\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small #3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeProjectHeading}[3]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} \scriptsize \textcolor{blue}{#3} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-6pt}
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small #3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small #1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeItemPlain}[1]{
+  \item\small{
+    {#1 \vspace{-4pt}}
+  }
+}
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+
+\renewcommand{\labelitemii}{$\circ$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-7pt}}
+
+%-------------------------------------------
+%%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%----------HEADING-----------------
+\begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+\textbf{\Large Nguyễn Hoàng Anh}
+& Email: \href{mailto:anh487303@gmail.com}{anh487303@gmail.com} \\
+
+\href{https://anhnguyendev.me}{\textcolor{blue}{anhnguyendev.me}}
+& Mobile: \href{tel:+84985335735}{+84-985-335-735} \\
+
+\href{https://www.linkedin.com/in/nguyen-anh-3974a4305/}{\textcolor{blue}{\small LinkedIn}}
+& \\
+\end{tabular*}
+
+
+% ---------- OBJECTIVE ----------
+\section{OBJECTIVE}
+
+English Teacher with hands-on tutoring and exam-prep experience and near-native English proficiency (TOEIC 945/990), seeking a full-time English Teacher position to help students build strong language skills and achieve their academic goals.
+
+
+%-----------EDUCATION-----------------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Ho Chi Minh City Open University}{Ho Chi Minh City, Vietnam}
+      {Bachelor of Science in Computer Science}{Aug 2023 -- Present}
+      \resumeItemListStart
+      \resumeItemPlain{Awarded academic scholarship for 2 consecutive semesters}
+    \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+%-----------TEACHING EXPERIENCE-----------------
+\section{Teaching Experience}
+\resumeSubHeadingListStart
+
+  \resumeSubheading
+    {Private English Tutor}{Ho Chi Minh City, Vietnam}
+    {Freelance / 1-on-1 \& Small Group Tutoring}{January 2025 -- Present}
+    \resumeItemListStart
+      \resumeItemPlain{Designed individualized lesson plans for 5 students across beginner--intermediate levels, covering grammar, vocabulary, and the four core skills.}
+      \resumeItemPlain{Tracked student progress with regular assessments and feedback, helping learners improve from absolute beginner to 600 TOEIC within 8 months.}
+      \resumeItemPlain{Adapted teaching materials and methods to different learning styles, keeping sessions engaging through games, real-life dialogues, and multimedia resources.}
+    \resumeItemListEnd
+
+  \resumeSubheading
+    {Grade 10 Entrance Exam Prep Instructor}{Ho Chi Minh City, Vietnam}
+    {English Exam Preparation (Grade 10 Entrance Exam)}{February 2025 -- June 2025}
+    \resumeItemListStart
+      \resumeItemPlain{Taught exam-focused English classes for 2 middle-school students preparing for the Grade 10 entrance exam, covering grammar, reading comprehension, and test-taking strategies.}
+      \resumeItemPlain{Developed structured review curricula and practice tests aligned with the entrance exam format, helping students achieve scores of 8.0 on the English entrance exam.}
+      \resumeItemPlain{Conducted timed mock exams and detailed error-analysis sessions to identify and address individual weaknesses before the exam.}
+    \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+
+%-----------PROJECTS-----------------
+\section{Projects}
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+  {Personal Portfolio Website}
+  {Aug 2025 -- Feb 2026}
+  {\href{https://anhnguyendev.me}{Live}}
+  \resumeItemListStart
+    \resumeItemPlain{Built and maintain a bilingual (EN/VI) personal website to share teaching philosophy, learning resources, and study tips for English learners.}
+  \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+
+%--------SKILLS------------
+\section{Skills}
+\resumeItemListStart
+  \resumeItemPlain{\textbf{Teaching:} Lesson Planning, Curriculum Design, Classroom Management, One-on-One Tutoring, Exam Prep Coaching}
+  \resumeItemPlain{\textbf{Core Language Skills:} Grammar, Vocabulary Building, Reading, Writing, Listening, Speaking}
+  \resumeItemPlain{\textbf{Assessment:} Progress Tracking, Mock Testing, Error Analysis, Feedback \& Coaching}
+  \resumeItemPlain{\textbf{Tools:} Google Classroom, Zoom/Google Meet, MS Office / Google Workspace, Canva}
+  \resumeItemPlain{\textbf{Soft Skills:} Communication, Patience, Adaptability, Problem Solving, Fluent In English}
+\resumeItemListEnd
+
+%--------Certifications------------
+\section{Certifications}
+
+  \resumeItemListStart
+    \resumeItemPlain{\textbf{TOEIC Listening \& Reading:} 945/990 \hfill ETS, 2026}
+  \resumeItemListEnd
+
+\end{document}
