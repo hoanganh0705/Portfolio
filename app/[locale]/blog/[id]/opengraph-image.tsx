@@ -1,4 +1,6 @@
-import { ImageResponse } from 'next/og'
+// This is a dynamic route that generates an Open Graph image for each blog post based on its metadata. The image is generated using the Next.js ImageResponse API, which allows us to create images on the fly using React components. The image includes the blog post's title, excerpt, category, author, date, and read time, as well as the site name. If the blog post cannot be found, a default image with the site name is returned instead.
+
+import { ImageResponse } from 'next/og' //image response is a new feature in Next.js 13.4 that allows us to generate images on the fly using React components. It is built on top of the Web Platform's Canvas API and can be used to create dynamic images for social media sharing, Open Graph, and more.
 import { getAllPosts } from '@/lib/getPosts'
 import { siteConfig } from '@/lib/site-config'
 import type { Locale } from '@/lib/i18n'
@@ -7,6 +9,7 @@ export const alt = 'Blog Post'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
+// generateStaticParams is a Next.js function that generates the static parameters for the dynamic route. It fetches all the blog posts for the given locale and returns an array of objects containing the post slugs as the id parameter. This allows Next.js to pre-render the Open Graph images for each blog post at build time, improving performance and SEO.
 export async function generateStaticParams({
   params,
 }: {

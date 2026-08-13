@@ -1,4 +1,6 @@
-import type { MetadataRoute } from 'next'
+// site map is a list of all the pages on your website that you want search engines to index. This file generates a sitemap for your Next.js application, including static routes and blog posts for each locale.
+
+import type { MetadataRoute } from 'next' // this helps you to write site map by typescript instead of xml. It provides type definitions for the sitemap structure, ensuring that the generated sitemap adheres to the expected format and helps catch errors during development.
 import { siteConfig } from '@/lib/site-config'
 import { getAllPosts } from '@/lib/getPosts'
 import { locales } from '@/lib/i18n'
@@ -6,21 +8,38 @@ import { locales } from '@/lib/i18n'
 const url = siteConfig.url
 
 // Fixed deploy date for static routes — avoids new Date() on every crawl (5.3)
-const DEPLOY_DATE = new Date(process.env.DEPLOY_DATE ?? '2026-03-12')
+const DEPLOY_DATE = new Date(
+  process.env.DEPLOY_DATE ?? '2026-03-12',
+)
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticRoutes = ['', '/resume', '/work', '/contact', '/blog']
+  const staticRoutes = [
+    '',
+    '/resume',
+    '/work',
+    '/contact',
+    '/blog',
+  ]
 
   // Generate entries for each locale × static route
-  const staticEntries: MetadataRoute.Sitemap = locales.flatMap(
-    (locale) =>
+  const staticEntries: MetadataRoute.Sitemap =
+    locales.flatMap((locale) =>
       staticRoutes.map((route) => ({
         url: `${url}/${locale}${route}`,
         lastModified: DEPLOY_DATE,
-        changeFrequency: (route === '' ? 'weekly' : route === '/contact' ? 'yearly' : 'monthly') as MetadataRoute.Sitemap[number]['changeFrequency'],
-        priority: route === '' ? 1.0 : route === '/resume' ? 0.9 : 0.8,
+        changeFrequency: (route === ''
+          ? 'weekly'
+          : route === '/contact'
+            ? 'yearly'
+            : 'monthly') as MetadataRoute.Sitemap[number]['changeFrequency'],
+        priority:
+          route === ''
+            ? 1.0
+            : route === '/resume'
+              ? 0.9
+              : 0.8,
       })),
-  )
+    )
 
   // Generate blog post entries for each locale
   let blogEntries: MetadataRoute.Sitemap = []
@@ -39,7 +58,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       )
     ).flat()
   } catch (error) {
-    console.error('Failed to generate blog sitemap entries:', error)
+    console.error(
+      'Failed to generate blog sitemap entries:',
+      error,
+    )
   }
 
   return [...staticEntries, ...blogEntries]

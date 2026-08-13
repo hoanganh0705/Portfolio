@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { siteConfig } from '@/lib/site-config'
 
+// manifest file is used to provide metadata about the web application, such as its name, description, icons, and theme colors. It allows users to install the web app on their devices and provides a more native app-like experience. The manifest file is essential for Progressive Web Apps (PWAs) and helps improve user engagement and accessibility.
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: siteConfig.name,

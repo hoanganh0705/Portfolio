@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2026.4.10)  12 AUG 2026 14:07
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2026.4.10)  12 AUG 2026 14:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/nguyenhoanganh/Workspace/WebProjects/Portfolio/CV/main
-(/home/nguyenhoanganh/Workspace/WebProjects/Portfolio/CV/main.tex
+**/home/nguyenhoanganh/Workspace/WebProjects/Portfolio/CV/English
+(/home/nguyenhoanganh/Workspace/WebProjects/Portfolio/CV/English.tex
 LaTeX2e <2022-11-01> patch level 1
 L3 programming layer <2023-02-22> (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
@@ -250,8 +250,8 @@ File: l3backend-xetex.def 2023-01-16 L3 backend support: XeTeX
 \g__pdf_backend_object_int=\count274
 \g__pdf_backend_annotation_int=\count275
 \g__pdf_backend_link_int=\count276
-) (./main.aux)
-\openout1 = `main.aux'.
+) (./English.aux)
+\openout1 = `English.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 102.
 LaTeX Font Info:    ... okay on input line 102.
@@ -278,9 +278,9 @@ LaTeX Font Info:    ... okay on input line 102.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 102.
 LaTeX Font Info:    ... okay on input line 102.
 Package hyperref Info: Link coloring OFF on input line 102.
- (./main.out) (./main.out)
+ (./English.out) (./English.out)
 \@outlinefile=\write3
-\openout3 = `main.out'.
+\openout3 = `English.out'.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 105.
@@ -289,22 +289,22 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 105.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 144.
+(Font)              <7> on input line 143.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 144.
+(Font)              <5> on input line 143.
  [1
 
-] (./main.aux)
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 6FF7CC61E08D3A22F1281BDDAD5AEE83;445.
+] (./English.aux)
+Package rerunfilecheck Info: File `English.out' has not changed.
+(rerunfilecheck)             Checksum: 96415EC7123E9488E0C01D5E42650A2C;586.
  ) 
 Here is how much of TeX's memory you used:
  9967 strings out of 476689
- 162743 string characters out of 5806613
- 1872018 words of memory out of 6000000
+ 162794 string characters out of 5806613
+ 1868018 words of memory out of 6000000
  30088 multiletter control sequences out of 15000+600000
  515466 words of font info for 52 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 72i,11n,76p,310b,338s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,11n,76p,326b,338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (1 page).
+Output written on English.pdf (1 page).
