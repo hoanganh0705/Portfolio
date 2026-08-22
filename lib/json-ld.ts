@@ -1,4 +1,5 @@
 import { siteConfig } from './site-config'
+// json-ld.ts is a utility file that generates JSON-LD structured data for the website. JSON-LD is a method of encoding Linked Data using JSON, which helps search engines understand the content and context of the website, improving SEO and rich results in search engine listings.
 
 export function getJsonLd(locale: string = 'en') {
   const inLanguage = locale === 'vi' ? 'vi-VN' : 'en-US'
@@ -9,24 +10,24 @@ export function getJsonLd(locale: string = 'en') {
       {
         '@type': 'Person',
         '@id': `${siteConfig.url}/#person`,
-        'name': siteConfig.author.name,
-        'alternateName': siteConfig.author.alternateName,
-        'jobTitle': siteConfig.author.jobTitle,
-        'url': siteConfig.url,
-        'email': siteConfig.author.email,
-        'image': siteConfig.defaultOgImage,
-        'sameAs': [
+        name: siteConfig.author.name,
+        alternateName: siteConfig.author.alternateName,
+        jobTitle: siteConfig.author.jobTitle,
+        url: siteConfig.url,
+        email: siteConfig.author.email,
+        image: siteConfig.defaultOgImage,
+        sameAs: [
           siteConfig.social.github,
           siteConfig.social.facebook,
           siteConfig.social.linkedin,
         ],
-        'address': {
+        address: {
           '@type': 'PostalAddress',
-          'addressLocality': 'Ho Chi Minh City',
-          'addressRegion': 'Ho Chi Minh',
-          'addressCountry': 'VN',
+          addressLocality: 'Ho Chi Minh City',
+          addressRegion: 'Ho Chi Minh',
+          addressCountry: 'VN',
         },
-        'knowsAbout': [
+        knowsAbout: [
           'Web Development',
           'Next.js',
           'React',
@@ -40,22 +41,25 @@ export function getJsonLd(locale: string = 'en') {
           'Private Tutoring',
           'Mathematics Tutoring',
         ],
-        'description': siteConfig.description,
+        description: siteConfig.description,
       },
       {
         '@type': 'WebSite',
         '@id': `${siteConfig.url}/#website`,
-        'url': siteConfig.url,
-        'name': siteConfig.name,
-        'alternateName': ['anhnguyendev', 'Anh Nguyen Dev Portfolio'],
-        'description': siteConfig.description,
-        'publisher': { '@id': `${siteConfig.url}/#person` },
-        'inLanguage': inLanguage,
-        'potentialAction': {
+        url: siteConfig.url,
+        name: siteConfig.name,
+        alternateName: [
+          'anhnguyendev',
+          'Anh Nguyen Dev Portfolio',
+        ],
+        description: siteConfig.description,
+        publisher: { '@id': `${siteConfig.url}/#person` },
+        inLanguage: inLanguage,
+        potentialAction: {
           '@type': 'SearchAction',
-          'target': {
+          target: {
             '@type': 'EntryPoint',
-            'urlTemplate': `${siteConfig.url}/?q={search_term_string}`,
+            urlTemplate: `${siteConfig.url}/?q={search_term_string}`,
           },
           'query-input': 'required name=search_term_string',
         },
@@ -63,37 +67,37 @@ export function getJsonLd(locale: string = 'en') {
       {
         '@type': 'ProfessionalService',
         '@id': `${siteConfig.url}/#service`,
-        'name': 'Anh Nguyen Dev — Web Development & Education Services',
-        'url': siteConfig.url,
-        'provider': { '@id': `${siteConfig.url}/#person` },
-        'areaServed': {
+        name: 'Anh Nguyen Dev — Web Development & Education Services',
+        url: siteConfig.url,
+        provider: { '@id': `${siteConfig.url}/#person` },
+        areaServed: {
           '@type': 'GeoCircle',
-          'geoMidpoint': {
+          geoMidpoint: {
             '@type': 'GeoCoordinates',
-            'latitude': 10.8231,
-            'longitude': 106.6297,
+            latitude: 10.8231,
+            longitude: 106.6297,
           },
-          'geoRadius': '50000',
+          geoRadius: '50000',
         },
-        'serviceType': [
+        serviceType: [
           'Full-Stack Web Development',
           'Private Tutoring',
           'English Teaching',
           'SEO Optimization',
         ],
-        'address': {
+        address: {
           '@type': 'PostalAddress',
-          'addressLocality': 'Ho Chi Minh City',
-          'addressRegion': 'Ho Chi Minh',
-          'addressCountry': 'VN',
+          addressLocality: 'Ho Chi Minh City',
+          addressRegion: 'Ho Chi Minh',
+          addressCountry: 'VN',
         },
-        'contactPoint': {
+        contactPoint: {
           '@type': 'ContactPoint',
-          'email': siteConfig.author.email,
-          'contactType': 'Customer Support',
-          'availableLanguage': ['English', 'Vietnamese'],
+          email: siteConfig.author.email,
+          contactType: 'Customer Support',
+          availableLanguage: ['English', 'Vietnamese'],
         },
-        'description':
+        description:
           'Freelance full-stack web development, private tutoring, English teaching, and SEO optimization services by Anh Nguyen Dev in Vietnam.',
       },
     ],
