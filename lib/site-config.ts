@@ -1,6 +1,6 @@
 /** Centralized site configuration — single source of truth for SEO */
 export const siteConfig = {
-  url: 'https://anhnguyendev.me',
+  url: 'https://anhnguyendev.tech',
   name: 'Anh Nguyen Dev',
   shortName: 'Anh Nguyen Dev',
   title:

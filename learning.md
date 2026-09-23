@@ -1,6 +1,6 @@
 # Reverse-Engineered Project Map & Learning Plan
 
-**Project:** Personal portfolio site (`anhnguyendev.me`)
+**Project:** Personal portfolio site (`anhnguyendev.tech`)
 **Stack:** Next.js 16 App Router · React 19 · TypeScript · Tailwind v4 · MDX · Upstash Redis · Resend · Vercel Analytics · Vitest + Playwright + Lighthouse CI
 **Repo size:** ~70 source files. No database, no API routes, no ORM, no auth flow — only one Server Action.
 
@@ -155,7 +155,7 @@ Browser
 ### Flow 1 — User lands on `/en` (home)
 
 ```text
-1. Browser requests https://anhnguyendev.me/
+1. Browser requests https://anhnguyendev.tech/
 2. proxy.ts runs at edge
    • pathname "/" doesn't start with /en or /vi
    • getPreferredLocale(): cookie NEXT_LOCALE? no → Accept-Language → default 'vi'
@@ -989,7 +989,7 @@ Hint: Header.tsx → Button → Link → /en/contact → ContactClient → Conta
 
 ### Exercise 2 — User opens a blog post
 
-Trace from `https://anhnguyendev.me/en/blog/mastering-nextjs-app-router` to the rendered page.
+Trace from `https://anhnguyendev.tech/en/blog/mastering-nextjs-app-router` to the rendered page.
 
 Hint: proxy.ts (pass through) → layout → blog/[id]/page.tsx → loadMdx → MDX render → JSON-LD → PostDetailLayout → TableOfContents reads DOM after mount.
 
@@ -1001,7 +1001,7 @@ Hint: ContactForm → useActionState → sendEmail Server Action → Zod → che
 
 ### Exercise 4 — A search engine bot crawls the site
 
-Trace from `https://anhnguyendev.me/sitemap.xml` to the JSON-LD it sees on a blog post.
+Trace from `https://anhnguyendev.tech/sitemap.xml` to the JSON-LD it sees on a blog post.
 
 Hint: sitemap.ts → flatMap → getAllPosts → blog/[id]/page.tsx → script dangerouslySetInnerHTML.
 
@@ -1516,7 +1516,7 @@ This is the real root layout. Understand:
 - The provider stack: `<ThemeProvider>` → `<LocaleProvider>` → page content
 - `generateStaticParams` returns both `'en'` and `'vi'`
 
-### 6. Trace: A request to `https://anhnguyendev.me/en`
+### 6. Trace: A request to `https://anhnguyendev.tech/en`
 
 ```text
 Browser → Vercel edge
@@ -1529,7 +1529,7 @@ Browser → Vercel edge
   → page.tsx renders inside <PageTransition>
 ```
 
-Now repeat for `https://anhnguyendev.me/`:
+Now repeat for `https://anhnguyendev.tech/`:
 ```text
 Browser → Vercel edge
   → proxy.ts runs (no locale prefix)
@@ -1562,7 +1562,7 @@ Browser → Vercel edge
 
 1. What file runs first for any incoming request?
 2. What is the default locale, and where is it defined?
-3. If a user visits `https://anhnguyendev.me/contact`, what URL do they end up on?
+3. If a user visits `https://anhnguyendev.tech/contact`, what URL do they end up on?
 4. What does `isValidLocale` do if the locale is invalid?
 5. Why is the root layout (`app/layout.tsx`) so empty?
 6. What is the difference between `layout.tsx` and `page.tsx`?

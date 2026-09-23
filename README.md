@@ -2,7 +2,7 @@
 
 Personal portfolio website for **Nguyen Hoang Anh** (Full-Stack Web Developer & Educator), built with Next.js App Router.
 
-Live site: [https://anhnguyendev.me](https://anhnguyendev.me)
+Live site: [https://anhnguyendev.tech](https://anhnguyendev.tech)
 
 ## Highlights
 
