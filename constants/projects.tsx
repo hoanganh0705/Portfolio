@@ -14,14 +14,14 @@ export const projects: ProjectMeta[] = [
     slug: 'portfolio-website',
     num: '01',
     image: '/assets/work/portfolio.png',
-    live: 'https://anhnguyendev.me',
+    live: 'https://anhnguyendev.tech',
     github: 'https://github.com/hoanganh0705/Portfolio',
   },
   {
     slug: 'quiz-system',
     num: '02',
     image: '/assets/work/quiz.png',
-    live: 'https://anhnguyendev.me/en/quiz-system',
+    live: 'https://anhnguyendev.tech/en/work/quiz-system',
     github: 'https://github.com/hoanganh0705/Portfolio',
   },
 ]

@@ -27,7 +27,7 @@ const CONTACT_TO_EMAIL =
   process.env.CONTACT_TO_EMAIL || siteConfig.author.email
 const CONTACT_FROM_EMAIL =
   process.env.CONTACT_FROM_EMAIL ||
-  'contact@anhnguyendev.me'
+  'contact@anhnguyendev.tech'
 
 const resend = new Resend(RESEND_API_KEY)
 

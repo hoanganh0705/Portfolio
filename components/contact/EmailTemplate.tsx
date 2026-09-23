@@ -117,10 +117,10 @@ export const ContactNotificationEmail = ({
           <Text style={footerText}>
             Notification from{' '}
             <Link
-              href='https://anhnguyendev.me'
+              href='https://anhnguyendev.tech'
               style={footerLink}
             >
-              anhnguyendev.me
+              anhnguyendev.tech
             </Link>
           </Text>
         </Section>

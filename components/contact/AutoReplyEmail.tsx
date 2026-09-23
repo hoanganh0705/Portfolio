@@ -25,7 +25,7 @@ const content = {
     closing: 'Best regards,',
     signature: 'Anh Nguyen',
     footerText: 'This is an automated reply from',
-    footerBrand: 'anhnguyendev.me',
+    footerBrand: 'anhnguyendev.tech',
   },
   vi: {
     preview: (name: string) =>
@@ -36,7 +36,7 @@ const content = {
     closing: 'Trân trọng,',
     signature: 'Anh Nguyễn',
     footerText: 'Đây là email tự động từ',
-    footerBrand: 'anhnguyendev.me',
+    footerBrand: 'anhnguyendev.tech',
   },
 } as const
 
@@ -82,7 +82,7 @@ export function AutoReplyEmail({
             <Text style={footerText}>
               {t.footerText}{' '}
               <Link
-                href='https://anhnguyendev.me'
+                href='https://anhnguyendev.tech'
                 style={footerLink}
               >
                 {t.footerBrand}

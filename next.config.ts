@@ -1,7 +1,7 @@
-import type { NextConfig } from 'next';
-import BundleAnalyzer from '@next/bundle-analyzer';
-import createMDX from '@next/mdx';
-import { securityHeaders } from '@/lib/security-headers';
+import type { NextConfig } from 'next'
+import BundleAnalyzer from '@next/bundle-analyzer'
+import createMDX from '@next/mdx'
+import { securityHeaders } from '@/lib/security-headers'
 
 const nextConfig: NextConfig = {
   output: 'standalone',
@@ -19,17 +19,19 @@ const nextConfig: NextConfig = {
       // Redirect www → non-www (covers both http and https)
       {
         source: '/:path*',
-        has: [{ type: 'host', value: 'www.anhnguyendev.me' }],
-        destination: 'https://anhnguyendev.me/:path*',
+        has: [
+          { type: 'host', value: 'www.anhnguyendev.tech' },
+        ],
+        destination: 'https://anhnguyendev.tech/:path*',
         permanent: true,
       },
     ]
   },
-};
+}
 
 const withBundleAnalyzer = BundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
-});
+})
 
 const withMDX = createMDX({
   extension: /\.mdx?$/,
@@ -41,6 +43,6 @@ const withMDX = createMDX({
     ],
     rehypePlugins: ['rehype-slug'],
   },
-});
+})
 
-export default withMDX(withBundleAnalyzer(nextConfig));
+export default withMDX(withBundleAnalyzer(nextConfig))
