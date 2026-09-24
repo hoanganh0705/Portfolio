@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { CiMenuFries } from 'react-icons/ci'
 import { useLocale } from '@/lib/locale-context'
+import { LanguageSwitcher } from './LanguageSwitcher'
 
 type NavProps = { scrolled: boolean }
 
@@ -29,7 +30,7 @@ const MobileNav = ({ scrolled }: NavProps) => {
   ]
 
   return (
-    <div className='container mx-auto px-2 xl:px-0'>
+    <div className='flex items-center'>
       <Sheet>
         <SheetTitle className='sr-only'>
           Navigation menu
@@ -80,6 +81,10 @@ const MobileNav = ({ scrolled }: NavProps) => {
               )
             })}
           </nav>
+
+          <div className='mt-10 flex justify-center'>
+            <LanguageSwitcher scrolled={false} />
+          </div>
         </SheetContent>
       </Sheet>
     </div>
