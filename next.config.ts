@@ -14,19 +14,6 @@ const nextConfig: NextConfig = {
       },
     ]
   },
-  async redirects() {
-    return [
-      // Redirect www → non-www (covers both http and https)
-      {
-        source: '/:path*',
-        has: [
-          { type: 'host', value: 'www.anhnguyendev.tech' },
-        ],
-        destination: 'https://anhnguyendev.tech/:path*',
-        permanent: true,
-      },
-    ]
-  },
 }
 
 const withBundleAnalyzer = BundleAnalyzer({
