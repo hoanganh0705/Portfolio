@@ -41,7 +41,7 @@ const Header = () => {
               Hoàng Anh
             </span>
           </Link>
-          <PageMascot />
+          <PageMascot className='-translate-y-1' />
         </div>
 
         {/* desktop nav & hire me button */}

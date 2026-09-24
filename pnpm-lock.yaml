@@ -74,9 +74,6 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      page-mascot:
-        specifier: ^0.1.0
-        version: 0.1.0(react@19.2.0)
       react:
         specifier: ^19.0.0
         version: 19.2.0
@@ -4025,12 +4022,6 @@ packages:
   pac-resolver@7.0.1:
     resolution: {integrity: sha512-5NPgf87AT2STgwa2ntRMr45jTKrYBGkVU36yT0ig/n/GMAa3oPqhZfIQ2kMEimReg0+t9kZViDVZ83qfVUlckg==}
     engines: {node: '>= 14'}
-
-  page-mascot@0.1.0:
-    resolution: {integrity: sha512-sw/BIqRKJ7nUfaxAGtmwQqm534I+lb2ZiXLDWZNexR1VF1RkmRl6BLVtj7hH+PrsiCPKtxHhA3IpVkXEm72FeA==}
-    engines: {node: '>=20'}
-    peerDependencies:
-      react: '>=18'
 
   pako@1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
@@ -9526,10 +9517,6 @@ snapshots:
     dependencies:
       degenerator: 5.0.1
       netmask: 2.1.1
-
-  page-mascot@0.1.0(react@19.2.0):
-    dependencies:
-      react: 19.2.0
 
   pako@1.0.11: {}
 
