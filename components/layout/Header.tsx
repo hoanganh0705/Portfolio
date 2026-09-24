@@ -8,6 +8,7 @@ import { LanguageSwitcher } from './LanguageSwitcher'
 // components
 import Nav from './Nav'
 import MobileNav from './MobileNav'
+import PageMascot from './PageMascot'
 import { useEffect, useState } from 'react'
 import { useLocale } from '@/lib/locale-context'
 
@@ -32,14 +33,16 @@ const Header = () => {
     >
       <div className='container mx-auto flex justify-between items-center'>
         {/* Logo */}
-        <Link href={`/${locale}`}>
-          <span
-            className={`font-semibold  ${hasScrolled ? 'text-3xl' : 'text-4xl'}`}
-          >
-            Hoàng Anh
-            <span className='text-accent-default'>.</span>
-          </span>
-        </Link>
+        <div className='flex items-center'>
+          <Link href={`/${locale}`}>
+            <span
+              className={`font-semibold  ${hasScrolled ? 'text-3xl' : 'text-4xl'}`}
+            >
+              Hoàng Anh
+            </span>
+          </Link>
+          <PageMascot />
+        </div>
 
         {/* desktop nav & hire me button */}
         <div className='hidden xl:flex items-center gap-8'>
