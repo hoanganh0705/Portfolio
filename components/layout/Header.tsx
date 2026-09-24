@@ -29,19 +29,22 @@ const Header = () => {
 
   return (
     <header
-      className={` transition-all duration-300 ease-in-out ${hasScrolled ? 'sticky top-0 left-0 w-full z-50 bg-accent-default/80 shadow-lg backdrop-blur-md py-4 xl:py-6 text-primary ' : 'bg-transparent py-8 xl:py-12 text-foreground'}`}
+      className={`transition-all duration-300 ease-in-out ${hasScrolled ? 'sticky top-0 left-0 z-50 w-full bg-accent-default/80 py-4 text-primary shadow-lg backdrop-blur-md xl:py-6' : 'bg-transparent py-5 text-foreground sm:py-6 xl:py-12'}`}
     >
-      <div className='container mx-auto flex justify-between items-center'>
+      <div className='container mx-auto flex items-center justify-between px-4 sm:px-6 xl:px-0'>
         {/* Logo */}
-        <div className='flex items-center'>
-          <Link href={`/${locale}`}>
+        <div className='flex min-w-0 items-center'>
+          <Link
+            href={`/${locale}`}
+            className='min-w-0 shrink'
+          >
             <span
-              className={`font-semibold  ${hasScrolled ? 'text-3xl' : 'text-4xl'}`}
+              className={`whitespace-nowrap font-semibold tracking-tight ${hasScrolled ? 'text-2xl sm:text-3xl' : 'text-2xl sm:text-3xl xl:text-4xl'}`}
             >
               Hoàng Anh
             </span>
           </Link>
-          <PageMascot className='-translate-y-1' />
+          <PageMascot className='ml-1 -translate-y-0.5 sm:ml-2' />
         </div>
 
         {/* desktop nav & hire me button */}
@@ -55,8 +58,7 @@ const Header = () => {
         </div>
 
         {/* mobile nav */}
-        <div className='xl:hidden flex items-center gap-3'>
-          <LanguageSwitcher scrolled={hasScrolled} />
+        <div className='flex items-center gap-1 sm:gap-2 xl:hidden'>
           <ThemeToggle scrolled={hasScrolled} />
           <MobileNav scrolled={hasScrolled} />
         </div>
