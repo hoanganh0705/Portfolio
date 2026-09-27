@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import { Button } from '@/components/ui/button'
 import { FiDownload } from 'react-icons/fi'
 import dynamic from 'next/dynamic'
+import type { Metadata } from 'next'
 
 // Components
 import Social from '@/components/home/Social'
@@ -22,11 +23,47 @@ const WhyMe = dynamic(
 import { getDictionary } from '@/lib/dictionaries'
 import type { Locale } from '@/lib/i18n'
 import { siteConfig } from '@/lib/site-config'
+import { createMetadata } from '@/lib/metadata'
 
 // Export revalidate to enable ISR for 10 days
 export const revalidate = 864000 // 10*24*60*60
 
-export { metadata } from './metadata'
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const isVietnamese = locale === 'vi'
+
+  const title = isVietnamese
+    ? 'Nguyễn Hoàng Anh | Full-Stack Developer'
+    : 'Anh Nguyen | Full-Stack Developer'
+
+  const description = isVietnamese
+    ? 'Nguyễn Hoàng Anh (Anh Nguyen / anhnguyendev) là Full-Stack Developer ở Việt Nam, xây dựng sản phẩm web hiện đại bằng Next.js, React, TypeScript và tối ưu SEO.'
+    : 'Anh Nguyen (anhnguyendev) is a Full-Stack Developer in Vietnam, building modern web experiences with Next.js, React, TypeScript, and SEO-focused engineering.'
+
+  return createMetadata({
+    title,
+    description,
+    keywords: [
+      'Nguyễn Hoàng Anh',
+      'Anh Nguyen',
+      'Full-Stack Developer',
+      'full stack developer',
+      'anhnguyendev',
+      'portfolio',
+      'web developer vietnam',
+      'next.js developer',
+      'react developer',
+      'seo specialist',
+    ],
+    path: '',
+    locale,
+    ogImage: '/og/portfolio-default.png',
+  })
+}
 
 // rendering-hoist-jsx: static fallback extracted outside component
 const StatsFallback = (

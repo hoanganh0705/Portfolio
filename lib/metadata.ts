@@ -12,8 +12,11 @@ interface MetadataParams {
 
 /** Base keywords that should appear on every page for brand recognition */
 const brandKeywords = [
-  'anh nguyen dev',
+  'Nguyễn Hoàng Anh',
+  'Anh Nguyen',
   'anhnguyendev',
+  'Full-Stack Developer',
+  'full stack developer',
   'nguyen hoang anh',
   'anh nguyen developer',
 ]
@@ -29,23 +32,26 @@ export const createMetadata = ({
   const fullTitle = `${title} | ${siteConfig.name}`
   const desc = description || siteConfig.description
   const image = ogImage || siteConfig.defaultOgImage
-  // Include locale prefix in canonical URL (5.2)
   const localePath = locale ? `/${locale}${path}` : path
   const canonicalUrl = `${siteConfig.url}${localePath}`
+  const pageLocale = locale === 'vi' ? 'vi_VN' : 'en_US'
+  const xDefaultUrl = `${siteConfig.url}/en${path}`
 
   return {
     title: fullTitle,
     description: desc,
     keywords: [...brandKeywords, ...(keywords || [])],
-    authors: [{ name: siteConfig.author.name, url: siteConfig.url }],
+    authors: [
+      { name: siteConfig.author.name, url: siteConfig.url },
+    ],
     creator: siteConfig.author.name,
     publisher: siteConfig.author.name,
     alternates: {
       canonical: canonicalUrl,
-      // Generate hreflang links (5.1)
       languages: {
         en: `${siteConfig.url}/en${path}`,
         vi: `${siteConfig.url}/vi${path}`,
+        'x-default': xDefaultUrl,
       },
     },
     openGraph: {
@@ -54,7 +60,7 @@ export const createMetadata = ({
       url: canonicalUrl,
       siteName: siteConfig.name,
       type: 'website',
-      locale: locale === 'vi' ? 'vi_VN' : siteConfig.locale,
+      locale: pageLocale,
       images: [
         {
           url: image,
@@ -69,7 +75,6 @@ export const createMetadata = ({
       title: fullTitle,
       description: desc,
       images: [image],
-      creator: `@${siteConfig.author.name}`,
     },
   }
 }

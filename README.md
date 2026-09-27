@@ -27,12 +27,10 @@ production systems:
   delivery** — see `app/actions/actions.ts`. The contact form is one action
   with no API route; Zod validates, then two Resend sends run in parallel,
   and logging is moved off the response path with `after()`.
-- **Distributed rate limiting** *(planned)* — sliding-window limiter on
-  Upstash Redis so the contact form stays correct when Vercel scales the
-  function horizontally.
-- **Performance budgets enforced in CI** *(planned)* — Lighthouse CI runs on
-  every PR with thresholds of ≥95 perf, 100 accessibility / best-practices
-  / SEO.
+- **Distributed rate limiting** — sliding-window limiter on Upstash Redis so
+  the contact form stays correct when Vercel scales the function horizontally.
+- **Lighthouse CI support** — run `pnpm lighthouse` with thresholds of ≥95
+  performance and 100 accessibility / best-practices / SEO.
 - **Content-visibility and dynamic imports** — heavy client components
   (Swiper, ResumeClient, ContactForm, Stats) are code-split; long lists use
   `content-visibility: auto`.

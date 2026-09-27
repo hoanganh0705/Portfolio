@@ -2,24 +2,23 @@
 export const siteConfig = {
   url: 'https://anhnguyendev.tech',
   name: 'Anh Nguyen Dev',
-  shortName: 'Anh Nguyen Dev',
-  title:
-    'Anh Nguyen Dev — Full-Stack Web Developer & Educator',
+  shortName: 'anhnguyendev',
+  title: 'Nguyễn Hoàng Anh | Full-Stack Developer',
   description:
-    'Nguyen Hoang Anh (anhnguyendev) is a full-stack web developer and educator based in Vietnam. Specializing in Next.js, React, Tailwind CSS, private tutoring, English teaching, and SEO optimization.',
+    'Nguyễn Hoàng Anh (Anh Nguyen / anhnguyendev) is a Full-Stack Developer based in Vietnam, building modern web experiences with Next.js, React, TypeScript, and SEO-focused engineering.',
   locale: 'en-US',
   author: {
-    name: 'Nguyen Hoang Anh',
+    name: 'Nguyễn Hoàng Anh',
     alternateName: [
+      'Anh Nguyen',
       'Anh Nguyen Dev',
       'anhnguyendev',
-      'anh nguyen dev',
-      'Nguyễn Hoàng Anh',
+      'Nguyen Hoang Anh',
     ],
     email:
       process.env.CONTACT_TO_EMAIL || 'anh487303@gmail.com',
     phone: process.env.CONTACT_PHONE || '(+84) 985 335 735',
-    jobTitle: 'Full-Stack Web Developer & Educator',
+    jobTitle: 'Full-Stack Developer',
     location: 'Ho Chi Minh City, Vietnam',
   },
   social: {
