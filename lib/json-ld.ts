@@ -10,9 +10,11 @@ export function getJsonLd(locale: string = 'en') {
       {
         '@type': 'Person',
         '@id': `${siteConfig.url}/#person`,
-        name: siteConfig.author.name,
+        name: 'Nguyễn Hoàng Anh',
         alternateName: siteConfig.author.alternateName,
-        jobTitle: siteConfig.author.jobTitle,
+        givenName: 'Nguyễn Hoàng Anh',
+        familyName: 'Nguyễn',
+        jobTitle: 'Full-Stack Developer',
         url: siteConfig.url,
         email: siteConfig.author.email,
         image: siteConfig.defaultOgImage,
@@ -50,7 +52,8 @@ export function getJsonLd(locale: string = 'en') {
         name: siteConfig.name,
         alternateName: [
           'anhnguyendev',
-          'Anh Nguyen Dev Portfolio',
+          'Anh Nguyen',
+          'Nguyễn Hoàng Anh',
         ],
         description: siteConfig.description,
         publisher: { '@id': `${siteConfig.url}/#person` },
@@ -63,6 +66,16 @@ export function getJsonLd(locale: string = 'en') {
           },
           'query-input': 'required name=search_term_string',
         },
+      },
+      {
+        '@type': 'WebPage',
+        '@id': `${siteConfig.url}/#webpage`,
+        url: siteConfig.url,
+        name: siteConfig.title,
+        description: siteConfig.description,
+        isPartOf: { '@id': `${siteConfig.url}/#website` },
+        about: { '@id': `${siteConfig.url}/#person` },
+        inLanguage: inLanguage,
       },
       {
         '@type': 'ProfessionalService',
@@ -98,7 +111,7 @@ export function getJsonLd(locale: string = 'en') {
           availableLanguage: ['English', 'Vietnamese'],
         },
         description:
-          'Freelance full-stack web development, private tutoring, English teaching, and SEO optimization services by Anh Nguyen Dev in Vietnam.',
+          'Freelance full-stack web development, private tutoring, English teaching, and SEO optimization services by Nguyễn Hoàng Anh in Vietnam.',
       },
     ],
   }

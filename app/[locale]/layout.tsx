@@ -7,7 +7,6 @@ import { notFound } from 'next/navigation'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { BackToTop } from '@/components/layout/BackToTop'
-import PageTransition from '@/components/layout/PageTransition'
 import StairTransition from '@/components/layout/StairTransition'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
 import { LocaleProvider } from '@/lib/locale-context'
@@ -102,7 +101,7 @@ export const metadata: Metadata = {
     icon: [{ url: '/favicon.ico', sizes: 'any' }],
     apple: [
       {
-        url: '/apple-icon',
+        url: '/apple-icon.png',
         sizes: '180x180',
         type: 'image/png',
       },
@@ -140,9 +139,7 @@ export default async function LocaleLayout({
           <LocaleProvider locale={locale} dict={dict}>
             <Header />
             <StairTransition />
-            <main id='main-content'>
-              <PageTransition>{children}</PageTransition>
-            </main>
+            <main id='main-content'>{children}</main>
             <Footer />
             <BackToTop />
             <Analytics />
